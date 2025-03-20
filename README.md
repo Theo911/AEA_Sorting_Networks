@@ -1,5 +1,3 @@
-# AEA_Sorting_Networks
-=======
 # State of the Art: Sorting Networks
 
 ## Table of Contents
@@ -208,4 +206,3 @@ Sorting networks have several practical applications:
 7. Parberry, I. (1989). A computer assisted optimal depth lower bound for sorting networks with nine inputs. In Proceedings of the 1989 ACM/IEEE Conference on Supercomputing (pp. 152-161).
 
 8. Dobbelaere, B. List of sorting networks. Retrieved from https://bertdobbelaere.github.io/sorting_networks.html
->>>>>>> b13eab7 (added readme)
