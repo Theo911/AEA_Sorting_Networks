@@ -1,0 +1,21 @@
+# Environment
+N_WIRES = 3
+MAX_STEPS = 10
+
+# Training
+NUM_EPISODES = 1000
+BATCH_SIZE = 64
+BUFFER_SIZE = 10000
+TARGET_UPDATE_FREQ = 10
+PRINT_EVERY = 50
+
+# Q-learning
+LEARNING_RATE = 5e-4
+GAMMA = 0.95
+EPSILON_START = 1.0
+EPSILON_END = 0.05
+EPSILON_DECAY = 0.995
+
+# Model Saving
+MODEL_DIR = "checkpoints/"
+MODEL_NAME = f"sorting_dqn_{N_WIRES}wires_{MAX_STEPS}steps.pt"
