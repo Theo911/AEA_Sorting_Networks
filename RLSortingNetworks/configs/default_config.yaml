@@ -1,0 +1,38 @@
+# Environment Settings
+environment:
+  n_wires: 4
+  # Optimal length for N=3 is 3. Set max_steps slightly higher.
+  max_steps: 9 # Example: optimal + 2
+
+# Training Settings
+training:
+  num_episodes: 3000
+  target_update_freq: 100 # Update target network less frequently for stability
+  print_every: 50         # Log progress every N episodes
+  start_fresh: True       # If False, try to resume from checkpoint
+  save_checkpoints: True  # Whether to save model/logs during training
+
+# DQN Agent Settings
+agent:
+  lr: 5.0e-4              # Learning rate
+  gamma: 0.95             # Discount factor
+  epsilon_start: 1.0      # Initial exploration rate
+  epsilon_end: 0.01       # Final exploration rate (don't go to absolute zero)
+  epsilon_decay: 0.995    # Multiplicative decay factor for epsilon
+  buffer_size: 10000      # Replay buffer capacity
+  batch_size: 64          # Batch size for training steps
+
+# Reward Structure (Scaled Terminal Reward)
+reward:
+  success_base: 100.0     # Base reward for finding a sorting network (scaled by 1/steps)
+  failure: -10.0          # Penalty for reaching max_steps without sorting
+  step_penalty: 0.0       # Penalty per step (can be non-zero, e.g., -0.01)
+
+# Model Architecture
+model:
+  fc1_units: 256
+  fc2_units: 256
+
+# Checkpoint/Logging Settings
+experiment:
+  base_dir: "checkpoints"
