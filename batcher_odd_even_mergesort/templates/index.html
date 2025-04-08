@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batcher's Odd-Even Mergesort Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+        .network-visualization img {
+            max-width: 100%;
+            height: auto;
+        }
+        .tab-content {
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .nav-tabs {
+            margin-bottom: 0;
+        }
+        #loadingSpinner {
+            display: none;
+        }
+        .img-container {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            overflow: auto;
+            max-height: 600px;
+        }
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        /* Adjustments for visualization */
+        @media (min-width: 992px) {
+            /* Override for clearer visualization in larger screens */
+            .img-container img {
+                transform: translateY(-5px); /* Raises numbers by 5px */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="pb-3 mb-4 border-bottom">
+            <h1 class="display-5 fw-bold">Batcher's Odd-Even Mergesort</h1>
+            <p class="lead">Interactive Demo of Sorting Networks</p>
+        </header>
+        
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="network-tab" data-bs-toggle="tab" data-bs-target="#network" type="button" role="tab">Network Visualization</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="execution-tab" data-bs-toggle="tab" data-bs-target="#execution" type="button" role="tab">Execution Demo</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="performance-tab" data-bs-toggle="tab" data-bs-target="#performance" type="button" role="tab">Performance Analysis</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="theory-tab" data-bs-toggle="tab" data-bs-target="#theory" type="button" role="tab">Algorithm Theory</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="myTabContent">
+            <!-- Network Visualization Tab -->
+            <div class="tab-pane fade show active" id="network" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Network Configuration</div>
+                            <div class="card-body">
+                                <form id="networkForm">
+                                    <div class="mb-3">
+                                        <label for="inputSize" class="form-label">Number of Inputs (2-32)</label>
+                                        <input type="number" class="form-control" id="inputSize" name="input_size" value="8" min="2" max="32">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Generate Network</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">Network Properties</div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Number of Comparators:</span>
+                                        <span id="numComparators">-</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Depth (Parallel Steps):</span>
+                                        <span id="networkDepth">-</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Layers:</span>
+                                        <span id="numLayers">-</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Redundancy (%):</span>
+                                        <span id="redundancy">-</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Efficiency (%):</span>
+                                        <span id="efficiency">-</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Zero-One Principle Verified:</span>
+                                        <span id="zeroOnePrinciple">-</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Wire Usage</strong>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Min:</span>
+                                            <span id="minWireUsage">-</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Max:</span>
+                                            <span id="maxWireUsage">-</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Average:</span>
+                                            <span id="avgWireUsage">-</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Layer Properties</strong>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Min Comparators/Layer:</span>
+                                            <span id="minCompPerLayer">-</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Max Comparators/Layer:</span>
+                                            <span id="maxCompPerLayer">-</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span>Avg Comparators/Layer:</span>
+                                            <span id="avgCompPerLayer">-</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Properties Description Card -->
+                        <div class="card mt-3">
+                            <div class="card-header">Properties Explained</div>
+                            <div class="card-body">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Number of Comparators</dt>
+                                    <dd class="col-sm-8">Total count of comparison operations in the network.</dd>
+                                    
+                                    <dt class="col-sm-4">Depth (Parallel Steps)</dt>
+                                    <dd class="col-sm-8">Maximum number of sequential steps required when operations are executed in parallel.</dd>
+                                    
+                                    <dt class="col-sm-4">Layers</dt>
+                                    <dd class="col-sm-8">Number of parallel execution stages in the network.</dd>
+                                    
+                                    <dt class="col-sm-4">Redundancy (%)</dt>
+                                    <dd class="col-sm-8">Percentage of comparisons that don't result in swaps during typical operation. Lower is better.</dd>
+                                    
+                                    <dt class="col-sm-4">Efficiency (%)</dt>
+                                    <dd class="col-sm-8">Ratio of theoretical minimum comparators to actual comparators used. Higher is better.</dd>
+                                    
+                                    <dt class="col-sm-4">Zero-One Principle</dt>
+                                    <dd class="col-sm-8">Verification that the network can sort all binary inputs correctly, which proves it can sort any input.</dd>
+                                    
+                                    <dt class="col-sm-4">Wire Usage</dt>
+                                    <dd class="col-sm-8">Statistics about how many times each wire is used in comparisons throughout the network.</dd>
+                                    
+                                    <dt class="col-sm-4">Layer Properties</dt>
+                                    <dd class="col-sm-8">Statistics about how comparators are distributed across parallel execution layers.</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">Network Visualization</div>
+                            <div class="card-body text-center">
+                                <div id="loadingSpinner" class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="img-container">
+                                    <div id="networkVisualization">
+                                        <p class="text-muted">Generate a network to see visualization</p>
+                                    </div>
+                                </div>
+                                
+                                <h5 class="mt-4">Depth Visualization (Parallel Execution)</h5>
+                                <div class="img-container">
+                                    <div id="depthVisualization">
+                                        <p class="text-muted">Generate a network to see depth visualization</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Execution Demo Tab -->
+            <div class="tab-pane fade" id="execution" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Execution Configuration</div>
+                            <div class="card-body">
+                                <form id="executionForm">
+                                    <div class="mb-3">
+                                        <label for="execInputSize" class="form-label">Number of Inputs (2-32)</label>
+                                        <input type="number" class="form-control" id="execInputSize" name="input_size" value="8" min="2" max="32">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Input Type</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="input_type" id="randomInput" value="random" checked>
+                                            <label class="form-check-label" for="randomInput">
+                                                Random Input
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="input_type" id="customInput" value="custom">
+                                            <label class="form-check-label" for="customInput">
+                                                Custom Input
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3" id="customInputDiv" style="display: none;">
+                                        <label for="inputValues" class="form-label">Input Values (comma-separated)</label>
+                                        <input type="text" class="form-control" id="inputValues" name="input_values" placeholder="e.g., 5,3,1,8,7,2,4,6">
+                                        <div class="form-text">Enter exactly <span id="requiredInputs">8</span> comma-separated values</div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary w-100">Execute Network</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">Execution Results</div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Input Sequence:</label>
+                                    <div id="inputSequence" class="form-control" style="min-height: 38px;"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Output Sequence:</label>
+                                    <div id="outputSequence" class="form-control" style="min-height: 38px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">Execution Visualization</div>
+                            <div class="card-body text-center">
+                                <div id="executionLoadingSpinner" class="spinner-border" role="status" style="display: none;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="img-container">
+                                    <div id="executionVisualization">
+                                        <p class="text-muted">Execute the network to see visualization</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Performance Analysis Tab -->
+            <div class="tab-pane fade" id="performance" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">Comparator Count Analysis</div>
+                            <div class="card-body">
+                                <canvas id="comparatorChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">Depth Analysis</div>
+                            <div class="card-body">
+                                <canvas id="depthChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">Comparison with Optimal Networks: Size</div>
+                            <div class="card-body">
+                                <canvas id="optimalSizeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">Comparison with Optimal Networks: Depth</div>
+                            <div class="card-body">
+                                <canvas id="optimalDepthChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Algorithm Theory Tab -->
+            <div class="tab-pane fade" id="theory" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">Batcher's Odd-Even Mergesort Algorithm</div>
+                    <div class="card-body">
+                        <h5>Algorithm Overview</h5>
+                        <p>
+                            Batcher's Odd-Even Mergesort is a sorting network algorithm developed by Ken Batcher in 1968. 
+                            While conceptually based on divide-and-conquer principles, our implementation follows the iterative 
+                            approach from Knuth's "The Art of Computer Programming" that builds a network with O(n log²(n)) comparators 
+                            and O(log²(n)) depth.
+                        </p>
+                        
+                        <h5>Key Principles</h5>
+                        <ul>
+                            <li><strong>Power-of-2 Design:</strong> Uses power-of-2 increments (t = 1, 2, 4, 8...) to build comparison chains</li>
+                            <li><strong>Progressive Sorting:</strong> Builds larger and larger sorted subsequences</li>
+                            <li><strong>Parallel Processing:</strong> Organizes comparators to maximize parallel execution</li>
+                            <li><strong>Zero-One Principle:</strong> Proven to satisfy the fundamental Zero-One principle</li>
+                        </ul>
+                        
+                        <h5>Implementation Approach</h5>
+                        <ol>
+                            <li>Start with t=1 and double it in each outer loop (t=1,2,4,8,...)</li>
+                            <li>For each t, start with p=t and halve p in each inner loop (p=t,t/2,t/4,...)</li>
+                            <li>For each p, generate comparators between elements that are p distance apart,
+                                but only for elements in the same "t-group" (determined by bitwise operations)</li>
+                            <li>These comparators progressively build larger sorted sequences that are eventually merged</li>
+                        </ol>
+                        
+                        <h5>Bitwise Logic</h5>
+                        <p>
+                            The algorithm uses clever bitwise operations (i & t == 0) to determine which elements belong to the
+                            same logical group for comparisons. This creates the pattern that ensures correct sorting while
+                            maintaining a regular structure for parallel execution.
+                        </p>
+                        
+                        <h5>Properties</h5>
+                        <ul>
+                            <li><strong>Size:</strong> O(n log²(n)) comparators</li>
+                            <li><strong>Depth:</strong> O(log²(n)) parallel steps</li>
+                            <li><strong>Deterministic:</strong> Same network always produced for a given input size</li>
+                            <li><strong>Practical:</strong> Despite not being asymptotically optimal, it works well in practice</li>
+                        </ul>
+                        
+                        <h5>Zero-One Principle</h5>
+                        <p>
+                            The zero-one principle states that if a network can sort all 2ⁿ sequences of 0s and 1s, it can sort 
+                            all sequences of arbitrary values. Batcher's algorithm has been mathematically proven to satisfy 
+                            this principle for all input sizes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Network visualization form submission
+        document.getElementById('networkForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            document.getElementById('loadingSpinner').style.display = 'inline-block';
+            
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Send request to server
+            fetch('/generate_network', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+                
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                
+                // Update network visualization
+                document.getElementById('networkVisualization').innerHTML = 
+                    `<img src="data:image/png;base64,${data.network_img}" alt="Sorting Network">`;
+                
+                // Update depth visualization
+                document.getElementById('depthVisualization').innerHTML = 
+                    `<img src="data:image/png;base64,${data.depth_img}" alt="Depth Visualization">`;
+                
+                // Update network properties
+                document.getElementById('numComparators').textContent = data.num_comparators;
+                document.getElementById('networkDepth').textContent = data.depth;
+                document.getElementById('redundancy').textContent = data.redundancy.toFixed(2) + '%';
+                document.getElementById('efficiency').textContent = data.efficiency.toFixed(2) + '%';
+                document.getElementById('numLayers').textContent = data.num_layers;
+
+                // Update Zero-One Principle verification status
+                if (data.zero_one_principle === "proven") {
+                    document.getElementById('zeroOnePrinciple').textContent = "Yes (mathematically proven)";
+                } else if (data.zero_one_principle === true) {
+                    document.getElementById('zeroOnePrinciple').textContent = "Yes (verified)";
+                } else {
+                    document.getElementById('zeroOnePrinciple').textContent = "No";
+                }
+
+                document.getElementById('minWireUsage').textContent = data.min_wire_usage;
+                document.getElementById('maxWireUsage').textContent = data.max_wire_usage;
+                document.getElementById('avgWireUsage').textContent = data.avg_wire_usage.toFixed(2);
+                document.getElementById('minCompPerLayer').textContent = data.min_comparators_per_layer;
+                document.getElementById('maxCompPerLayer').textContent = data.max_comparators_per_layer;
+                document.getElementById('avgCompPerLayer').textContent = data.avg_comparators_per_layer.toFixed(2);
+            })
+            .catch(error => {
+                document.getElementById('loadingSpinner').style.display = 'none';
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+        
+        // Execution form events
+        document.getElementById('execInputSize').addEventListener('change', function() {
+            document.getElementById('requiredInputs').textContent = this.value;
+        });
+        
+        document.querySelectorAll('input[name="input_type"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const customInputDiv = document.getElementById('customInputDiv');
+                if (this.value === 'custom') {
+                    customInputDiv.style.display = 'block';
+                } else {
+                    customInputDiv.style.display = 'none';
+                }
+            });
+        });
+        
+        // Execution form submission
+        document.getElementById('executionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            document.getElementById('executionLoadingSpinner').style.display = 'inline-block';
+            
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Send request to server
+            fetch('/execute_network', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading spinner
+                document.getElementById('executionLoadingSpinner').style.display = 'none';
+                
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                
+                // Update execution visualization
+                document.getElementById('executionVisualization').innerHTML = 
+                    `<img src="data:image/png;base64,${data.execution_img}" alt="Execution Visualization">`;
+                
+                // Update input/output sequences
+                document.getElementById('inputSequence').textContent = data.input_values.join(', ');
+                document.getElementById('outputSequence').textContent = data.output_values.join(', ');
+            })
+            .catch(error => {
+                document.getElementById('executionLoadingSpinner').style.display = 'none';
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+        
+        // Performance charts
+        let comparatorChart, depthChart, optimalSizeChart, optimalDepthChart;
+        
+        // Tab change event for initializing charts
+        document.getElementById('performance-tab').addEventListener('click', function() {
+            if (!comparatorChart) {
+                fetch('/performance_data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+                    
+                    // Prepare chart data
+                    const sizes = Object.keys(data.comparator_counts).map(Number);
+                    const comparatorCounts = Object.values(data.comparator_counts);
+                    const depths = Object.values(data.depths);
+                    
+                    // Comparator count chart
+                    const ctxComparator = document.getElementById('comparatorChart').getContext('2d');
+                    comparatorChart = new Chart(ctxComparator, {
+                        type: 'line',
+                        data: {
+                            labels: sizes,
+                            datasets: [{
+                                label: 'Number of Comparators',
+                                data: comparatorCounts,
+                                borderColor: 'rgb(75, 192, 192)',
+                                tension: 0.1,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Input Size (n)'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Number of Comparators'
+                                    },
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                    
+                    // Depth chart
+                    const ctxDepth = document.getElementById('depthChart').getContext('2d');
+                    depthChart = new Chart(ctxDepth, {
+                        type: 'line',
+                        data: {
+                            labels: sizes,
+                            datasets: [{
+                                label: 'Network Depth',
+                                data: depths,
+                                borderColor: 'rgb(255, 99, 132)',
+                                tension: 0.1,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Input Size (n)'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Depth (Parallel Steps)'
+                                    },
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                    
+                    // Optimal comparison charts
+                    const comparison = data.optimal_comparison;
+                    const commonSizes = Object.keys(comparison.optimal_sizes).map(Number);
+                    
+                    // Size comparison
+                    const ctxOptimalSize = document.getElementById('optimalSizeChart').getContext('2d');
+                    optimalSizeChart = new Chart(ctxOptimalSize, {
+                        type: 'line',
+                        data: {
+                            labels: commonSizes,
+                            datasets: [{
+                                label: 'Optimal Size',
+                                data: Object.values(comparison.optimal_sizes),
+                                borderColor: 'rgb(54, 162, 235)',
+                                tension: 0.1,
+                                fill: false
+                            }, {
+                                label: "Batcher's Size",
+                                data: commonSizes.map(n => comparison.batcher_sizes[n]),
+                                borderColor: 'rgb(255, 159, 64)',
+                                tension: 0.1,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Input Size (n)'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Number of Comparators'
+                                    },
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                    
+                    // Depth comparison
+                    const ctxOptimalDepth = document.getElementById('optimalDepthChart').getContext('2d');
+                    optimalDepthChart = new Chart(ctxOptimalDepth, {
+                        type: 'line',
+                        data: {
+                            labels: commonSizes,
+                            datasets: [{
+                                label: 'Optimal Depth',
+                                data: Object.values(comparison.optimal_depths),
+                                borderColor: 'rgb(54, 162, 235)',
+                                tension: 0.1,
+                                fill: false
+                            }, {
+                                label: "Batcher's Depth",
+                                data: commonSizes.map(n => comparison.batcher_depths[n]),
+                                borderColor: 'rgb(255, 159, 64)',
+                                tension: 0.1,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Input Size (n)'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Depth (Parallel Steps)'
+                                    },
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred loading performance data.');
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

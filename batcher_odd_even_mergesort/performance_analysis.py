@@ -17,7 +17,7 @@ import os
 from batcher_odd_even_mergesort import generate_sorting_network
 
 # Create results directory if it doesn't exist
-RESULTS_DIR = "results"
+RESULTS_DIR = "results_performance_analysis"
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 

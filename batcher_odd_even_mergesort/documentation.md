@@ -88,7 +88,6 @@ Our implementation consists of several Python modules:
 2. **visualization.py**: Tools for visualizing the sorting network
 3. **performance_analysis.py**: Performance analysis and comparison with optimal values
 4. **network_properties.py**: Analysis of mathematical properties
-5. **examples.py**: Detailed examples with step-by-step execution
 
 ### Core Functions
 

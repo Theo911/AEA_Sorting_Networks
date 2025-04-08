@@ -5,7 +5,6 @@
 - [x] Implement visualization module in `visualization.py`
 - [x] Implement performance analysis in `performance_analysis.py`
 - [x] Implement network properties analysis in `network_properties.py`
-- [x] Create examples module with step-by-step execution
 - [x] Write comprehensive documentation
 
 ## Testing 🧪
