@@ -23,7 +23,8 @@ from visualization import (
 from performance_analysis import (
     analyze_comparator_count,
     analyze_network_depth,
-    compare_with_optimal
+    compare_with_optimal,
+    timing_analysis
 )
 from network_properties import (
     verify_zero_one_principle,
@@ -151,7 +152,7 @@ def generate_network():
     # Generate the network
     comparators = generate_sorting_network(n)
     
-    # For extremely small networks, ensure we have valid data
+    # For tiny networks, ensure we have valid data
     validation_error = validate_comparators(comparators, n)
     if validation_error:
         return jsonify(validation_error)
@@ -240,7 +241,7 @@ def execute_network():
     # Generate the network
     comparators = generate_sorting_network(n)
     
-    # For extremely small networks, ensure we have valid data
+    # For tiny networks, ensure we have valid data
     validation_error = validate_comparators(comparators, n)
     if validation_error:
         return jsonify(validation_error)
@@ -273,12 +274,16 @@ def performance_data():
     comparator_counts = analyze_comparator_count(2, 16)
     depths = analyze_network_depth(2, 16)
     
+    # Get timing analysis
+    generation_times = timing_analysis(2, 16, 3)
+    
     # Get comparison with optimal
     comparison = compare_with_optimal()
     
     return jsonify({
         'comparator_counts': comparator_counts,
         'depths': depths,
+        'generation_times': generation_times,
         'optimal_comparison': comparison
     })
 

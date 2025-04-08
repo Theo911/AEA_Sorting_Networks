@@ -322,6 +322,17 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Network Generation Time</div>
+                            <div class="card-body">
+                                <canvas id="generationTimeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <!-- Algorithm Theory Tab -->
@@ -504,7 +515,7 @@
         });
         
         // Performance charts
-        let comparatorChart, depthChart, optimalSizeChart, optimalDepthChart;
+        let comparatorChart, depthChart, optimalSizeChart, optimalDepthChart, generationTimeChart;
         
         // Tab change event for initializing charts
         document.getElementById('performance-tab').addEventListener('click', function() {
@@ -521,6 +532,7 @@
                     const sizes = Object.keys(data.comparator_counts).map(Number);
                     const comparatorCounts = Object.values(data.comparator_counts);
                     const depths = Object.values(data.depths);
+                    const generationTimes = Object.values(data.generation_times);
                     
                     // Comparator count chart
                     const ctxComparator = document.getElementById('comparatorChart').getContext('2d');
@@ -669,6 +681,56 @@
                                         text: 'Depth (Parallel Steps)'
                                     },
                                     beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    // Generation time chart
+                    const ctxGenerationTime = document.getElementById('generationTimeChart').getContext('2d');
+                    generationTimeChart = new Chart(ctxGenerationTime, {
+                        type: 'line',
+                        data: {
+                            labels: sizes,
+                            datasets: [{
+                                label: 'Generation Time (ms)',
+                                data: generationTimes,
+                                borderColor: 'rgb(75, 192, 192)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderWidth: 2,
+                                tension: 0.1,
+                                fill: true,
+                                pointRadius: 3
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Input Size (n)'
+                                    }
+                                },
+                                y: {
+                                    type: 'logarithmic',
+                                    title: {
+                                        display: true,
+                                        text: 'Time (ms, log scale)'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Time to Generate Sorting Network'
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return `${context.raw.toFixed(2)} ms`;
+                                        }
+                                    }
                                 }
                             }
                         }
