@@ -2,7 +2,6 @@
 Interactive Web Demo for Batcher's Odd-Even Mergesort Algorithm
 """
 
-import os
 import io
 import base64
 import random
@@ -33,10 +32,6 @@ from network_properties import (
 
 # Initialize Flask app
 app = Flask(__name__)
-
-# Create static folders if they don't exist
-os.makedirs('static', exist_ok=True)
-os.makedirs('static/images', exist_ok=True)
 
 def handle_exceptions(f):
     """Decorator to handle exceptions in route handlers"""

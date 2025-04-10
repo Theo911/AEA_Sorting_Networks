@@ -2,60 +2,41 @@
 
 ## Overview
 
-Batcher's Odd-Even Mergesort is a sorting network construction algorithm developed by Kenneth E. Batcher in 1968. The algorithm constructs an efficient sorting network through a recursive divide-and-conquer approach. Unlike traditional sorting algorithms like quicksort or mergesort that make data-dependent decisions, sorting networks perform a fixed sequence of comparisons regardless of the input data.
+Batcher's Odd-Even Mergesort is a sorting network construction algorithm developed by Kenneth E. Batcher in 1968. The algorithm constructs an efficient sorting network through a divide-and-conquer approach. Unlike traditional sorting algorithms like quicksort or mergesort that make data-dependent decisions, sorting networks perform a fixed sequence of comparisons regardless of the input data.
 
 ## Algorithm Description
 
-The algorithm consists of three key components:
+While Batcher's algorithm is conceptually a divide-and-conquer method, our implementation directly generates the comparators in the correct order using an iterative approach based on Knuth's "The Art of Computer Programming". 
 
-1. **Odd-Even Merge Sort**: The main function that recursively divides input into halves, sorts them, and then merges.
-2. **Odd-Even Merge**: Merges two sorted sequences through a recursive process.
-3. **Odd-Even Merge Compare**: Creates the actual comparator operations for comparing elements.
+The algorithm works by:
+1. Starting with t=1 and doubling t in each outer loop (t=1,2,4,8,...)
+2. For each t, starting with p=t and halving p in each inner loop (p=t,t/2,t/4,...)
+3. For each p, generating comparators between elements that are p distance apart, but only for elements in the same "t-group" (determined by bitwise operations)
 
 ### Pseudo-code
 
 ```
-function odd_even_merge_sort(lo, hi):
-    if hi - lo <= 1:
-        return []  # Base case: single element is already sorted
-    
-    middle = (lo + hi) / 2
+function batcher_sort(n):
     comparators = []
     
-    # Recursively sort first half
-    comparators.extend(odd_even_merge_sort(lo, middle))
-    
-    # Recursively sort second half
-    comparators.extend(odd_even_merge_sort(middle, hi))
-    
-    # Merge the two sorted halves
-    comparators.extend(odd_even_merge(lo, hi, 1))
-    
-    return comparators
-
-function odd_even_merge(lo, hi, r):
-    if hi - lo <= 1:
+    # Base cases
+    if n <= 1:
         return []
+    if n == 2:
+        return [(0, 1)]
     
-    middle = (lo + hi) / 2
-    comparators = []
-    
-    # Recursively merge first and second half
-    comparators.extend(odd_even_merge(lo, middle, r))
-    comparators.extend(odd_even_merge(middle, hi, r))
-    
-    # Add compare-exchange operations
-    comparators.extend(odd_even_merge_compare(lo, hi, r))
-    
-    return comparators
-
-function odd_even_merge_compare(lo, hi, r):
-    comparators = []
-    d = r * 2
-    
-    if d < hi - lo:
-        for i = lo + r to hi - r with step d:
-            comparators.append((i, i + r))
+    # Main algorithm
+    t = 1
+    while t < n:
+        p = t
+        while p > 0:
+            for i in range(0, n - p):
+                if i & t == 0:  # Bitwise AND to check if i is in the first group
+                    j = i + p
+                    if j < n:
+                        comparators.append((i, j))
+            p = p >> 1  # Divide p by 2
+        t = t << 1  # Multiply t by 2
     
     return comparators
 ```
@@ -108,7 +89,14 @@ Our implementation consists of a web-based interactive demo with several key com
 # Core functions
 def generate_sorting_network(n: int) -> List[Tuple[int, int]]:
     """Generate a sorting network for n inputs."""
-    # Implementation using odd-even merge sort
+    return batcher_sort(n)
+
+def batcher_sort(n: int) -> List[Tuple[int, int]]:
+    """
+    Iterative implementation of Batcher's odd-even mergesort algorithm.
+    Uses bitwise operations to determine which elements to compare.
+    """
+    # Implementation using iterative approach from Knuth's TAOCP
 
 def apply_comparators(input_list: List[int], comparators: List[Tuple[int, int]]) -> List[int]:
     """Apply the sorting network to an input list."""
@@ -118,10 +106,17 @@ def apply_comparators(input_list: List[int], comparators: List[Tuple[int, int]])
             output[i], output[j] = output[j], output[i]
     return output
 
-# Network property analysis
+def verify_sorting_network(n: int, comparators: List[Tuple[int, int]]) -> bool:
+    """
+    Verify if the sorting network sorts all possible inputs correctly.
+    Implements the Zero-One principle by checking all binary inputs.
+    """
+    # Directly tests all binary sequences for small n (≤ 10)
+
+# Network property analysis (from network_properties.py)
 def verify_zero_one_principle(n: int, comparators: List[Tuple[int, int]]) -> bool:
     """Verify that the network sorts all 2^n binary inputs correctly."""
-    # Directly tests all binary sequences for small n (≤ 6)
+    # Implementation in network_properties.py
 
 def find_parallel_layers(comparators: List[Tuple[int, int]], n_wires: int) -> List[List[Tuple[int, int]]]:
     """Identify comparators that can be executed in parallel."""
