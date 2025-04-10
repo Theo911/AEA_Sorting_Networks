@@ -11,7 +11,7 @@ environment:
   n_wires: 5
 experiment:
   base_dir: "/Users/theodorburca/Desktop/Master/Semestrul_2/3_Analiza_experimentala\u0306\
-    _a_algoritmilor/google/new/checkpoints"
+    _a_algoritmilor/Proiect/github/RLSortingNetworks/checkpoints"
 model:
   fc1_units: 256
   fc2_units: 256
@@ -20,7 +20,7 @@ reward:
   step_penalty: 0.0
   success_base: 100.0
 training:
-  num_episodes: 3000
+  num_episodes: 5000
   print_every: 50
   save_checkpoints: true
   start_fresh: true

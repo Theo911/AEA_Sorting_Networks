@@ -118,6 +118,80 @@ def prune_redundant_comparators(n_wires: int, comparators: List[Tuple[int, int]]
     return pruned_network
 
 
+def calculate_network_depth(n_wires: int, comparators: List[Tuple[int, int]]) -> int:
+    """Calculates the depth of a comparator network correctly.
+
+    The depth is the minimum number of parallel layers required to execute
+    all comparators, respecting data dependencies between wires.
+
+    Args:
+        n_wires (int): The number of wires (channels) in the network.
+        comparators (List[Tuple[int, int]]): The sequence of comparators defining the network.
+
+    Returns:
+        int: The calculated depth of the network. Returns 0 for empty networks or n_wires <= 1.
+    """
+    if not comparators or n_wires <= 1:
+        return 0
+
+    # For each wire, track how many comparators it passes through
+    wire_comparator_count = [0] * n_wires
+
+    for i, j in comparators:
+        # Validation
+        if not (0 <= i < n_wires and 0 <= j < n_wires):
+            continue
+        if i == j:
+            continue
+
+        # When can we apply the comparator?
+        # It's available after both wires are available.
+        input_available = max(wire_comparator_count[i], wire_comparator_count[j])
+
+        # After applying, both wires have comparator count +1
+        wire_comparator_count[i] = input_available + 1
+        wire_comparator_count[j] = input_available + 1
+
+    return max(wire_comparator_count)
+
+def calculate_network_depth_by_levels(n_wires: int, comparators: List[Tuple[int, int]]) -> int:
+    """Calculates the optimized depth (minimum number of levels) of a comparator network.
+
+    Args:
+        n_wires (int): Number of wires.
+        comparators (List[Tuple[int, int]]): List of comparators (wire pairs).
+
+    Returns:
+        int: Optimized depth (minimum number of levels needed).
+    """
+    if not comparators or n_wires <= 1:
+        return 0
+
+    remaining_comparators = comparators.copy()
+    depth = 0
+
+    while remaining_comparators:
+        used_wires = set()
+        next_level = []
+
+        # Build one level at a time
+        for comp in remaining_comparators:
+            i, j = comp
+            if i not in used_wires and j not in used_wires:
+                # Can add this comparator to current level
+                used_wires.add(i)
+                used_wires.add(j)
+            else:
+                # Postpone this comparator to next round
+                next_level.append(comp)
+
+        # Prepare for next level
+        remaining_comparators = next_level
+        depth += 1
+
+    return depth
+
+
 def format_network_visualization(comparators: List[Tuple[int, int]], n_wires: int) -> str:
     """Formats a text-based visualization of the sorting network.
 

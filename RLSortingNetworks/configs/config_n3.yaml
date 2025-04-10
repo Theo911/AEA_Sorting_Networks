@@ -1,0 +1,28 @@
+# Config for N=3
+environment:
+  n_wires: 3
+  max_steps: 5 # Optimal size=3
+
+training:
+  num_episodes: 3000
+  target_update_freq: 100
+  print_every: 50
+  start_fresh: True
+  save_checkpoints: True
+agent:
+  lr: 5.0e-4
+  gamma: 0.95
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  epsilon_decay: 0.995
+  buffer_size: 10000
+  batch_size: 64
+reward:
+  success_base: 100.0
+  failure: -10.0
+  step_penalty: 0.0
+model:
+  fc1_units: 256
+  fc2_units: 256
+experiment:
+  base_dir: "checkpoints"

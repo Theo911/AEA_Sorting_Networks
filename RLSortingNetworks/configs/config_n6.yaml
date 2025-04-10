@@ -1,0 +1,44 @@
+# Config for N=6 - Revised for Better Learning
+
+environment:
+  n_wires: 6
+  max_steps: 25 # Was 14. Allows more exploration without immediate failure penalty.
+
+training:
+  num_episodes: 5000 # Was 5000. More complex problems need more learning time.
+  target_update_freq: 250
+  print_every: 50
+  start_fresh: True
+  save_checkpoints: True
+
+agent:
+  lr: 5.0e-4 # Learning rate might be ok, but could try slightly lower (e.g., 1e-4, 3e-4) if loss fluctuates wildly later.
+  gamma: 0.95 # Discount factor - might need adjustment if episodes become much longer due to max_steps. Try 0.98 or 0.99?
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  # Suggestion 4: Slow down epsilon decay to explore for longer.
+  epsilon_decay: 0.999 # Was 0.995. Takes much longer to reach epsilon_end.
+                       # Alternative: Keep 0.995 but increase num_episodes even more.
+  # Suggestion 5: Increase buffer size for more diverse experience.
+  buffer_size: 50000 # Was 10000.
+  batch_size: 64 # Usually ok, could try 128 if memory allows.
+
+reward:
+  success_base: 100.0
+  failure: -10.0 # This negative reward might be too punishing early on.
+  # Suggestion 6 (Optional - requires code change): Consider a "Shaped Reward".
+  # Instead of just terminal rewards, give small positive rewards based on
+  # how many *more* binary inputs are sorted compared to the previous step.
+  # This gives denser feedback. E.g., reward = (count_sorted(t) - count_sorted(t-1)) / 2^n
+  # Requires modifying the Trainer's reward calculation logic.
+  # If sticking to terminal rewards, keep as is for now.
+  step_penalty: 0.0 # Keep at 0 unless you specifically want to penalize length early.
+
+model:
+  # Suggestion 7: Increase model capacity slightly?
+  fc1_units: 512 # Was 256.
+  fc2_units: 512 # Was 256.
+  # Could even try a third hidden layer if needed, but start with wider layers.
+
+experiment:
+  base_dir: "checkpoints"

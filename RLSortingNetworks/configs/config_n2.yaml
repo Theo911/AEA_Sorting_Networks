@@ -1,0 +1,28 @@
+# Config for N=2
+environment:
+  n_wires: 2
+  max_steps: 2 # Optimal size=1. Need at least 1 step + margin.
+
+training:
+  num_episodes: 100 # Should find the solution quickly
+  target_update_freq: 100
+  print_every: 10
+  start_fresh: True
+  save_checkpoints: True
+agent:
+  lr: 5.0e-4
+  gamma: 0.95
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  epsilon_decay: 0.995
+  buffer_size: 1000 # Can be smaller
+  batch_size: 64
+reward:
+  success_base: 100.0
+  failure: -10.0
+  step_penalty: 0.0
+model:
+  fc1_units: 128 # Smaller model ok
+  fc2_units: 128
+experiment:
+  base_dir: "checkpoints"

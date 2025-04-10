@@ -1,0 +1,42 @@
+# Config for N=7 - Revised for Better Learning
+
+environment:
+  n_wires: 7
+  # Optimal size=16. Need significantly more steps for exploration & learning.
+  max_steps: 35  # Was 25. Provides more room than optimal + buffer.
+
+training:
+  # Increased substantially compared to the original n=7 config suggestion.
+  num_episodes: 5000
+  # Keep target update freq potentially less frequent for stability with longer training.
+  target_update_freq: 300 # Was 100. Experiment maybe with 250-500.
+  print_every: 50
+  start_fresh: True
+  save_checkpoints: True
+
+agent:
+  lr: 5.0e-4          # Start with default, but monitor loss. Might need 3e-4 or 1e-4 if unstable.
+  gamma: 0.95         # Might consider increasing slightly (0.98?) if episodes often reach near max_steps.
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  # Slow down decay even more to ensure thorough exploration for longer.
+  epsilon_decay: 0.9995 # Was 0.995. This will keep epsilon higher for much longer.
+                        # Consider 0.999 if training time is a major concern.
+  # Increase buffer size further.
+  buffer_size: 75000 # Was 10000. Allow storing more varied transitions.
+  batch_size: 64      # Keep 64, or try 128 if memory allows and training seems slow.
+
+reward:
+  success_base: 100.0
+  failure: -10.0      # Keep penalty for now.
+  step_penalty: 0.0   # Keep at 0.
+
+model:
+  # Increase model capacity significantly for n=7 state space.
+  fc1_units: 512 # Was 256.
+  fc2_units: 512 # Was 256.
+  # Consider adding a third hidden layer if performance still lags:
+  # fc3_units: 256
+
+experiment:
+  base_dir: "checkpoints"
