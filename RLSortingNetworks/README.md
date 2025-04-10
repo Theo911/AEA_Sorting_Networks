@@ -197,37 +197,102 @@ This section breaks down the core components of the `PySortNetRL` project and ex
 
 ### 3. The Agent (`sorting_network_rl.agent.dqn_agent`)
 
-*   **Purpose:** Implements the DQN learning algorithm and manages the agent's interaction policy.
+*   **Purpose:** Implements the DQN learning algorithm and manages the agent's interaction policy for constructing sorting networks.
 *   **Class:** `DQNAgent`
 *   **Key Components:**
-    *   **Networks:** `policy_net` (instance of `QNetwork`, actively trained) and `target_net` (instance of `QNetwork`, weights periodically copied from `policy_net`). Both are moved to the appropriate device (CPU/GPU).
-    *   **Optimizer:** `torch.optim.Adam` used to update the `policy_net` weights based on calculated gradients.
-    *   **Replay Buffer:** `collections.deque(maxlen=buffer_size)` stores past experiences `(state, action, reward, next_state, done)`.
-    *   **Hyperparameters:** `gamma` (discount factor), `epsilon` (current exploration rate), `epsilon_min`, `epsilon_decay`, `batch_size`.
-*   **Core Methods:**
-    *   `__init__(...)`: Initializes networks, optimizer, buffer, and hyperparameters based on the configuration dictionary. Calls `update_target_network()` initially to synchronize weights.
-    *   `select_action(state_vector)`:
-        *   Generates a random number. If less than `self.epsilon`, returns a random action index (exploration).
-        *   Otherwise (exploitation):
-            *   Converts the NumPy `state_vector` to a PyTorch tensor.
-            *   Passes the tensor through `self.policy_net` (in evaluation mode) to get Q-values for all actions.
-            *   Returns the index of the action with the highest Q-value (`.argmax().item()`).
-    *   `store_transition(...)`: Appends the provided experience tuple to the `replay_buffer`. Ensures states are NumPy arrays.
-    *   `_sample_batch()`: Randomly samples `self.batch_size` transitions from the `replay_buffer` and converts them into PyTorch tensors (states, actions, rewards, next_states, dones) on the correct device.
-    *   `train_step()`:
-        1.  Checks if the buffer has enough samples (`>= batch_size`). If not, returns `None`.
-        2.  Calls `_sample_batch()` to get a batch of data.
-        3.  **Calculate Current Q-Values:** Uses `policy_net` to compute `Q(s, a)` for the sampled states `s` and actions `a`. Uses `.gather(1, actions)` to select the specific Q-values for the actions actually taken.
-        4.  **Calculate Target Q-Values (Double DQN):**
-            *   Uses `policy_net` to find the *best action indices* `a'_max` for the `next_states` (`s'`). (`policy_net(next_states).argmax(1, keepdim=True)`).
-            *   Uses `target_net` to evaluate the Q-value of *those specific actions* `a'_max` in the `next_states`. (`target_net(next_states).gather(1, policy_next_actions)`).
-            *   Calculates the final target: `target = rewards + self.gamma * target_q_values * (1 - dones)`.
-        5.  **Calculate Loss:** Computes the difference between `current_q` and `target_q` using Huber Loss (`nn.functional.smooth_l1_loss`).
-        6.  **Optimize:** Performs backpropagation (`loss.backward()`) and updates `policy_net` weights (`optimizer.step()`). Optional gradient clipping is included.
-        7.  Returns the scalar loss value.
-    *   `update_target_network()`: Copies the state dictionary (weights and biases) from `policy_net` to `target_net`.
-    *   `decay_epsilon()`: Multiplies `self.epsilon` by `self.epsilon_decay`, ensuring it doesn't fall below `self.epsilon_min`.
-    *   `save_model()`, `load_model()`, `save_epsilon()`, `load_epsilon()`: Handle checkpointing operations.
+    *   **Networks:** `policy_net` (instance of `QNetwork`, actively trained) and `target_net` (instance of `QNetwork`, weights periodically copied from `policy_net`). Both are moved to the appropriate device (CPU/GPU). See [The Learning Mechanism](#the-dqn-learning-mechanism-policy--target-networks) below for details.
+    *   **Optimizer:** `torch.optim.Adam` used to update the `policy_net` weights based on calculated gradients, minimizing the loss function.
+    *   **Replay Buffer:** `collections.deque(maxlen=buffer_size)` stores a large number of past experiences `(state, action, reward, next_state, done)`. This allows for sampling diverse, less correlated batches for training.
+    *   **Hyperparameters:** `gamma` (discount factor for future rewards), `epsilon` (current exploration rate), `epsilon_min`, `epsilon_decay`, `batch_size`. Controlled via the configuration file.
+*   **Core Methods Overview:** (Refer to the code for exact implementation)
+    *   `__init__(...)`: Sets up networks, optimizer, buffer, and hyperparameters. Synchronizes target network initially.
+    *   `select_action(state_vector)`: Chooses the next comparator to add using epsilon-greedy based on `policy_net` Q-values.
+    *   `store_transition(...)`: Adds a completed interaction step (including the calculated reward) to the replay buffer.
+    *   `_sample_batch()`: Retrieves a random minibatch of transitions from the buffer.
+    *   `train_step()`: Performs a single Q-learning update using a sampled batch.
+    *   `update_target_network()`: Copies weights from `policy_net` to `target_net`.
+    *   `decay_epsilon()`: Reduces the exploration rate.
+    *   `save/load_model()`, `save/load_epsilon()`: Checkpointing utilities.
+
+#### The DQN Learning Mechanism: Policy & Target Networks
+
+*(This section remains the same as the previous detailed explanation about the Policy Network, Target Network, and the "Moving Target" problem)*
+
+1.  **Policy Network (`policy_net`):** Actively trained; selects actions; calculates predicted Q(s,a).
+2.  **Target Network (`target_net`):** Frozen weights, periodically updated; calculates stable target Q-values for next states.
+3.  **Why Two Networks?** To stabilize learning by preventing the target from shifting with every single update to the policy network.
+
+#### Detailed Learning Flow (Step-by-Step within the `Trainer`)
+
+The agent doesn't learn in isolation; its learning is driven by the `Trainer` orchestrating interactions with the `SortingNetworkEnv`. Here's a more detailed breakdown of one full cycle (one episode and the subsequent updates):
+
+**A. Initialization Phase (Before Training Starts)**
+
+1.  **Setup:** The `Trainer` creates the `SortingNetworkEnv` and the `DQNAgent`.
+2.  **Agent Init:** The `DQNAgent` initializes:
+    *   `policy_net` and `target_net` with random weights.
+    *   Copies `policy_net` weights to `target_net` (`update_target_network()`).
+    *   Creates an empty `replay_buffer`.
+    *   Sets `epsilon` to `epsilon_start` (e.g., 1.0).
+3.  **Checkpoint Load (Optional):** If not `start_fresh`, the `Trainer` tells the `DQNAgent` to load saved weights (`load_model`) and epsilon (`load_epsilon`).
+
+**B. Training Episode Loop (Repeated `num_episodes` times)**
+
+**For a Single Episode:**
+
+1.  **Reset:** `Trainer` calls `env.reset()`. The environment clears its internal `comparators` list and `current_step`. `Trainer` gets the initial empty state observation.
+2.  **Encode Initial State:** `Trainer` calls `encode_state()` on the empty comparator list to get the starting `current_state_vector`.
+3.  **Initialize Episode Variables:** `episode_reward = 0`, `done = False`.
+
+4.  **Step Loop (While `not done`):**
+    *   **4.1. Agent Selects Action:**
+        *   `Trainer` calls `agent.select_action(current_state_vector)`.
+        *   `DQNAgent` generates a random float `r`.
+        *   If `r < epsilon`, a random valid `action_index` (representing a comparator `(i,j)`) is chosen (Exploration).
+        *   If `r >= epsilon`, `current_state_vector` is fed into `policy_net`. The `action_index` corresponding to the maximum output Q-value is chosen (Exploitation).
+    *   **4.2. Environment Executes Action:**
+        *   `Trainer` calls `env.step(action_index)`.
+        *   The environment appends the selected comparator `(i,j)` to its internal list.
+        *   The environment increments its `current_step`.
+        *   The environment checks if `current_step >= max_steps` and sets `env_done` flag accordingly.
+        *   The environment returns the `next_state_info` (new comparator list and step count), placeholder reward (0), and `env_done`.
+    *   **4.3. Encode Next State:** `Trainer` calls `encode_state()` on the `next_state_info['comparators']` to get `next_state_vector`.
+    *   **4.4. Trainer Calculates Reward & Checks Termination:**
+        *   `Trainer` calls `is_sorting_network(n_wires, next_state_info['comparators'])`.
+        *   **If Valid Network:** `reward = success_base / current_step`, `done = True`. The `Trainer` also updates its tracked `best_network` if this solution is shorter than previously found ones.
+        *   **If Not Valid AND `env_done`:** `reward = failure`, `done = True`.
+        *   **If Not Valid AND NOT `env_done`:** `reward = step_penalty`, `done = False`.
+    *   **4.5. Store Experience:**
+        *   `Trainer` creates the tuple: `(current_state_vector, action_index, reward, next_state_vector, done)`.
+        *   `Trainer` calls `agent.store_transition(...)` to add this tuple to the `replay_buffer`. The buffer automatically discards the oldest transition if it's full.
+    *   **4.6. Agent Learns (Train Step):**
+        *   `Trainer` calls `agent.train_step()`.
+        *   **Inside `agent.train_step()`:**
+            *   **Buffer Check:** If `len(replay_buffer) < batch_size`, return (do nothing).
+            *   **Sampling:** Randomly sample `batch_size` transitions from `replay_buffer`. Let one such transition be `(s, a, r, s', d)`.
+            *   **Target Calculation (for each transition in batch):**
+                *   *Select Action:* Find the best action `a'_best` for state `s'` using the **policy network**: `a'_best = argmax_{a'} Q_{policy}(s', a')`.
+                *   *Evaluate Action:* Get the Q-value of *that specific action* `a'_best` in state `s'` using the **target network**: `Q_target_val = Q_{target}(s', a'_best)`.
+                *   *Compute TD Target:* `y = r` if `d` is True (terminal state), otherwise `y = r + gamma * Q_target_val`.
+            *   **Prediction Calculation (for each transition in batch):**
+                *   Get the Q-value predicted by the **policy network** for the action `a` that was *actually taken* in state `s`: `Q_predicted = Q_{policy}(s, a)`.
+            *   **Loss Calculation:** Compute the loss (e.g., Huber loss) between the batch of `y` (targets) and the batch of `Q_predicted` (predictions).
+            *   **Gradient Descent:** Calculate gradients of the loss with respect to `policy_net` weights (`loss.backward()`), clip gradients (optional), and update `policy_net` weights using the optimizer (`optimizer.step()`).
+    *   **4.7. State Transition:** `Trainer` sets `current_state_vector = next_state_vector` to prepare for the next iteration of the step loop.
+    *   **Loop End:** The step loop continues until `done` becomes True.
+
+5.  **Post-Episode Operations:**
+    *   **Epsilon Decay:** `Trainer` calls `agent.decay_epsilon()`, reducing `epsilon` slightly.
+    *   **Logging:** `Trainer` records episode statistics.
+    *   **Target Network Update:** If the current episode number is a multiple of `target_update_freq`, `Trainer` calls `agent.update_target_network()` to copy `policy_net` weights to `target_net`.
+    *   **Checkpointing:** If the current episode number is a multiple of `print_every`, `Trainer` calls `agent.save_model()` and `agent.save_epsilon()`.
+
+**C. End of Training**
+
+*   After `num_episodes`, the main loop finishes.
+*   The `Trainer` performs final saves and may log/display the overall best network found (`self.best_network`). The final state of `policy_net` represents the learned policy.
+
+This detailed flow highlights the continuous cycle: the agent acts based on its current policy, the environment responds, the trainer calculates the reward and termination status, the experience is stored, and the agent learns from batches of past experiences to gradually improve its policy network's Q-value estimations, guided by the stable targets from the target network.
 
 ### 4. The Q-Network Model (`sorting_network_rl.model.network`)
 
@@ -421,7 +486,7 @@ This table summarizes the length of the shortest valid sorting networks found by
 | 1   | 1                  |      0       | 0             |       *0*       |        *0*        |     *0*     | (Trivial)         |
 | 2   | 2                  |      1       | 1             |       *1*       |                   |     *1*     | `2w_2s`           |
 | 3   | 5                  |      3       | 3             |       *3*       |                   |     *3*     | `3w_5s`           |
-| 4   | 10                 |      5       | 3             |       *6*       |        *5*        |     *8*     | `4w_10s`          |
+| 4   | 10                 |      5       | 3             |       *6*       |        *5*        |     *3*     | `4w_10s`          |
 | 5   | 15                 |      9       | 5             |      *10*       |        *9*        |     *7*     | `5w_15s`          |
 | 6   | 20                 |      12      | 5             |      *18*       |       *13*        |     *9*     | `6w_25s`          |
 | 7   | 25                 |      16      | 6             |      *33*       |       *17*        |    *10*     | `7w_25s`          |
