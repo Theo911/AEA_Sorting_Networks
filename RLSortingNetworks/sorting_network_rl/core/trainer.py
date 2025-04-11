@@ -199,10 +199,19 @@ class Trainer:
             done = False
             episode_reward = 0.0
             episode_steps = 0
+            last_action_index: Optional[int] = None
 
             while not done:
-                # Select action
-                action = self.agent.select_action(state_vector)
+                invalid_actions = []
+                if last_action_index is not None:
+                    # Mask the last action to prevent immediate repetition
+                    invalid_actions.append(last_action_index)
+
+                # --- Modification: Pass invalid actions to the agent ---
+                action = self.agent.select_action(state_vector, invalid_actions)
+
+                # --- Update the last action index ---
+                last_action_index = action
 
                 # Take step in environment
                 next_state_info, _, env_done = self.env.step(action) # Basic reward is 0

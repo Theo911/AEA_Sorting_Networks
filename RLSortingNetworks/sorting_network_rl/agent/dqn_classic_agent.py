@@ -68,26 +68,92 @@ class DQNAgent_Classic:
                     f"epsilon_end={self.epsilon_min}, epsilon_decay={self.epsilon_decay}, "
                     f"batch_size={self.batch_size}, buffer_size={buffer_size}, lr={learning_rate}")
 
-    def select_action(self, state_vector: np.ndarray) -> int:
-        """Selects an action using an epsilon-greedy policy.
+    def select_action(self,
+                      state_vector: np.ndarray,
+                      invalid_action_indices: Optional[List[int]] = None
+                      ) -> int:
+        """Selects an action using an epsilon-greedy policy, applying action masking.
 
         Args:
             state_vector (np.ndarray): The current state represented as a NumPy array.
+            invalid_action_indices (Optional[List[int]]): A list of action indices
+                that should be masked (not chosen during exploitation). Defaults to None.
 
         Returns:
-            int: The index of the selected action.
+            int: The index of the selected (potentially masked) action.
         """
+        # --- Exploration Phase ---
         if random.random() < self.epsilon:
-            # Exploration: choose a random action
-            return random.randrange(self.action_dim)
+            # Get all possible action indices
+            possible_actions = list(range(self.action_dim))
+            if invalid_action_indices:
+                # Filter out the invalid actions to get the set of valid actions
+                valid_actions = [a for a in possible_actions if a not in invalid_action_indices]
+                # If, somehow, all actions are masked as invalid (unlikely),
+                # choose randomly from the original set to avoid an error and log a warning.
+                if not valid_actions:
+                    logger.warning("Exploration: All actions were masked as invalid? Choosing from original set.")
+                    return random.choice(possible_actions)
+                # Choose a random action from the *valid* subset
+                return random.choice(valid_actions)
+            else:
+                # If no invalid actions are specified, choose randomly from all possible actions
+                return random.choice(possible_actions)
+
+        # --- Exploitation Phase ---
         else:
-            # Exploitation: choose the best action according to the policy network
+            # Convert state numpy array to a PyTorch tensor, add batch dimension, move to device
             state_tensor = torch.from_numpy(state_vector).float().unsqueeze(0).to(self.device)
-            self.policy_net.eval() # Set network to evaluation mode for inference
+            # Set the policy network to evaluation mode (disables dropout, etc.) for inference
+            self.policy_net.eval()
+            # Disable gradient calculations for inference
             with torch.no_grad():
-                q_values = self.policy_net(state_tensor)
-            self.policy_net.train() # Set network back to train mode
-            return q_values.argmax().item() # Get action with highest Q-value
+                # Get Q-values for all actions in the current state.
+                # Squeeze [0] to remove the batch dimension, result shape: [action_dim]
+                q_values = self.policy_net(state_tensor)[0]
+
+            # --- Apply Action Masking ---
+            if invalid_action_indices:
+                # Convert list of invalid indices to a tensor for efficient indexing
+                invalid_indices_tensor = torch.LongTensor(invalid_action_indices).to(self.device)
+
+                # Ensure indices are within the valid range before masking
+                # This prevents potential index out of bounds errors
+                valid_mask_indices = invalid_indices_tensor[invalid_indices_tensor < self.action_dim]
+
+                # If there are any valid indices to mask
+                if len(valid_mask_indices) > 0:
+                    # Set the Q-values for the invalid actions to negative infinity.
+                    # This ensures they won't be selected by argmax.
+                    q_values[valid_mask_indices] = -torch.inf
+                    # logger.debug(f"Masked actions: {valid_mask_indices.tolist()}") # Optional debug log
+
+                # Check if all actions were masked (all Q-values are -infinity)
+                # This is an edge case, could happen if masking logic is too aggressive
+                if torch.all(q_values == -torch.inf):
+                    logger.warning("Exploitation: All actions were masked! Choosing a random valid action (if any) to proceed.")
+                    # Fallback: Choose a random valid action if possible, otherwise any action.
+                    possible_actions = list(range(self.action_dim))
+                    # Re-filter valid actions based on the original invalid list
+                    valid_actions = [a for a in possible_actions if a not in invalid_action_indices]
+                    if valid_actions:
+                        best_action = random.choice(valid_actions)
+                    else: # Extreme fallback if even filtering fails
+                        logger.warning("Exploitation: No valid actions found after masking all. Choosing from original set.")
+                        best_action = random.choice(possible_actions)
+                else:
+                    # Normal case: Find the action index with the maximum Q-value among the *valid* actions
+                    best_action = q_values.argmax().item()
+            else:
+                 # If no invalid actions were provided, choose the action with the highest Q-value overall
+                 best_action = q_values.argmax().item()
+            # --- End Action Masking ---
+
+            # Set the policy network back to training mode
+            self.policy_net.train()
+            # Return the selected action index
+            return best_action
+
 
     def store_transition(self, state: np.ndarray, action: int, reward: float, next_state: np.ndarray, done: bool) -> None:
         """Stores an experience transition in the replay buffer.

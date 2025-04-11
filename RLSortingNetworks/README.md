@@ -73,7 +73,9 @@ We employ the Deep Q-Network (DQN) algorithm, a popular value-based DRL method:
 ```
 RLSortingNetworks/
 ├── configs/                 # Configuration files (YAML)
-│   └── default_config.yaml
+│   ├── default_config.yaml
+│   ├── config_n3.yaml      # Example config for n=3 wires
+│   └── config_n4.yaml      # Example config for n=4 wires
 ├── checkpoints/             # Default directory for saving run artifacts
 │   └── <run_id>/            # Specific run directory (e.g., 4w_10s)
 │       ├── config.yaml      # Copy of config used for this run
@@ -85,7 +87,8 @@ RLSortingNetworks/
 ├── sorting_network_rl/      # Main source code package (importable)
 │   ├── __init__.py
 │   ├── agent/               # RL Agent (DQN)
-│   │   └── dqn_agent.py
+│   │   ├── dqn_agent.py                # Standard Double DQN Agent (with Target Network)
+│   │   └── dqn_classic_agent.py        # Classic DQN Agent (Single Network, for comparison)
 │   ├── core/                # Core logic (training, evaluation loops)
 │   │   ├── evaluator.py
 │   │   └── trainer.py
@@ -206,7 +209,7 @@ This section breaks down the core components of the `PySortNetRL` project and ex
     *   **Hyperparameters:** `gamma` (discount factor for future rewards), `epsilon` (current exploration rate), `epsilon_min`, `epsilon_decay`, `batch_size`. Controlled via the configuration file.
 *   **Core Methods Overview:** (Refer to the code for exact implementation)
     *   `__init__(...)`: Sets up networks, optimizer, buffer, and hyperparameters. Synchronizes target network initially.
-    *   `select_action(state_vector)`: Chooses the next comparator to add using epsilon-greedy based on `policy_net` Q-values.
+    *   `select_action(state_vector, invalid_action_indices=None)`: Chooses the next action using epsilon-greedy. **Includes basic action masking** to prevent selecting specified invalid actions (e.g., the immediately preceding action, passed by the `Trainer`).
     *   `store_transition(...)`: Adds a completed interaction step (including the calculated reward) to the replay buffer.
     *   `_sample_batch()`: Retrieves a random minibatch of transitions from the buffer.
     *   `train_step()`: Performs a single Q-learning update using a sampled batch.
@@ -293,6 +296,13 @@ The agent doesn't learn in isolation; its learning is driven by the `Trainer` or
 *   The `Trainer` performs final saves and may log/display the overall best network found (`self.best_network`). The final state of `policy_net` represents the learned policy.
 
 This detailed flow highlights the continuous cycle: the agent acts based on its current policy, the environment responds, the trainer calculates the reward and termination status, the experience is stored, and the agent learns from batches of past experiences to gradually improve its policy network's Q-value estimations, guided by the stable targets from the target network.
+
+### Comparative Agent: Classic DQN (`sorting_network_rl.agent.dqn_classic_agent`)
+
+*   **Purpose:** Included for comparative analysis, this agent implements the **Classic DQN** algorithm, which uses only a *single* neural network (`policy_net`) for both action selection and target value calculation.
+*   **Class:** `DQNAgentClassic`
+*   **Key Difference:** It lacks a separate `target_net` and the `update_target_network` method. The `train_step` method calculates the target Q-value directly using the `policy_net`, which can lead to the "moving target" problem and potentially less stable learning compared to the standard `DQNAgent`.
+*   **Usage:** To use this agent for experiments, modify the agent import and instantiation lines within `sorting_network_rl/core/trainer.py` and ensure the call to `update_target_network` in the `Trainer`'s training loop is commented out or removed. (lines 44 and 263, 264)
 
 ### 4. The Q-Network Model (`sorting_network_rl.model.network`)
 
@@ -487,7 +497,7 @@ This table compares the performance of sorting networks discovered by the standa
 |  2  |            2            |        1        |        1         |             *1*             |             *1*              |              *1*              |              *1*               |             *1*              |              *1*              |                                |                                 | `2w_2s`              |
 |  3  |            5            |        3        |        3         |             *3*             |             *3*              |                               |                                |             *3*              |              *3*              |                                |                                 | `3w_5s`              |
 |  4  |           10            |        5        |        3         |             *5*             |             *3*              |                               |                                |             *5*              |              *3*              |                                |                                 | `4w_10s`             |
-|  5  |           15            |        9        |        5         |            *10*             |             *8*              |              *9*              |              *7*               |             *10*             |              *7*              |              *9*               |               *6*               | `5w_15s`             |
+|  5  |           15            |        9        |        5         |            *10*             |             *8*              |              *9*              |              *6*               |             *10*             |              *7*              |              *9*               |               *6*               | `5w_15s`             |
 |  6  |           25            |       12        |        5         |            *18*             |             *14*             |             *13*              |              *9*               |             *18*             |             *12*              |              *13*              |               *7*               | `6w_25s`             |
 |  7  |           35            |       16        |        6         |            *33*             |             *21*             |             *17*              |              *10*              |             *31*             |             *14*              |              *19*              |              *12*               | `7w_35s`             |
 |  8  |           *?*           |       19        |        6         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `8w_??s`             |
@@ -512,9 +522,9 @@ This table compares the performance of sorting networks discovered by the standa
 
 This project provides a foundation for using DRL to find sorting networks. Potential areas for future development include:
 
+-   [x] **Action Masking:** Prevent the agent from selecting comparators that are known to be redundant or sub-optimal in certain states (e.g., comparing already sorted adjacent wires).
+-   **Improved State Representation:** Explore more sophisticated state representations that might better capture the network's structure and sorting progress, such as Graph Neural Networks (GNNs). 
 -   **Depth Optimization:** Modify the reward structure or state representation to explicitly encourage networks with lower depth (fewer parallel steps), possibly alongside size minimization.
--   **Improved State Representation:** Explore more sophisticated state representations that might better capture the network's structure and sorting progress, such as Graph Neural Networks (GNNs).
--   **Action Masking:** Prevent the agent from selecting comparators that are known to be redundant or sub-optimal in certain states (e.g., comparing already sorted adjacent wires).
 -   **Hyperparameter Tuning:** Employ automated hyperparameter optimization techniques (e.g., using Optuna, Ray Tune) to find optimal settings for learning rate, network architecture, epsilon decay, etc.
 -   **Curriculum Learning:** Start training with smaller `n_wires` and gradually increase the problem difficulty, potentially transferring knowledge learned on simpler tasks.
 -   **Parallel Environments:** Utilize libraries like `multiprocessing` or Ray to run multiple environment instances in parallel, significantly speeding up experience collection and training time.
