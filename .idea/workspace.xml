@@ -4,7 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd1d6f84-8d87-44bc-8c2b-13515b85a3fe" name="Changes" comment="" />
+    <list default="true" id="dd1d6f84-8d87-44bc-8c2b-13515b85a3fe" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/RLSortingNetworks/sorting_network_rl/agent/dqn_classic_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/github.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/github.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/2w_2s/model.pt" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/2w_2s/model.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/2w_2s/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/2w_2s/results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/3w_5s/best_network.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/3w_5s/best_network.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/3w_5s/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/3w_5s/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/3w_5s/model.pt" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/3w_5s/model.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/3w_5s/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/3w_5s/results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/4w_10s/best_network.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/4w_10s/best_network.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/4w_10s/model.pt" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/4w_10s/model.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/4w_10s/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/4w_10s/results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/5w_15s/best_network.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/5w_15s/best_network.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/5w_15s/model.pt" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/5w_15s/model.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/5w_15s/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/5w_15s/results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/6w_25s/best_network.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/6w_25s/best_network.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/6w_25s/model.pt" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/6w_25s/model.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/6w_25s/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/6w_25s/results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/best_network.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/best_network.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/epsilon.npy" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/epsilon.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/model.pt" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/model.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/checkpoints/7w_35s/results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/configs/config_n3.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/configs/config_n3.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/configs/config_n7.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/configs/config_n7.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/configs/config_n8.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/configs/config_n8.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSortingNetworks/sorting_network_rl/core/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/RLSortingNetworks/sorting_network_rl/core/trainer.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,33 +59,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.evaluate.executor": "Run",
-    "Python.evaluate_and_visualize (1).executor": "Run",
-    "Python.evaluate_and_visualize.executor": "Run",
-    "Python.evaluation.executor": "Run",
-    "Python.main (1).executor": "Run",
-    "Python.main (2).executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.plot_training (1).executor": "Run",
-    "Python.plot_training.executor": "Run",
-    "Python.train (1).executor": "Run",
-    "Python.train.executor": "Run",
-    "Python.trainer.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/theodorburca/Desktop/Master/Semestrul_2/3_Analiza_experimentală_a_algoritmilor/Proiect/github",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.evaluate.executor&quot;: &quot;Run&quot;,
+    &quot;Python.evaluate_and_visualize (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.evaluate_and_visualize.executor&quot;: &quot;Run&quot;,
+    &quot;Python.evaluation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.evaluator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.plot_training (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.plot_training.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.train.executor&quot;: &quot;Run&quot;,
+    &quot;Python.trainer.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/theodorburca/Desktop/Master/Semestrul_2/3_Analiza_experimentală_a_algoritmilor/Proiect/github&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/RLSortingNetworks" />
@@ -62,7 +94,7 @@
       <recent name="$PROJECT_DIR$/sorting_network_rl" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.evaluate">
+  <component name="RunManager" selected="Python.train (1)">
     <configuration name="evaluate" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="github" />
       <option name="ENV_FILES" value="" />
@@ -109,6 +141,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="evaluator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="github" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/RLSortingNetworks/sorting_network_rl/core" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RLSortingNetworks/sorting_network_rl/core/evaluator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="train (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="github" />
       <option name="ENV_FILES" value="" />
@@ -124,29 +179,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RLSortingNetworks/scripts/train.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="github" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backup/new/scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backup/new/scripts/train.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -180,11 +212,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.evaluate" />
-        <item itemvalue="Python.evaluation" />
         <item itemvalue="Python.train (1)" />
+        <item itemvalue="Python.evaluate" />
         <item itemvalue="Python.trainer" />
-        <item itemvalue="Python.train" />
+        <item itemvalue="Python.evaluator" />
+        <item itemvalue="Python.evaluation" />
       </list>
     </recent_temporary>
   </component>
@@ -212,7 +244,10 @@
       <workItem from="1743858755942" duration="4770000" />
       <workItem from="1743879013213" duration="37000" />
       <workItem from="1743943348898" duration="2635000" />
-      <workItem from="1744297494838" duration="11984000" />
+      <workItem from="1744297494838" duration="12739000" />
+      <workItem from="1744347220873" duration="11215000" />
+      <workItem from="1744373650805" duration="429000" />
+      <workItem from="1744375352114" duration="6959000" />
     </task>
     <servers />
   </component>
@@ -232,16 +267,17 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/github$plot_training.coverage" NAME="plot_training Coverage Results" MODIFIED="1743535360026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/github$trainer.coverage" NAME="trainer Coverage Results" MODIFIED="1743863849848" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RLSortingNetworks/sorting_network_rl/core" />
+    <SUITE FILE_PATH="coverage/github$trainer.coverage" NAME="trainer Coverage Results" MODIFIED="1744378294260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RLSortingNetworks/sorting_network_rl/core" />
     <SUITE FILE_PATH="coverage/github$evaluate_and_visualize__1_.coverage" NAME="evaluate_and_visualize (1) Coverage Results" MODIFIED="1743859303278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sorting_network_rl" />
     <SUITE FILE_PATH="coverage/github$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1743859319278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sorting_network_rl" />
     <SUITE FILE_PATH="coverage/github$evaluate_and_visualize.coverage" NAME="evaluate_and_visualize Coverage Results" MODIFIED="1743859962570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backup/sorting_network_rl" />
-    <SUITE FILE_PATH="coverage/github$evaluate.coverage" NAME="evaluate Coverage Results" MODIFIED="1744309137528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RLSortingNetworks/scripts" />
+    <SUITE FILE_PATH="coverage/github$evaluator.coverage" NAME="evaluator Coverage Results" MODIFIED="1744347543289" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RLSortingNetworks/sorting_network_rl/core" />
+    <SUITE FILE_PATH="coverage/github$evaluate.coverage" NAME="evaluate Coverage Results" MODIFIED="1744381336010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RLSortingNetworks/scripts" />
     <SUITE FILE_PATH="coverage/github$plot_training__1_.coverage" NAME="plot_training (1) Coverage Results" MODIFIED="1743742682510" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sorting_network_rl" />
     <SUITE FILE_PATH="coverage/github$main.coverage" NAME="main Coverage Results" MODIFIED="1743535847696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/github$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1743859948430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backup/sorting_network_rl" />
-    <SUITE FILE_PATH="coverage/github$train__1_.coverage" NAME="train (1) Coverage Results" MODIFIED="1744306771677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RLSortingNetworks/scripts" />
     <SUITE FILE_PATH="coverage/github$evaluation.coverage" NAME="evaluation Coverage Results" MODIFIED="1744309038507" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RLSortingNetworks/sorting_network_rl/utils" />
+    <SUITE FILE_PATH="coverage/github$train__1_.coverage" NAME="train (1) Coverage Results" MODIFIED="1744382248063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/RLSortingNetworks/scripts" />
     <SUITE FILE_PATH="coverage/github$train.coverage" NAME="train Coverage Results" MODIFIED="1743860863025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backup/new/scripts" />
   </component>
 </project>

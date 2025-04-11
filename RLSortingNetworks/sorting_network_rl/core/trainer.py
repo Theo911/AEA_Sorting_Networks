@@ -8,6 +8,7 @@ from typing import Dict, Any, List, Tuple, Optional
 
 from RLSortingNetworks.sorting_network_rl.env.sorting_env import SortingNetworkEnv
 from RLSortingNetworks.sorting_network_rl.agent.dqn_agent import DQNAgent
+from RLSortingNetworks.sorting_network_rl.agent.dqn_classic_agent import DQNAgent_Classic
 from RLSortingNetworks.sorting_network_rl.utils.state_encoder import encode_state
 from RLSortingNetworks.sorting_network_rl.utils.evaluation import is_sorting_network, prune_redundant_comparators, format_network_visualization
 from RLSortingNetworks.sorting_network_rl.utils.config_loader import save_config
@@ -34,7 +35,13 @@ class Trainer:
         self.env = SortingNetworkEnv(n_wires=self.env_cfg['n_wires'], max_steps=self.env_cfg['max_steps'])
         self.state_dim = encode_state(self.env.n_wires, self.env.max_steps, []).shape[0]
         self.action_dim = self.env.get_action_space_size()
+
+        # DQN Agent with 2 neural networks (policy and target)
         self.agent = DQNAgent(self.state_dim, self.action_dim, config)
+
+        # Uncomment the following line to use a classic DQN agent (for comparison)
+        # Classic DQN agent: uses a single neural network for Q-value approximation (for comparison purposes)
+        # self.agent = DQNAgent_Classic(self.state_dim, self.action_dim, config)
 
         # --- Setup Experiment Directory and Paths ---
         self._setup_paths()
@@ -242,6 +249,7 @@ class Trainer:
             self.agent.decay_epsilon()
             self._log_episode_results(episode, episode_reward, episode_steps, last_loss)
 
+            # Optional: Comment if using classic DQN agent
             # Update target network periodically
             if episode % target_update_freq == 0:
                 self.agent.update_target_network()

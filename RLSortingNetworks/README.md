@@ -479,32 +479,33 @@ This script loads a trained model or a saved network and performs analysis, visu
 
 ### Performance Summary (Experimental Results)
 
-This table summarizes the length of the shortest valid sorting networks found by this DRL agent during training runs with the default configuration (or specify which config). Results may vary depending on hyperparameters and training duration.
+This table compares the performance of sorting networks discovered by the standard Double DQN agent (with Target Network) and a Classic DQN agent (single network). Optimal values are provided for reference. "Best" refers to the shortest valid network found during the entire training run (from `best_network.csv`). "Pruned" refers to the result after applying the pruning algorithm. Results depend heavily on the specific training run configurations.
 
-| `n` | `max_steps` (Used) | Optimal Size | Optimal Depth | Agent Best Size | Agent Pruned Size | Agent Depth | Notes / Config ID |
-| :-: | :----------------: |:------------:| :-----------: |:---------------:|:-----------------:|:-----------:|:------------------|
-| 1   | 1                  |      0       | 0             |       *0*       |        *0*        |     *0*     | (Trivial)         |
-| 2   | 2                  |      1       | 1             |       *1*       |                   |     *1*     | `2w_2s`           |
-| 3   | 5                  |      3       | 3             |       *3*       |                   |     *3*     | `3w_5s`           |
-| 4   | 10                 |      5       | 3             |       *6*       |        *5*        |     *3*     | `4w_10s`          |
-| 5   | 15                 |      9       | 5             |      *10*       |        *9*        |     *7*     | `5w_15s`          |
-| 6   | 20                 |      12      | 5             |      *18*       |       *13*        |     *9*     | `6w_25s`          |
-| 7   | 25                 |      16      | 6             |      *33*       |       *17*        |    *10*     | `7w_25s`          |
-| 8   | 30                 |      19      | 6             |       *?*       |        *?*        |     *?*     | `8w_30s`          |
-| 9   | 35                 |      25      | 7             |       *?*       |        *?*        |     *?*     | `9w_35s`          |
-| 10  | 40                 |      29      | 7             |       *?*       |        *?*        |     *?*     | `10w_40s`         |
-| 11  | 45                 |      35      | 8             |       *?*       |        *?*        |     *?*     | `11w_45s`         |
-| 12  | 50                 |      39      | 8             |       *?*       |        *?*        |     *?*     | `12w_50s`         |
-| 13  | 55                 |   43 - 45    | 9             |       *?*       |        *?*        |     *?*     | `13w_55s`         |
-| 14  | 60                 |   47 - 51    | 9             |       *?*       |        *?*        |     *?*     | `14w_60s`         |
-| 15  | 65                 |   51 - 56    | 9             |       *?*       |        *?*        |     *?*     | `15w_65s`         |
-| 16  | 70                 |   55 - 60    | 9             |       *?*       |        *?*        |     *?*     | `16w_70s`         |
-| 17  | 80                 |   60 - 71    | 10            |       *?*       |        *?*        |     *?*     | `17w_80s`         |
+| `n` | `max_steps`<br>(Config) | Optimal<br>Size | Optimal<br>Depth | **Double DQN**<br>Best Size | **Double DQN**<br>Best Depth | **Double DQN**<br>Pruned Size | **Double DQN**<br>Pruned Depth | **Classic DQN**<br>Best Size | **Classic DQN**<br>Best Depth | **Classic DQN**<br>Pruned Size | **Classic DQN**<br>Pruned Depth | Notes /<br>Config ID |
+|:---:|:-----------------------:|:---------------:|:----------------:|:---------------------------:|:----------------------------:|:-----------------------------:|:------------------------------:|:----------------------------:|:-----------------------------:|:------------------------------:|:-------------------------------:|:---------------------|
+|  1  |            1            |        0        |        0         |             *0*             |             *0*              |              *0*              |              *0*               |             *0*              |              *0*              |              *0*               |               *0*               | `1w_1s` (Trivial)    |
+|  2  |            2            |        1        |        1         |             *1*             |             *1*              |              *1*              |              *1*               |             *1*              |              *1*              |                                |                                 | `2w_2s`              |
+|  3  |            5            |        3        |        3         |             *3*             |             *3*              |                               |                                |             *3*              |              *3*              |                                |                                 | `3w_5s`              |
+|  4  |           10            |        5        |        3         |             *5*             |             *3*              |                               |                                |             *5*              |              *3*              |                                |                                 | `4w_10s`             |
+|  5  |           15            |        9        |        5         |            *10*             |             *8*              |              *9*              |              *7*               |             *10*             |              *7*              |              *9*               |               *6*               | `5w_15s`             |
+|  6  |           25            |       12        |        5         |            *18*             |             *14*             |             *13*              |              *9*               |             *18*             |             *12*              |              *13*              |               *7*               | `6w_25s`             |
+|  7  |           35            |       16        |        6         |            *33*             |             *21*             |             *17*              |              *10*              |             *31*             |             *14*              |              *19*              |              *12*               | `7w_35s`             |
+|  8  |           *?*           |       19        |        6         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `8w_??s`             |
+|  9  |           *?*           |       25        |        7         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `9w_??s`             |
+| 10  |           *?*           |       29        |        7         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `10w_??s`            |
+| 11  |           *?*           |       35        |        8         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `11w_??s`            |
+| 12  |           *?*           |       39        |        8         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `12w_??s`            |
+| 13  |           *?*           |     43 - 45     |        9         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `13w_??s`            |
+| 14  |           *?*           |     47 - 51     |        9         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `14w_??s`            |
+| 15  |           *?*           |     51 - 56     |        9         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `15w_??s`            |
+| 16  |           *?*           |     55 - 60     |        9         |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `16w_??s`            |
+| 17  |           *?*           |     60 - 71     |        10        |             *?*             |             *?*              |              *?*              |              *?*               |             *?*              |              *?*              |              *?*               |               *?*               | `17w_??s`            |
+
 
 **Notes:**
 *   "Best Network Length (Agent Found)" refers to the shortest valid network saved in `best_network.csv` during training.
 *   "Pruned Network Length" is the result after applying the `prune_redundant_comparators` function to the best network found.
-*   "Optimal Known Size" is listed for reference (see [State of the Art](#state-of-the-art-sorting-networks) if included, or external sources).
+*   "Optimal Known Size" is listed for reference (see [State of the Art](../README.md)).
 *   Results were obtained using run configurations identified by the Config ID (e.g., `3w_5s` corresponds to the directory `checkpoints/3w_5s/`). Ensure the config matches if reproducing.
 
 ## Future Work

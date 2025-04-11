@@ -1,28 +1,44 @@
-# Config for N=8
+# Config for N=8 - Targeting Improved Learning
+
 environment:
   n_wires: 8
-  max_steps: 30 # Optimal size=19
+  # Optimal size=19. Need ample room beyond this.
+  max_steps: 40  # Increased margin compared to n=7 (optimal+21 vs optimal+19).
 
 training:
-  num_episodes: 5000 # Increased example
-  target_update_freq: 100
-  print_every: 50
+  # Requires significantly more episodes. Start high, maybe increase later.
+  num_episodes: 5000 # Was ~25k suggested for n=7. Substantial increase needed. need 40k, but trying with 5k
+  # Keep target update relatively infrequent.
+  target_update_freq: 400 # Was ~300 suggested for n=7.
+  print_every: 50     # Or maybe 100 to reduce log clutter on long runs.
   start_fresh: True
   save_checkpoints: True
+
 agent:
-  lr: 5.0e-4
-  gamma: 0.95
+  # Consider starting with a slightly lower learning rate due to increased complexity/episodes.
+  lr: 3.0e-4          # Was 5.0e-4. Monitor loss closely.
+  # With longer episodes likely, a higher gamma might be beneficial.
+  gamma: 0.98         # Was 0.95. Values future rewards more.
   epsilon_start: 1.0
   epsilon_end: 0.01
-  epsilon_decay: 0.995
-  buffer_size: 10000
+  # Keep epsilon decay slow to allow extensive exploration.
+  epsilon_decay: 0.9995 # Same as suggested for n=7. Might need even slower (0.9998?) if it converges too fast.
+  # Further increase buffer size.
+  buffer_size: 100000 # Was 75k suggested for n=7.
+  # Batch size: 64 is standard, 128 could speed up if memory allows.
   batch_size: 64
+
 reward:
   success_base: 100.0
-  failure: -10.0
+  failure: -10.0      # Keeping this, but long max_steps reduces its impact early on.
   step_penalty: 0.0
+
 model:
-  fc1_units: 256
-  fc2_units: 256
+  # Further increase model capacity is likely necessary.
+  fc1_units: 512      # Keep 512 or potentially increase to 768/1024?
+  fc2_units: 512      # Keep 512 or potentially increase to 768/1024?
+  # A third hidden layer might become beneficial here.
+  # fc3_units: 256    # Example third layer size
+
 experiment:
   base_dir: "checkpoints"

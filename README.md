@@ -2,6 +2,7 @@
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Implementations in this Repository](#implementations-in-this-repository)
 - [Problem Definition](#problem-definition)
 - [Key Concepts](#key-concepts)
   - [Comparator Networks](#comparator-networks)
@@ -35,6 +36,22 @@ A comparator is a fundamental element of the network that compares two values an
 - **Number of wires (channels)**: The network consists of \( n \) horizontal wires, each carrying a value that will be compared and sorted.
 
 The primary goal in studying sorting networks is to minimize both the number of comparators and depth, optimizing performance in hardware and software implementations.
+
+
+## Implementations in this Repository
+
+This repository explores different approaches to generating or analyzing sorting networks. Each major implementation resides in its own subdirectory and contains a dedicated `README.md` file with detailed information about its specific methodology, usage, and results.
+
+*   **[RLSortingNetworks](./RLSortingNetworks/)**:
+    *   **Approach:** Uses Deep Reinforcement Learning (specifically Deep Q-Networks - DQN) to train an agent that learns to sequentially construct efficient sorting networks.
+    *   **Focus:** Primarily optimizes for the minimum number of comparators (size).
+    *   **Details:** For a complete explanation of the DRL agent, training process, configuration, evaluation, and results specific to this method, please refer to the [RLSortingNetworks README](./RLSortingNetworks/README.md).
+
+*   **[batcher_odd_even_mergesort](./batcher_odd_even_mergesort/)**:
+    *   **Details:** See the [batcher_odd_even_mergesort README](./batcher_odd_even_mergesort/README.md).
+
+Please navigate to the respective directories for in-depth documentation on each implementation.
+
 
 ## Problem Definition
 

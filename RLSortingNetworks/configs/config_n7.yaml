@@ -7,11 +7,11 @@ environment:
 
 training:
   # Increased substantially compared to the original n=7 config suggestion.
-  num_episodes: 5000
+  num_episodes: 6000
   # Keep target update freq potentially less frequent for stability with longer training.
   target_update_freq: 300 # Was 100. Experiment maybe with 250-500.
   print_every: 50
-  start_fresh: True
+  start_fresh: False
   save_checkpoints: True
 
 agent:
