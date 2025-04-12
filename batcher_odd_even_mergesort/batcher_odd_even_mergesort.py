@@ -1,4 +1,4 @@
-'''
+"""
 Batcher's Odd-Even Mergesort Algorithm for Sorting Networks
 
 This implementation creates a sorting network using Batcher's Odd-Even Mergesort algorithm.
@@ -14,9 +14,10 @@ Key features:
 - Works for any input size (not just powers of 2)
 - Deterministic - same comparators always produced for a given input size
 - Proven to satisfy the Zero-One Principle
-'''
+"""
 
 from typing import List, Tuple
+import itertools
 
 
 def batcher_sort(n: int) -> List[Tuple[int, int]]:
@@ -40,20 +41,20 @@ def batcher_sort(n: int) -> List[Tuple[int, int]]:
         List of (i,j) comparator pairs forming a sorting network
     """
     comparators = []
-    
+
     # Base case: no need to sort 0 or 1 elements
     if n <= 1:
         return []
-    
+
     # For n=2, just need one comparator
     if n == 2:
         return [(0, 1)]
-        
+
     # Implementation of Batcher's odd-even mergesort
     # This is based on the algorithm description from Knuth's TAOCP
-    t = 1
+    t = 1 # Defined the "groups size" for merging
     while t < n:
-        p = t
+        p = t # defines the distance between elements being compared
         while p > 0:
             for i in range(0, n - p):
                 if i & t == 0:  # Bitwise AND to check if i is in the first group
@@ -63,7 +64,7 @@ def batcher_sort(n: int) -> List[Tuple[int, int]]:
                         comparators.append((i, j))
             p = p >> 1  # Bitwise right shift, same as p = p // 2
         t = t << 1  # Bitwise left shift, same as t = t * 2
-    
+
     return comparators
 
 
@@ -100,7 +101,7 @@ def apply_comparators(input_list: List[int], comparators: List[Tuple[int, int]])
 
 def is_sorted(lst: List[int]) -> bool:
     """Check if a list is sorted."""
-    return all(lst[i] <= lst[i+1] for i in range(len(lst)-1))
+    return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))
 
 
 def verify_sorting_network(n: int, comparators: List[Tuple[int, int]]) -> bool:
@@ -115,8 +116,7 @@ def verify_sorting_network(n: int, comparators: List[Tuple[int, int]]) -> bool:
     Returns:
         True if it is a valid sorting network, False otherwise
     """
-    import itertools
-    
+
     # Check all possible binary inputs (0-1 principle)
     for input_bits in itertools.product([0, 1], repeat=n):
         output = apply_comparators(list(input_bits), comparators)
@@ -129,12 +129,12 @@ if __name__ == "__main__":
     # Example usage
     n = 8  # Number of inputs
     comparators = generate_sorting_network(n)
-    
+
     print(f"Batcher's Odd-Even Mergesort network for {n} inputs:")
     print(f"Number of comparators: {len(comparators)}")
     print("Comparators:", comparators)
-    
+
     # Verify for small n (verification is exponential, so only practical for small n)
     if n <= 10:
         is_valid = verify_sorting_network(n, comparators)
-        print(f"Network is valid sorting network: {is_valid}") 
+        print(f"Network is valid sorting network: {is_valid}")
