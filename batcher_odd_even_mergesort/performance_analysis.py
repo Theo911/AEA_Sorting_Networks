@@ -12,7 +12,7 @@ import numpy as np
 from typing import List, Tuple, Dict
 import time
 
-from batcher_odd_even_mergesort import generate_sorting_network
+from batcher_odd_even_mergesort.core import generate_sorting_network
 from network_properties import find_parallel_layers
 
 

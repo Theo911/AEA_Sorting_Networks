@@ -13,19 +13,19 @@ import matplotlib.pyplot as plt
 from flask import Flask, render_template, request, jsonify
 
 # Import functionality from existing modules
-from batcher_odd_even_mergesort import generate_sorting_network, apply_comparators
-from visualization import (
+from batcher_odd_even_mergesort.core import generate_sorting_network, apply_comparators
+from batcher_odd_even_mergesort.visualization import (
     draw_network, 
     visualize_network_execution, 
     draw_depth_layers
 )
-from performance_analysis import (
+from batcher_odd_even_mergesort.performance_analysis import (
     analyze_comparator_count,
     analyze_network_depth,
     compare_with_optimal,
     timing_analysis
 )
-from network_properties import (
+from batcher_odd_even_mergesort.network_properties import (
     verify_zero_one_principle,
     get_network_properties_summary
 )
