@@ -8,7 +8,7 @@ interactive visualizations.
 """
 
 import matplotlib.pyplot as plt
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 from network_properties import find_parallel_layers
 
@@ -115,13 +115,14 @@ def visualize_network_execution(comparators: List[Tuple[int, int]], input_values
     return fig
 
 
-def draw_depth_layers(comparators: List[Tuple[int, int]], n_wires: int):
+def draw_depth_layers(comparators: List[Tuple[int, int]], n_wires: int, title: Optional[str] = None):
     """
     Visualize a sorting network with layers colored by depth (parallel execution).
     
     Args:
         comparators: List of (i,j) comparator pairs
         n_wires: Number of wires in the network
+        title: Optional title for the plot. If None, a default is generated.
         
     Returns:
         A tuple of (matplotlib figure with depth visualization, layers data)
@@ -129,9 +130,15 @@ def draw_depth_layers(comparators: List[Tuple[int, int]], n_wires: int):
     # Use the canonical implementation from network_properties
     layers = find_parallel_layers(comparators, n_wires)
     
+    # Determine plot title
+    if title is None:
+        plot_title = f"Network by Depth (Parallel Execution)\nDepth: {len(layers)} layers"
+    else:
+        plot_title = f"{title}\nDepth: {len(layers)} layers"
+
     # Create visualization
     fig = plt.figure(figsize=(12, n_wires * 0.6))
-    plt.title(f"Batcher's Network by Depth (Parallel Execution)\nDepth: {len(layers)} layers")
+    plt.title(plot_title) # Use the determined title
     plt.axis('off')
     
     # Draw horizontal wires

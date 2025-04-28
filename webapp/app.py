@@ -11,6 +11,13 @@ import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 from flask import Flask, render_template, request, jsonify
+import sys
+import os
+
+# Add path for batcher_odd_even_mergesort
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'batcher_odd_even_mergesort')))
+# Add path for RLSortingNetworks
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'RLSortingNetworks')))
 
 # Import functionality from existing modules
 from batcher_odd_even_mergesort.core import generate_sorting_network, apply_comparators
@@ -23,12 +30,24 @@ from batcher_odd_even_mergesort.performance_analysis import (
     analyze_comparator_count,
     analyze_network_depth,
     compare_with_optimal,
-    timing_analysis
+    timing_analysis,
+    count_depth
 )
 from batcher_odd_even_mergesort.network_properties import (
     verify_zero_one_principle,
     get_network_properties_summary
 )
+
+# Import functionality from RL
+try:
+    from sorting_network_rl.utils.network_generator import get_rl_network
+    # Also import any necessary RL evaluation utils if needed directly (e.g., pruning)
+    # from sorting_network_rl.utils.evaluation import prune_redundant_comparators
+    RL_AVAILABLE = True
+except ImportError as e:
+    print(f"Warning: Could not import RLSortingNetworks modules: {e}. RL features will be disabled.")
+    get_rl_network = None # Define as None to avoid NameError later
+    RL_AVAILABLE = False
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -110,17 +129,17 @@ def index():
     """Render the main page"""
     return render_template('index.html')
 
-def generate_network_visualizations(comparators, n):
+def generate_network_visualizations(comparators, n, algorithm_name="Sorting Network"):
     """Generate network visualizations and convert to base64 strings"""
     # Configure matplotlib settings based on input size
     configure_matplotlib_for_size(n)
     
-    # Generate network visualization
-    fig = draw_network(comparators, n, title=f"Batcher's Odd-Even Mergesort Network (n={n})")
+    # Generate network visualization with dynamic title
+    fig = draw_network(comparators, n, title=f"{algorithm_name} (n={n})")
     network_img = fig_to_base64(fig)
     
-    # Generate depth visualization
-    result = draw_depth_layers(comparators, n)
+    # Generate depth visualization with dynamic title
+    result = draw_depth_layers(comparators, n, title=f"{algorithm_name} by Depth")
     # Check if result is a tuple (fig, layers) or just plt module
     if isinstance(result, tuple):
         fig_depth, _ = result
@@ -156,8 +175,8 @@ def generate_network():
     properties = get_network_properties_summary(n)
     
     try:
-        # Generate visualizations
-        network_img, depth_img = generate_network_visualizations(comparators, n)
+        # Generate visualizations with specific title
+        network_img, depth_img = generate_network_visualizations(comparators, n, algorithm_name="Batcher's Odd-Even Mergesort Network")
         
         # Handle zero-one principle verification message
         if n <= 6:
@@ -281,6 +300,68 @@ def performance_data():
         'generation_times': generation_times,
         'optimal_comparison': comparison
     })
+
+# --- Route for RL Network Generation ---
+@app.route('/generate_rl_network', methods=['POST'])
+@handle_exceptions
+def generate_rl_network():
+    """Generate a sorting network using the RL model."""
+    if not RL_AVAILABLE or get_rl_network is None:
+        return jsonify({'error': 'RL Sorting Network module is not available. Check server logs.'})
+
+    n = int(request.form.get('input_size', 8))
+    
+    # Input validation (reuse existing validator)
+    # Consider if RL has different size limits (e.g., 2-8 based on available models)
+    # For now, using the same limits as Batcher
+    validation_error = validate_input_size(n)
+    if validation_error:
+        return jsonify(validation_error)
+
+    # Determine RL project root path (adjust if needed)
+    rl_project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'RLSortingNetworks'))
+    if not os.path.isdir(rl_project_root):
+         return jsonify({'error': f'RL Project directory not found at expected location: {rl_project_root}'})
+
+    # Generate the network using the RL utility function
+    comparators = get_rl_network(n, rl_project_root)
+    
+    if comparators is None:
+        # Error message already logged by get_rl_network
+        return jsonify({'error': f'Failed to generate RL network for n={n}. Check server logs for details (config/model missing?).'})
+
+    # Validate the generated comparators (reuse existing validator)
+    validation_error = validate_comparators(comparators, n)
+    if validation_error:
+        # This might indicate an issue with the RL generation if it returns an empty list
+        return jsonify(validation_error)
+    
+    # Reuse existing visualization function!
+    try:
+        # Generate visualizations with specific title
+        network_img, depth_img = generate_network_visualizations(comparators, n, algorithm_name="RL Sorting Network")
+        
+        # Prepare response (we don't have all properties like Batcher's, calculate what we can)
+        num_comparators_rl = len(comparators)
+        depth_rl = count_depth(comparators, n)
+        # Other properties like efficiency, redundancy, zero-one need specific calculation/verification for RL
+
+        response = {
+            'network_img': network_img,
+            'depth_img': depth_img,
+            'num_comparators': num_comparators_rl,
+            'depth': depth_rl,
+            # Add placeholders or calculate other properties as needed
+            'redundancy': 'N/A',
+            'efficiency': 'N/A',
+            'num_layers': depth_rl, # Assuming depth corresponds to layers here
+            'zero_one_principle': 'Unknown' # Needs verification (is_sorting_network)
+        }
+        
+        return jsonify(response)
+    except Exception as viz_error:
+        traceback.print_exc()
+        return jsonify({'error': f'Visualization or property calculation error for RL network: {str(viz_error)}'})
 
 if __name__ == '__main__':
     app.run(debug=True) 
