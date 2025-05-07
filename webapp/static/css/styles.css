@@ -1,0 +1,44 @@
+body {
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+.network-visualization img {
+    max-width: 100%;
+    height: auto;
+}
+.tab-content {
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+.card {
+    margin-bottom: 20px;
+}
+.nav-tabs {
+    margin-bottom: 0;
+}
+#loadingSpinner {
+    display: none;
+}
+.img-container {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    overflow: auto;
+    max-height: 600px;
+}
+.img-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+/* Adjustments for visualization */
+@media (min-width: 992px) {
+    /* Override for clearer visualization in larger screens */
+    .img-container img {
+        transform: translateY(-5px); /* Raises numbers by 5px */
+    }
+} 

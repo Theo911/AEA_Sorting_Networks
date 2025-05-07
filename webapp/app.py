@@ -52,7 +52,7 @@ except ImportError as e:
     RL_AVAILABLE = False
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 def handle_exceptions(f):
     """Decorator to handle exceptions in route handlers"""
