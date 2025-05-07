@@ -190,6 +190,22 @@
                             <div class="card-body">
                                 <form id="executionForm">
                                     <div class="mb-3">
+                                        <label class="form-label">Algorithm</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="algorithm" id="batcherExecAlgo" value="batcher" checked>
+                                            <label class="form-check-label" for="batcherExecAlgo">
+                                                Batcher's Odd-Even MergeSort
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="algorithm" id="rlExecAlgo" value="rl">
+                                            <label class="form-check-label" for="rlExecAlgo">
+                                                Reinforcement Learning (RL)
+                                                <span class="badge bg-warning text-dark">Experimental</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="execInputSize" class="form-label">Number of Inputs (2-32)</label>
                                         <input type="number" class="form-control" id="execInputSize" name="input_size" value="6" min="2" max="32">
                                     </div>
@@ -255,6 +271,24 @@
             
             <!-- Performance Analysis Tab -->
             <div class="tab-pane fade" id="performance" role="tabpanel">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">Algorithm Comparison</div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center mb-3">
+                                    <div class="btn-group" role="group" aria-label="Algorithm comparison">
+                                        <button type="button" class="btn btn-primary active" id="showBatcherBtn">Batcher's Algorithm</button>
+                                        <button type="button" class="btn btn-outline-primary" id="showRLBtn">RL Algorithm</button>
+                                        <button type="button" class="btn btn-outline-primary" id="showComparisonBtn">Compare Both</button>
+                                    </div>
+                                </div>
+                                <p class="text-muted text-center" id="performanceNote">Showing performance data for Batcher's algorithm. Select an option above to change the view.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">

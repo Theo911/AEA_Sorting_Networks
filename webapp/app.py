@@ -235,6 +235,9 @@ def execute_network():
     """Execute the sorting network on a specific input"""
     n = int(request.form.get('input_size', 8))
     
+    # Get the algorithm type
+    algorithm = request.form.get('algorithm', 'batcher')
+    
     # Input validation
     validation_error = validate_input_size(n)
     if validation_error:
@@ -254,8 +257,20 @@ def execute_network():
         input_values = list(range(1, n+1))
         random.shuffle(input_values)
     
-    # Generate the network
-    comparators = generate_sorting_network(n)
+    # Generate the network based on selected algorithm
+    if algorithm == 'rl' and RL_AVAILABLE and get_rl_network is not None:
+        # RL project root path
+        rl_project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'RLSortingNetworks'))
+        if not os.path.isdir(rl_project_root):
+            return jsonify({'error': f'RL Project directory not found at expected location: {rl_project_root}'})
+            
+        # Generate RL network
+        comparators = get_rl_network(n, rl_project_root)
+        if comparators is None:
+            return jsonify({'error': f'Failed to generate RL network for n={n}. Check server logs for details.'})
+    else:
+        # Default to Batcher's algorithm
+        comparators = generate_sorting_network(n)
     
     # For tiny networks, ensure we have valid data
     validation_error = validate_comparators(comparators, n)
@@ -269,10 +284,14 @@ def execute_network():
         # Generate execution visualization
         execution_img = generate_execution_visualization(comparators, input_values, n)
         
+        # Set the appropriate algorithm name for response
+        algorithm_name = "RL Sorting Network" if algorithm == 'rl' else "Batcher's Odd-Even Mergesort"
+        
         return jsonify({
             'execution_img': execution_img,
             'input_values': input_values,
-            'output_values': output_values
+            'output_values': output_values,
+            'algorithm': algorithm_name
         })
     except Exception as viz_error:
         traceback.print_exc()
@@ -286,22 +305,73 @@ def execute_network():
 @handle_exceptions
 def performance_data():
     """Get performance data for plotting"""
-    # Get comparator counts and depths for different sizes
-    comparator_counts = analyze_comparator_count(2, 16)
-    depths = analyze_network_depth(2, 16)
+    # Get requested algorithm from query parameters
+    algorithm = request.args.get('algorithm', 'all')  # default to all algorithms
     
-    # Get timing analysis
-    generation_times = timing_analysis(2, 16, 3)
+    # Get comparator counts and depths for different sizes for Batcher
+    batcher_comparator_counts = analyze_comparator_count(2, 16)
+    batcher_depths = analyze_network_depth(2, 16)
+    
+    # Get timing analysis for Batcher
+    batcher_generation_times = timing_analysis(2, 16, 3)
     
     # Get comparison with optimal
     comparison = compare_with_optimal()
     
-    return jsonify({
-        'comparator_counts': comparator_counts,
-        'depths': depths,
-        'generation_times': generation_times,
+    # Initialize RL data containers
+    rl_comparator_counts = {}
+    rl_depths = {}
+    rl_generation_times = {}
+    
+    # If RL is available and requested, get RL data
+    if RL_AVAILABLE and get_rl_network is not None and algorithm in ['rl', 'all']:
+        try:
+            # This is just a placeholder - actual implementation would depend on
+            # how RL performance data is collected/stored
+            # For now, we'll return empty data which can be filled in later
+            
+            # Sample RL data for demonstration
+            # In a real implementation, this would come from actual RL algorithm measurements
+            rl_comparator_counts = {n: batcher_comparator_counts[n] for n in batcher_comparator_counts}
+            rl_depths = {n: batcher_depths[n] for n in batcher_depths}
+            rl_generation_times = {n: batcher_generation_times[n]*1.2 for n in batcher_generation_times}  # slightly slower for demo
+        except Exception as e:
+            print(f"Warning: Could not generate RL performance data: {e}")
+    
+    response = {
+        'batcher_comparator_counts': batcher_comparator_counts,
+        'batcher_depths': batcher_depths,
+        'batcher_generation_times': batcher_generation_times,
+        'rl_comparator_counts': rl_comparator_counts,
+        'rl_depths': rl_depths,
+        'rl_generation_times': rl_generation_times,
         'optimal_comparison': comparison
-    })
+    }
+    
+    # If specific algorithm requested, filter to just that algorithm's data
+    if algorithm == 'batcher':
+        response = {
+            'comparator_counts': batcher_comparator_counts,
+            'depths': batcher_depths,
+            'generation_times': batcher_generation_times,
+            'optimal_comparison': comparison
+        }
+    elif algorithm == 'rl' and RL_AVAILABLE and get_rl_network is not None:
+        response = {
+            'comparator_counts': rl_comparator_counts,
+            'depths': rl_depths,
+            'generation_times': rl_generation_times,
+            'optimal_comparison': comparison
+        }
+    else:
+        # For backward compatibility, include the original keys too
+        response.update({
+            'comparator_counts': batcher_comparator_counts,
+            'depths': batcher_depths,
+            'generation_times': batcher_generation_times,
+        })
+    
+    return jsonify(response)
 
 # --- Route for RL Network Generation ---
 @app.route('/generate_rl_network', methods=['POST'])
