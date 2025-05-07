@@ -12,7 +12,7 @@ import itertools
 import numpy as np
 from typing import List, Tuple, Dict
 
-from batcher_odd_even_mergesort.core import generate_sorting_network, apply_comparators
+from .core import generate_sorting_network, apply_comparators
 
 
 def verify_zero_one_principle(n: int, comparators: List[Tuple[int, int]]) -> bool:

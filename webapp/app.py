@@ -15,9 +15,11 @@ import sys
 import os
 
 # Add path for batcher_odd_even_mergesort
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'batcher_odd_even_mergesort')))
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, parent_dir)
 # Add path for RLSortingNetworks
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'RLSortingNetworks')))
+rl_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'RLSortingNetworks'))
+sys.path.insert(0, rl_dir)
 
 # Import functionality from existing modules
 from batcher_odd_even_mergesort.core import generate_sorting_network, apply_comparators

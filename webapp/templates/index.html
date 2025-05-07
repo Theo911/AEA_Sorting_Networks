@@ -352,7 +352,7 @@
             
             <!-- Algorithm Theory Tab -->
             <div class="tab-pane fade" id="theory" role="tabpanel">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">Batcher's Odd-Even Mergesort Algorithm</div>
                     <div class="card-body">
                         <h5>Algorithm Overview</h5>
@@ -401,6 +401,61 @@
                             all sequences of arbitrary values. Batcher's algorithm has been mathematically proven to satisfy 
                             this principle for all input sizes.
                         </p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">RL Sorting Network Algorithm</div>
+                    <div class="card-body">
+                        <h5>Algorithm Overview</h5>
+                        <p>
+                            The RL Sorting Network approach uses Deep Reinforcement Learning (DRL) to autonomously discover
+                            sorting networks. Unlike traditional algorithms like Batcher's that follow predefined rules, the
+                            RL approach learns to construct size-efficient networks through trial and error interaction with
+                            a simulated environment.
+                        </p>
+                        
+                        <h5>Problem Formulation (as MDP)</h5>
+                        <p>The network construction process is modeled as a Markov Decision Process:</p>
+                        <ul>
+                            <li><strong>States:</strong> The current partial sorting network, represented by the sequence of comparators added so far</li>
+                            <li><strong>Actions:</strong> All possible comparators (i,j) where 0 ≤ i < j < n that can be added to the network</li>
+                            <li><strong>Transitions:</strong> Adding a chosen comparator moves the state from sequence S to new sequence S + [comparator]</li>
+                            <li><strong>Rewards:</strong> Scaled terminal reward structure that encourages finding valid sorting networks with fewer comparators</li>
+                            <li><strong>Goal:</strong> Learn a policy for choosing comparators that maximizes expected rewards, leading to shorter valid networks</li>
+                        </ul>
+                        
+                        <h5>Deep Q-Learning Approach</h5>
+                        <ul>
+                            <li><strong>Q-Network:</strong> Neural network trained to approximate the optimal action-value function Q*(s,a)</li>
+                            <li><strong>Experience Replay:</strong> Stores transitions for improved sample efficiency and breaking correlations</li>
+                            <li><strong>Target Network:</strong> Separate network for stable target Q-values during training</li>
+                            <li><strong>Double DQN:</strong> Reduces overestimation bias by decoupling action selection and value estimation</li>
+                        </ul>
+                        
+                        <h5>Training Process</h5>
+                        <ol>
+                            <li>Initialize networks and environment for a given input size n</li>
+                            <li>For each episode, reset to an empty network and follow epsilon-greedy policy</li>
+                            <li>Add comparators step-by-step until finding a valid sorting network or reaching max steps</li>
+                            <li>Calculate rewards based on success/failure and network size</li>
+                            <li>Store experiences and perform mini-batch updates to the Q-network</li>
+                            <li>Gradually reduce exploration (epsilon) as training progresses</li>
+                        </ol>
+                        
+                        <h5>Validation & Optimization</h5>
+                        <ul>
+                            <li><strong>Zero-One Principle:</strong> Verifies network validity by checking all 2ⁿ binary inputs</li>
+                            <li><strong>Pruning:</strong> Removes redundant comparators from valid networks to further optimize size</li>
+                            <li><strong>Evaluation:</strong> Compares discovered networks against theoretical bounds and known algorithms</li>
+                        </ul>
+                        
+                        <h5>Advantages Over Traditional Algorithms</h5>
+                        <ul>
+                            <li><strong>Size Optimization:</strong> Can discover networks with fewer comparators than traditional algorithms</li>
+                            <li><strong>Adaptability:</strong> Learns patterns without explicit programming of mathematical structure</li>
+                            <li><strong>Novel Solutions:</strong> May discover sorting networks with different structures than manually designed algorithms</li>
+                        </ul>
                     </div>
                 </div>
             </div>

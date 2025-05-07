@@ -10,7 +10,7 @@ interactive visualizations.
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Optional
 
-from network_properties import find_parallel_layers
+from .network_properties import find_parallel_layers
 
 
 def draw_network(comparators: List[Tuple[int, int]], n_wires: int, title: str = "Batcher's Odd-Even Mergesort Network"):
