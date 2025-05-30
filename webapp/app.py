@@ -7,6 +7,8 @@ import base64
 import random
 import traceback
 import functools
+import datetime
+import time
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
@@ -20,6 +22,9 @@ sys.path.insert(0, parent_dir)
 # Add path for RLSortingNetworks
 rl_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'RLSortingNetworks'))
 sys.path.insert(0, rl_dir)
+
+# Import data manager for Phase 2 API endpoints
+from data_manager import get_data_manager
 
 # Import functionality from existing modules
 from batcher_odd_even_mergesort.core import generate_sorting_network, apply_comparators
@@ -40,6 +45,24 @@ from batcher_odd_even_mergesort.network_properties import (
     get_network_properties_summary
 )
 
+# Import future algorithm placeholders
+# Import improved Batcher (should be available)
+try:
+    from batcher_odd_even_mergesort.improved_batcher import generate_improved_batcher_network
+    IMPROVED_BATCHER_AVAILABLE = True
+except ImportError as e:
+    print(f"Warning: Could not import improved Batcher: {e}. Improved Batcher features will be disabled.")
+    generate_improved_batcher_network = lambda n: None
+    IMPROVED_BATCHER_AVAILABLE = False
+
+# Import improved RL (placeholder - not implemented yet)
+# The algorithms directory was removed, so this is just a placeholder
+generate_improved_rl_network = lambda n: None
+IMPROVED_RL_AVAILABLE = False
+
+# Overall improved algorithms availability
+IMPROVED_ALGORITHMS_AVAILABLE = IMPROVED_BATCHER_AVAILABLE or IMPROVED_RL_AVAILABLE
+
 # Import functionality from RL
 try:
     from sorting_network_rl.utils.network_generator import get_rl_network
@@ -53,6 +76,9 @@ except ImportError as e:
 
 # Initialize Flask app
 app = Flask(__name__, static_folder='static', static_url_path='/static')
+
+# Initialize data manager instance
+data_manager = get_data_manager()
 
 def handle_exceptions(f):
     """Decorator to handle exceptions in route handlers"""
@@ -257,20 +283,30 @@ def execute_network():
         input_values = list(range(1, n+1))
         random.shuffle(input_values)
     
+    # Start timing for execution tracking
+    start_time = time.time()
+    
     # Generate the network based on selected algorithm
-    if algorithm == 'rl' and RL_AVAILABLE and get_rl_network is not None:
-        # RL project root path
-        rl_project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'RLSortingNetworks'))
-        if not os.path.isdir(rl_project_root):
-            return jsonify({'error': f'RL Project directory not found at expected location: {rl_project_root}'})
-            
-        # Generate RL network
-        comparators = get_rl_network(n, rl_project_root)
-        if comparators is None:
-            return jsonify({'error': f'Failed to generate RL network for n={n}. Check server logs for details.'})
+    if algorithm == 'batcher_improved':
+        if not IMPROVED_BATCHER_AVAILABLE:
+            return jsonify({'error': f'Enhanced Batcher algorithm not available. Import flag: {IMPROVED_BATCHER_AVAILABLE}'})
+        
+        try:
+            # Enhanced Batcher algorithm
+            comparators = generate_improved_batcher_network(n)
+            if comparators is None:
+                return jsonify({'error': f'Enhanced Batcher algorithm returned None for n={n}. This might indicate an implementation issue.'})
+            if len(comparators) == 0:
+                return jsonify({'error': f'Enhanced Batcher algorithm returned empty network for n={n}.'})
+            print(f"Enhanced Batcher generated {len(comparators)} comparators for n={n}")
+        except Exception as e:
+            return jsonify({'error': f'Enhanced Batcher algorithm failed: {str(e)}'})
     else:
-        # Default to Batcher's algorithm
+        # Default to Traditional Batcher's algorithm
         comparators = generate_sorting_network(n)
+    
+    # Calculate execution timing
+    network_generation_time = time.time() - start_time
     
     # For tiny networks, ensure we have valid data
     validation_error = validate_comparators(comparators, n)
@@ -278,27 +314,66 @@ def execute_network():
         return jsonify(validation_error)
     
     # Execute the network
+    execution_start_time = time.time()
     output_values = apply_comparators(input_values, comparators)
+    execution_time = time.time() - execution_start_time
+    
+    # Calculate total execution time
+    total_execution_time = (network_generation_time + execution_time) * 1000  # Convert to milliseconds
+    
+    # Calculate network properties for tracking
+    network_depth = count_depth(comparators, n)
+    is_sorted = output_values == sorted(input_values)
+    
+    # Store execution result for analysis
+    try:
+        execution_data = {
+            'algorithm': algorithm,
+            'n_wires': n,
+            'input_values': input_values,
+            'output_values': output_values,
+            'execution_time_ms': total_execution_time,
+            'network_generation_time_ms': network_generation_time * 1000,
+            'sort_execution_time_ms': execution_time * 1000,
+            'comparators_count': len(comparators),
+            'network_depth': network_depth,
+            'success': is_sorted,
+            'input_type': input_type
+        }
+        data_manager.store_execution_result(execution_data)
+    except Exception as e:
+        print(f"Warning: Could not store execution result: {e}")
     
     try:
         # Generate execution visualization
         execution_img = generate_execution_visualization(comparators, input_values, n)
         
         # Set the appropriate algorithm name for response
-        algorithm_name = "RL Sorting Network" if algorithm == 'rl' else "Batcher's Odd-Even Mergesort"
+        algorithm_names = {
+            'batcher': "Batcher's Odd-Even Mergesort",
+            'batcher_improved': "Enhanced Batcher Algorithm"
+        }
+        algorithm_name = algorithm_names.get(algorithm, "Unknown Algorithm")
         
         return jsonify({
             'execution_img': execution_img,
             'input_values': input_values,
             'output_values': output_values,
-            'algorithm': algorithm_name
+            'algorithm': algorithm_name,
+            'execution_time_ms': total_execution_time,
+            'comparators_count': len(comparators),
+            'network_depth': network_depth,
+            'success': is_sorted
         })
     except Exception as viz_error:
         traceback.print_exc()
         return jsonify({
             'error': f'Visualization error: {str(viz_error)}',
             'input_values': input_values,
-            'output_values': output_values
+            'output_values': output_values,
+            'algorithm': algorithm_name,
+            'execution_time_ms': total_execution_time,
+            'success': is_sorted
         })
 
 @app.route('/performance_data', methods=['GET'])
@@ -434,6 +509,192 @@ def generate_rl_network():
     except Exception as viz_error:
         traceback.print_exc()
         return jsonify({'error': f'Visualization or property calculation error for RL network: {str(viz_error)}'})
+
+# ========== Phase 2: New API Endpoints ==========
+
+@app.route('/api/performance_data', methods=['GET'])
+@handle_exceptions
+def api_enhanced_performance_data():
+    """Return 7-algorithm comprehensive performance comparison data with validation metrics"""
+    try:
+        data_manager = get_data_manager()
+        performance_data = data_manager.get_comprehensive_performance_data()
+        
+        return jsonify({
+            'success': True,
+            'data': performance_data,
+            'timestamp': datetime.datetime.now().isoformat(),
+            'api_version': '2.0_enhanced'
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+
+@app.route('/api/algorithm_comparison', methods=['GET'])
+@handle_exceptions
+def api_algorithm_evolution_analysis():
+    """Return algorithm evolution analysis (Classic→Double, Raw→Pruned)"""
+    try:
+        data_manager = get_data_manager()
+        evolution_data = data_manager.get_algorithm_evolution_analysis()
+        
+        return jsonify({
+            'success': True,
+            'evolution_analysis': evolution_data,
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+
+@app.route('/api/data_validation', methods=['GET'])
+@handle_exceptions
+def api_data_quality_metrics():
+    """Return data validation and consistency metrics"""
+    try:
+        data_manager = get_data_manager()
+        performance_data = data_manager.get_comprehensive_performance_data()
+        validation_data = performance_data.get('data_quality', {})
+        
+        return jsonify({
+            'success': True,
+            'data_quality': validation_data,
+            'data_sources': performance_data.get('data_sources', {}),
+            'algorithm_status': performance_data.get('algorithm_status', {}),
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+
+@app.route('/api/execution_analytics', methods=['GET'])
+@handle_exceptions
+def api_execution_analytics():
+    """Return execution analytics for dashboard"""
+    try:
+        data_manager = get_data_manager()
+        analytics = data_manager.get_execution_analytics()
+        
+        return jsonify({
+            'success': True,
+            'analytics': analytics,
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+
+@app.route('/api/store_execution', methods=['POST'])
+@handle_exceptions
+def api_store_enhanced_execution():
+    """Store execution results with 7-algorithm classification and enhanced tracking"""
+    try:
+        execution_data = request.get_json()
+        
+        if not execution_data:
+            return jsonify({
+                'success': False,
+                'error': 'No execution data provided'
+            })
+        
+        # Enhanced execution data structure
+        enhanced_execution = {
+            'timestamp': datetime.datetime.now().isoformat(),
+            'algorithm': execution_data.get('algorithm', 'unknown'),
+            'algorithm_variant': {
+                'base_type': execution_data.get('base_type', 'unknown'),  # batcher, rl, optimal
+                'training_method': execution_data.get('training_method'),  # classic_dqn, double_dqn
+                'optimization': execution_data.get('optimization', 'unknown')  # raw, pruned
+            },
+            'n_wires': execution_data.get('n_wires'),
+            'input_values': execution_data.get('input_values'),
+            'execution_time_ms': execution_data.get('execution_time_ms'),
+            'comparators_count': execution_data.get('comparators_count'),
+            'network_depth': execution_data.get('network_depth'),
+            'success': execution_data.get('success', False),
+            'performance_metrics': execution_data.get('performance_metrics', {}),
+            'user_session': execution_data.get('user_session', 'anonymous')
+        }
+        
+        # Store the enhanced execution result
+        data_manager = get_data_manager()
+        data_manager.store_execution_result(enhanced_execution)
+        
+        return jsonify({
+            'success': True,
+            'message': 'Enhanced execution result stored successfully',
+            'execution_id': f"exec_{enhanced_execution['timestamp'].replace(':', '').replace('-', '').replace('.', '')}",
+            'timestamp': enhanced_execution['timestamp']
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+
+@app.route('/api/algorithm_status', methods=['GET'])
+@handle_exceptions
+def api_algorithm_status():
+    """Return availability status of all algorithms with data sources"""
+    try:
+        # Test the improved Batcher function
+        try:
+            test_result = generate_improved_batcher_network(4)
+            batcher_improved_test = test_result is not None and len(test_result) > 0
+        except Exception as e:
+            batcher_improved_test = False
+            print(f"Improved Batcher test failed: {e}")
+        
+        status = {
+            'batcher': {
+                'available': True,
+                'description': "Batcher's Traditional Algorithm",
+                'status': 'Classic reliable algorithm'
+            },
+            'batcher_improved': {
+                'available': IMPROVED_BATCHER_AVAILABLE and batcher_improved_test,
+                'description': "Enhanced Batcher Algorithm", 
+                'status': 'Optimized with modern improvements',
+                'test_result': batcher_improved_test,
+                'import_flag': IMPROVED_BATCHER_AVAILABLE
+            },
+            'rl': {
+                'available': RL_AVAILABLE and get_rl_network is not None,
+                'description': "Reinforcement Learning Networks",
+                'status': 'AI-discovered networks (limited range)'
+            }
+        }
+        
+        return jsonify({
+            'success': True,
+            'algorithms': status,
+            'timestamp': datetime.datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.datetime.now().isoformat()
+        })
 
 if __name__ == '__main__':
     app.run(debug=True) 

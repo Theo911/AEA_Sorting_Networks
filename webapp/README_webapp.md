@@ -1,6 +1,6 @@
-# Batcher's Odd-Even Mergesort Interactive Web Demo
+# Algorithm Interactive Web Demo
 
-This web application provides an interactive demonstration of Batcher's Odd-Even Mergesort algorithm for sorting networks.
+This web application provides an interactive demonstration of both Batcher's Odd-Even Mergesort and a Reinforcement Learning algorithm for sorting networks.
 
 ## Features
 
