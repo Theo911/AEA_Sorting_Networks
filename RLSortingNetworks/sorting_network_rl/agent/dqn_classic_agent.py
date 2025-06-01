@@ -42,7 +42,16 @@ class DQNAgent_Classic:
         agent_cfg = config.get('agent', {})
         self.state_dim = state_dim
         self.action_dim = action_dim
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+        if torch.backends.mps.is_available():
+            self.device = torch.device("mps")
+            logger.info("MPS (Apple Silicon GPU) is available. Using device: mps")
+        elif torch.cuda.is_available():
+            self.device = torch.device("cuda")
+            logger.info("CUDA is available. Using device: cuda")
+        else:
+            self.device = torch.device("cpu")
+            logger.info("Neither MPS nor CUDA is available. Using device: cpu")
         logger.info(f"Using device: {self.device}")
 
         self.gamma = agent_cfg.get('gamma', 0.99)

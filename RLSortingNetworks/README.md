@@ -299,11 +299,20 @@ This detailed flow highlights the continuous cycle: the agent acts based on its 
 
 ### Comparative Agent: Classic DQN (`sorting_network_rl.agent.dqn_classic_agent`)
 
-*   **Purpose:** Included for comparative analysis, this agent implements the **Classic DQN** algorithm, which uses only a *single* neural network (`policy_net`) for both action selection and target value calculation.
+*   **Purpose:** Included for comparative analysis, this agent implements the **Classic DQN** algorithm. Classic DQN uses only a *single* neural network (`policy_net`) for both action selection and target Q-value calculation in its learning updates.
 *   **Class:** `DQNAgentClassic`
-*   **Key Difference:** It lacks a separate `target_net` and the `update_target_network` method. The `train_step` method calculates the target Q-value directly using the `policy_net`, which can lead to the "moving target" problem and potentially less stable learning compared to the standard `DQNAgent`.
-*   **Usage:** To use this agent for experiments, modify the agent import and instantiation lines within `sorting_network_rl/core/trainer.py` and ensure the call to `update_target_network` in the `Trainer`'s training loop is commented out or removed. (lines 44 and 263, 264)
-
+*   **Key Difference from `DQNAgent` (Double DQN):**
+    *   Lacks a separate `target_net`.
+    *   Does not have an `update_target_network` method.
+    *   In its `train_step` method, the target Q-value for the next state (`max_next_q`) is calculated using the *same* `policy_net`. This can lead to the "moving target" problem, potentially resulting in less stable or slower learning compared to the Double DQN approach used by the standard `DQNAgent`.
+*   **Usage for Experiments:**
+    *   To train using this Classic DQN agent, run the `scripts/train.py` script and specify the agent type:
+      ```bash
+      python scripts/train.py -n <num_wires_value> -agent classic_dqn
+      ```
+    *   If you run `scripts/train.py` without the `-agent` argument, you will be prompted to choose between "double_dqn" (default) and "classic_dqn".
+    *   The `Trainer` class is designed to instantiate the correct agent based on this selection and will automatically skip calling `update_target_network` when `DQNAgentClassic` is used. No manual code commenting in `Trainer.py` is required.
+    *   Results for Classic DQN runs will be saved in separate checkpoint directories (e.g., `checkpoints/4w_10s_classic/`) due to the `agent_suffix` added to the `run_id`.
 ### 4. The Q-Network Model (`sorting_network_rl.model.network`)
 
 *   **Purpose:** To approximate the Q-value function Q(s, a).

@@ -15,7 +15,6 @@ experiment:
 model:
   fc1_units: 1024
   fc2_units: 1024
-  fc3_units: 512
 reward:
   failure: -5.0
   step_penalty: 0
@@ -24,5 +23,5 @@ training:
   num_episodes: 10000
   print_every: 50
   save_checkpoints: true
-  start_fresh: true
+  start_fresh: false
   target_update_freq: 500
