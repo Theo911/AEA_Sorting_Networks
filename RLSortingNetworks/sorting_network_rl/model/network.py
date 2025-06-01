@@ -19,11 +19,21 @@ class QNetwork(nn.Module):
         super().__init__()
         fc1_units = config.get('model', {}).get('fc1_units', 256)
         fc2_units = config.get('model', {}).get('fc2_units', 256)
+        fc3_units = config.get('model', {}).get('fc3_units', None)
 
         self.fc1 = nn.Linear(state_dim, fc1_units)
         self.fc2 = nn.Linear(fc1_units, fc2_units)
-        self.fc3 = nn.Linear(fc2_units, action_dim)
-        logging.info(f"Initialized QNetwork with layers: Linear({state_dim}, {fc1_units}), ReLU, Linear({fc1_units}, {fc2_units}), ReLU, Linear({fc2_units}, {action_dim})")
+        if fc3_units:
+            self.fc3 = nn.Linear(fc2_units, fc3_units)
+            self.fc_out = nn.Linear(fc3_units, action_dim) # Output from fc3
+            logging.info(f"Initialized QNetwork with 3 hidden layers: ... {fc3_units} ...")
+        else:
+            self.fc3 = None # No third layer
+            self.fc_out = nn.Linear(fc2_units, action_dim) # Output from fc2
+            logging.info(f"Initialized QNetwork with 2 hidden layers: ...")
+
+        logging.info(f"QNetwork initialized with state_dim={state_dim}, action_dim={action_dim},  "
+                     f"fc1_units={fc1_units}, fc2_units={fc2_units}, fc3_units={fc3_units if fc3_units else 'None'}")
 
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -37,5 +47,7 @@ class QNetwork(nn.Module):
         """
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        q_values = self.fc3(x)
+        if self.fc3:
+            x = F.relu(self.fc3(x))
+        q_values = self.fc_out(x)
         return q_values

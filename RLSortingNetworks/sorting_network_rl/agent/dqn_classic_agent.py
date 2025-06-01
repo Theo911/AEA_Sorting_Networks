@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from collections import deque
-from typing import Tuple, Deque, Dict, Any, Optional
+from typing import Tuple, Deque, Dict, Any, Optional, List
 import os
 
 from RLSortingNetworks.sorting_network_rl.model.network import QNetwork

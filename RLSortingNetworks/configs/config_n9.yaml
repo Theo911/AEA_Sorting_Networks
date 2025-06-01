@@ -1,0 +1,44 @@
+# Config for N=9 - Targeting Improved Learning
+
+environment:
+  n_wires: 9
+  # Optimal size=25. Need ample room beyond this.
+  max_steps: 65  # Increased margin compared to n=7 (optimal+21 vs optimal+19).
+
+training:
+  # Requires significantly more episodes. Start high, maybe increase later.
+  num_episodes: 10000 # Was ~25k suggested for n=7. Substantial increase needed. need 40k, but trying with 5k
+  # Keep target update relatively infrequent.
+  target_update_freq: 500 # Was ~300 suggested for n=7.
+  print_every: 50     # Or maybe 100 to reduce log clutter on long runs.
+  start_fresh: False
+  save_checkpoints: True
+
+agent:
+  # Consider starting with a slightly lower learning rate due to increased complexity/episodes.
+  lr: 1.0e-4          # Was 5.0e-4. Monitor loss closely.
+  # With longer episodes likely, a higher gamma might be beneficial.
+  gamma: 0.99         # Was 0.95. Values future rewards more.
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  # Keep epsilon decay slow to allow extensive exploration.
+  epsilon_decay: 0.9995 # Same as suggested for n=7. Might need even slower (0.9998?) if it converges too fast.
+  # Further increase buffer size.
+  buffer_size: 300000 # Was 75k suggested for n=7.
+  # Batch size: 64 is standard, 128 could speed up if memory allows.
+  batch_size: 128
+
+reward:
+  success_base: 100.0
+  failure: -5.0      # Keeping this, but long max_steps reduces its impact early on.
+  step_penalty: 0 # Small penalty to encourage efficiency, but not too harsh.
+
+model:
+  # Further increase model capacity is likely necessary.
+  fc1_units: 1024      # Keep 512 or potentially increase to 768/1024?
+  fc2_units: 1024      # Keep 512 or potentially increase to 768/1024?
+  # A third hidden layer might become beneficial here.
+  fc3_units: 512    # Example third layer size
+
+experiment:
+  base_dir: "checkpoints"

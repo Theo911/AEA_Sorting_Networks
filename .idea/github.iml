@@ -15,7 +15,7 @@
     <option name="TEMPLATE_CONFIGURATION" value="Chameleon" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/batcher_odd_even_mergesort/templates" />
+        <option value="$MODULE_DIR$/webapp/templates" />
       </list>
     </option>
   </component>
