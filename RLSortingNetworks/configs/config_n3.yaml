@@ -4,7 +4,7 @@ environment:
   max_steps: 5 # Optimal size=3
 
 training:
-  num_episodes: 3000
+  num_episodes: 1000
   target_update_freq: 100
   print_every: 50
   start_fresh: False

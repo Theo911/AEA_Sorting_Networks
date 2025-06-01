@@ -269,22 +269,121 @@ class DQNAgent:
         except Exception as e:
             logger.error(f"Error saving model to {file_path}: {e}")
 
+    # def load_model(self, file_path: str) -> None:
+    #     """Loads the policy network's state dictionary."""
+    #     if not os.path.exists(file_path):
+    #         logger.error(f"Model file not found: {file_path}")
+    #         raise FileNotFoundError(f"Model file not found: {file_path}")
+    #     try:
+    #         # Load state dict, ensuring correct device mapping
+    #         self.policy_net.load_state_dict(torch.load(file_path, map_location=self.device))
+    #         self.policy_net.to(self.device) # Ensure model is on the correct device
+    #         self.update_target_network() # Also update target network upon loading
+    #         self.policy_net.train() # Set to train mode by default after loading
+    #         self.target_net.eval()
+    #         logger.info(f"Policy network loaded from {file_path}")
+    #     except Exception as e:
+    #         logger.error(f"Error loading model from {file_path}: {e}")
+    #         raise IOError(f"Error loading model from {file_path}: {e}")
+
     def load_model(self, file_path: str) -> None:
-        """Loads the policy network's state dictionary."""
+        """Loads the policy network's state dictionary,
+           attempting to adapt from older model formats if necessary.
+        """
         if not os.path.exists(file_path):
             logger.error(f"Model file not found: {file_path}")
             raise FileNotFoundError(f"Model file not found: {file_path}")
+
         try:
-            # Load state dict, ensuring correct device mapping
-            self.policy_net.load_state_dict(torch.load(file_path, map_location=self.device))
-            self.policy_net.to(self.device) # Ensure model is on the correct device
-            self.update_target_network() # Also update target network upon loading
-            self.policy_net.train() # Set to train mode by default after loading
-            self.target_net.eval()
-            logger.info(f"Policy network loaded from {file_path}")
+            # Load the saved state dictionary from the file
+            loaded_state_dict = torch.load(file_path, map_location=self.device)
+            # Get the state dictionary of the current (potentially new) model architecture
+            current_model_keys = set(self.policy_net.state_dict().keys())
+            loaded_keys = set(loaded_state_dict.keys())
+
+            # --- Adaptation Logic for Old Model Structure ---
+            # This logic specifically handles the case where the old model's output layer
+            # was named 'fc3' and the new model (with 2 hidden layers) names it 'fc_out'.
+            # It assumes fc1 and fc2 layers are consistent.
+
+            # Condition 1: Current model expects 'fc_out' but not a hidden 'fc3'.
+            # This is true if 'fc_out.weight' is a key in current model, and 'fc3.weight' is NOT
+            # (or if self.policy_net.fc3 attribute is None, based on your QNetwork init logic).
+            current_expects_fc_out_from_fc2 = ("fc_out.weight" in current_model_keys and
+                                               (not hasattr(self.policy_net, 'fc3') or self.policy_net.fc3 is None))
+
+            # Condition 2: Loaded model has 'fc3' as output and no 'fc_out'.
+            loaded_has_fc3_as_output = ("fc3.weight" in loaded_keys and
+                                        "fc_out.weight" not in loaded_keys)
+
+            if current_expects_fc_out_from_fc2 and loaded_has_fc3_as_output:
+                logger.info(
+                    f"Attempting to adapt legacy model format (fc3 as output layer) from {file_path} "
+                    f"to current format (fc_out as output layer for 2-hidden-layer models)."
+                )
+                # Create a new state dict for the current model structure
+                adapted_state_dict = {}
+                keys_remapped = False
+                for key, value in loaded_state_dict.items():
+                    if key == "fc3.weight":
+                        adapted_state_dict["fc_out.weight"] = value
+                        keys_remapped = True
+                    elif key == "fc3.bias":
+                        adapted_state_dict["fc_out.bias"] = value
+                        keys_remapped = True
+                    elif key in current_model_keys:  # Copy matching keys (fc1, fc2)
+                        adapted_state_dict[key] = value
+                    else:
+                        logger.warning(f"Key '{key}' from saved model not found in current model structure. Skipping.")
+
+                if not keys_remapped:
+                    logger.warning(
+                        "Adaptation logic triggered, but no keys were actually remapped. Check model structures.")
+                    # Fallback to loading original if no remapping occurred but conditions were met
+                    final_state_dict_to_load = loaded_state_dict
+                else:
+                    # Check for missing keys in the adapted dict
+                    missing_in_adapted = [k for k in current_model_keys if k not in adapted_state_dict]
+                    if missing_in_adapted:
+                        logger.error(f"Adaptation failed. Missing keys in adapted state_dict: {missing_in_adapted}")
+                        raise RuntimeError(
+                            f"State dict adaptation failed for {file_path}. Missing keys: {missing_in_adapted}")
+                    final_state_dict_to_load = adapted_state_dict
+
+            else:
+                # No specific adaptation rule matched, load as is
+                logger.debug(f"No specific adaptation rule matched for {file_path}. Attempting direct load.")
+                final_state_dict_to_load = loaded_state_dict
+            # --- END: Adaptation Logic ---
+
+            # Load the (potentially adapted) state dictionary into the policy network
+            self.policy_net.load_state_dict(final_state_dict_to_load)
+            self.policy_net.to(self.device)  # Ensure model is on the correct device
+
+            # Update the target network with the loaded policy network weights
+            if hasattr(self, 'update_target_network'):  # Check if method exists (for DQNAgent)
+                self.update_target_network()
+            if hasattr(self, 'target_net') and self.target_net is not None:  # Check if attribute exists
+                self.target_net.eval()  # Set target network to evaluation mode
+
+            self.policy_net.train()  # Set policy network to train mode by default after loading
+            logger.info(f"Policy network successfully loaded from {file_path}")
+
+        except RuntimeError as e:
+            # Catch specific PyTorch errors related to state_dict loading
+            logger.error(f"RuntimeError loading state_dict for QNetwork from {file_path}: {e}")
+            logger.error(
+                "This is often due to a mismatch between the saved model's architecture "
+                "and the current QNetwork class definition. Ensure the model structure "
+                "(number/names of layers, sizes) matches or adapt the 'load_model' method."
+            )
+            # Re-raise as a more general IOError or a custom exception
+            raise IOError(
+                f"Failed to load model due to architecture mismatch or corrupted file: {file_path}. Original error: {e}")
         except Exception as e:
-            logger.error(f"Error loading model from {file_path}: {e}")
-            raise IOError(f"Error loading model from {file_path}: {e}")
+            # Catch any other unexpected errors during loading
+            logger.error(f"An unexpected error occurred while loading model from {file_path}: {e}", exc_info=True)
+            raise IOError(f"Failed to load model from {file_path}: {e}")
 
     def save_epsilon(self, file_path: str) -> None:
         """Saves the current epsilon value."""

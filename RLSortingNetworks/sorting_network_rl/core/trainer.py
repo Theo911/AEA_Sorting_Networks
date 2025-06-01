@@ -18,11 +18,13 @@ logger = logging.getLogger(__name__)
 class Trainer:
     """Handles the training loop and associated tasks for the DQN agent."""
 
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config: Dict[str, Any], agent_type: str = "double_dqn"):
         """Initializes the Trainer.
 
         Args:
             config (Dict[str, Any]): The configuration dictionary.
+            agent_type (str): Type of agent to use, e.g., "double_dqn" or "classic_dqn".
+                              Defaults to "double_dqn".
         """
         self.config = config
         self.env_cfg = config['environment']
@@ -30,18 +32,22 @@ class Trainer:
         self.agent_cfg = config['agent']
         self.reward_cfg = config['reward']
         self.exp_cfg = config['experiment']
+        self.agent_type_str = agent_type
 
         # --- Setup Environment and Agent ---
         self.env = SortingNetworkEnv(n_wires=self.env_cfg['n_wires'], max_steps=self.env_cfg['max_steps'])
         self.state_dim = encode_state(self.env.n_wires, self.env.max_steps, []).shape[0]
         self.action_dim = self.env.get_action_space_size()
 
-        # DQN Agent with 2 neural networks (policy and target)
-        self.agent = DQNAgent(self.state_dim, self.action_dim, config)
-
-        # Uncomment the following line to use a classic DQN agent (for comparison)
-        # Classic DQN agent: uses a single neural network for Q-value approximation (for comparison purposes)
-        # self.agent = DQNAgent_Classic(self.state_dim, self.action_dim, config)
+        # --- Setup Agent based on agent_type ---
+        if self.agent_type_str.lower() == "classic_dqn":
+            self.agent = DQNAgent_Classic(self.state_dim, self.action_dim, config)
+            logger.info("Initialized DQNAgentClassic (Single Network).")        # Classic DQN agent: uses a single neural network for Q-value approximation (for comparison purposes)
+        elif self.agent_type_str.lower() == "double_dqn":
+            self.agent = DQNAgent(self.state_dim, self.action_dim, config)      # DQN Agent with 2 neural networks (policy and target)
+            logger.info("Initialized DQNAgent (Double DQN with Target Network).")
+        else:
+            raise ValueError(f"Unknown agent_type: {self.agent_type_str}. Choose 'double_dqn' or 'classic_dqn'.")
 
         # --- Setup Experiment Directory and Paths ---
         self._setup_paths()
@@ -60,7 +66,8 @@ class Trainer:
         n_wires = self.env_cfg['n_wires']
         max_steps = self.env_cfg['max_steps']
 
-        self.run_id = f"{n_wires}w_{max_steps}s"
+        agent_suffix = "_classic" if isinstance(self.agent, DQNAgent_Classic) else ""
+        self.run_id = f"{n_wires}w_{max_steps}s{agent_suffix}"
 
         self.run_dir = os.path.join(self.exp_cfg['base_dir'], self.run_id)
         # Create the run directory if it doesn't exist
@@ -179,7 +186,7 @@ class Trainer:
 
     def train(self) -> None:
         """Runs the main training loop."""
-        logger.info("Starting training...")
+        logger.info(f"Starting training for agent type: {self.agent_type_str}...")
         save_config(self.config, self.config_path) # Save config for this run
         logger.info(f"Configuration for this run saved to {self.config_path}")
 
@@ -258,10 +265,9 @@ class Trainer:
             self.agent.decay_epsilon()
             self._log_episode_results(episode, episode_reward, episode_steps, last_loss)
 
-            # Optional: Comment if using classic DQN agent
-            # Update target network periodically
-            if episode % target_update_freq == 0:
-                self.agent.update_target_network()
+            if isinstance(self.agent, DQNAgent):
+                if episode % target_update_freq == 0:
+                    self.agent.update_target_network()
 
             # Save checkpoint periodically (or based on other conditions)
             if episode % self.train_cfg['print_every'] == 0: # Save checkpoint when printing progress

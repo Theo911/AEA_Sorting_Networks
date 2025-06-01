@@ -62,6 +62,27 @@ def get_n_from_user(min_n: int = 1, max_n: int = 17) -> int:
              print("\nInput cancelled by user.")
              sys.exit(0) # Exit gracefully
 
+def get_agent_type_from_user(default_agent: str = "double_dqn") -> str:
+    """Prompts the user to select the agent type if not specified."""
+    while True:
+        try:
+            prompt_message = (
+                f"Select agent type to evaluate ('double' or 'classic') "
+                f"[Press Enter for default: {default_agent.replace('_dqn','')}]: "
+            )
+            agent_input = input(prompt_message).strip().lower()
+            if not agent_input: # User pressed Enter, use default
+                return default_agent
+            if agent_input == "double":
+                return "double_dqn"
+            if agent_input == "classic":
+                return "classic_dqn"
+            else:
+                print("Error: Invalid input. Please enter 'double' or 'classic'.")
+        except EOFError:
+            print("\nInput cancelled by user.")
+            sys.exit(0)
+
 # --- Main Execution ---
 
 def main():
@@ -70,7 +91,7 @@ def main():
     parser.add_argument(
         "-n", "--num_wires",
         type=int,
-        # Argument is now optional; prompt if omitted
+        default=None,
         help="Number of wires (n) to train for (e.g., 3, 4, ...). If omitted, you will be prompted."
     )
     parser.add_argument(
@@ -78,6 +99,13 @@ def main():
         type=str,
         default=DEFAULT_CONFIGS_DIR,
         help=f"Path to the directory containing configuration files (default: {DEFAULT_CONFIGS_DIR})"
+    )
+    parser.add_argument(
+        "-agent", "--agent_type",
+        type=str,
+        default=None,
+        choices=["double_dqn", "classic_dqn"],
+        help="Type of DQN agent to use: 'double_dqn' (with target network) or 'classic_dqn' (single network)."
     )
     args = parser.parse_args()
 
@@ -96,7 +124,15 @@ def main():
     else:
         # Prompt the user interactively if -n was not provided
         n_to_run = get_n_from_user()
-        logging.info(f"Number of wires obtained from user input: n={n_to_run}")
+
+    if args.agent_type is not None:
+        agent_to_run = args.agent_type
+        logging.info(f"Agent type specified via argument: {agent_to_run}")
+    else:
+        agent_to_run = get_agent_type_from_user(default_agent="double_dqn")
+
+    logging.info(f"Number of wires obtained from user input: n={n_to_run}")
+    logging.info(f"Using agent type: {agent_to_run}")
 
     # --- Determine the path to the n-specific configuration file ---
     config_path = get_config_path_for_n(n_to_run, args.configs_dir)
@@ -158,7 +194,7 @@ def main():
     # --- Initialize and Run the Trainer ---
     try:
         # Pass the loaded and processed configuration to the Trainer
-        trainer = Trainer(config)
+        trainer = Trainer(config, agent_type=agent_to_run)
 
         # Set up file logging (the path is now determined correctly by the Trainer)
         setup_logging(trainer.log_path, level=logging.INFO)

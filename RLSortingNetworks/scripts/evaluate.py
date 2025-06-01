@@ -41,9 +41,9 @@ def get_config_path_for_n(n_value: int, configs_dir: str) -> str:
     config_filename = f"config_n{n_value}.yaml"
     return os.path.join(configs_dir, config_filename)
 
-def get_run_dir_path_for_n(n_value: int, max_steps: int, checkpoints_base_dir: str) -> str:
+def get_run_dir_path_for_n(n_value: int, max_steps: int, agent_suffix:str, checkpoints_base_dir: str) -> str:
     """Constructs the expected path for the run directory based on n and max_steps."""
-    run_id = f"{n_value}w_{max_steps}s"
+    run_id = f"{n_value}w_{max_steps}s{agent_suffix}"
     return os.path.join(checkpoints_base_dir, run_id)
 
 def get_n_from_user(min_n: int = 1, max_n: int = 17) -> int:
@@ -62,7 +62,28 @@ def get_n_from_user(min_n: int = 1, max_n: int = 17) -> int:
              print("\nInput cancelled by user.")
              sys.exit(0)
 
-def _validate_paths_and_load_config(n_to_run: int, configs_dir: str, project_root: str) -> Tuple[Dict[str, str], Dict[str, Any]]:
+def get_agent_type_from_user(default_agent: str = "double_dqn") -> str:
+    """Prompts the user to select the agent type if not specified."""
+    while True:
+        try:
+            prompt_message = (
+                f"Select agent type to evaluate ('double' or 'classic') "
+                f"[Press Enter for default: {default_agent.replace('_dqn','')}]: "
+            )
+            agent_input = input(prompt_message).strip().lower()
+            if not agent_input: # User pressed Enter, use default
+                return default_agent
+            if agent_input == "double":
+                return "double_dqn"
+            if agent_input == "classic":
+                return "classic_dqn"
+            else:
+                print("Error: Invalid input. Please enter 'double' or 'classic'.")
+        except EOFError:
+            print("\nInput cancelled by user.")
+            sys.exit(0)
+
+def _validate_paths_and_load_config(n_to_run: int, agent_type_str: str, configs_dir: str, project_root: str) -> Tuple[Dict[str, str], Dict[str, Any]]:
     """Validates paths, loads config, resolves checkpoint dir."""
     # (Implementation remains the same as before)
     # 1. Get Config Path
@@ -105,7 +126,8 @@ def _validate_paths_and_load_config(n_to_run: int, configs_dir: str, project_roo
          sys.exit(1)
 
     # 4. Determine Run Directory Path
-    run_dir = get_run_dir_path_for_n(n_to_run, max_steps, absolute_base_dir)
+    agent_suffix = "_classic" if agent_type_str.lower() == "classic_dqn" else ""
+    run_dir = get_run_dir_path_for_n(n_to_run, max_steps, agent_suffix,absolute_base_dir)
     logging.info(f"Expecting run artifacts in: {run_dir}")
 
     # 5. Construct full paths for artifacts
@@ -284,6 +306,7 @@ def main():
     parser.add_argument(
         "-n", "--num_wires",
         type=int,
+        default=None,
         help="Number of wires (n) to evaluate. If omitted, you will be prompted."
     )
     parser.add_argument(
@@ -298,6 +321,13 @@ def main():
         dest="prune",         # Store the value in 'args.prune'
         default=True,         # Default value for args.prune is True
         help="Disable pruning of the evaluated network (pruning is enabled by default)."
+    )
+    parser.add_argument(
+        "-agent", "--agent_type",
+        type=str,
+        default=None,
+        choices=["double_dqn", "classic_dqn"],
+        help="Type of DQN agent results to evaluate ('double_dqn' or 'classic_dqn'). If omitted, you will be prompted."
     )
 
     args = parser.parse_args()
@@ -314,11 +344,18 @@ def main():
              sys.exit(1)
     else:
         n_to_run = get_n_from_user()
-        logging.info(f"Number of wires obtained from user input: n={n_to_run}")
+
+    if args.agent_type is not None:
+        agent_to_run = args.agent_type
+        logging.info(f"Agent type specified via argument: {agent_to_run}")
+    else:
+        agent_to_run = get_agent_type_from_user(default_agent="double_dqn")
+
+    logging.info(f"Using agent type: {agent_to_run}")
 
     try:
         # 4. Validate paths, load config, resolve dirs
-        paths, config = _validate_paths_and_load_config(n_to_run, args.configs_dir, project_root)
+        paths, config = _validate_paths_and_load_config(n_to_run, agent_to_run, args.configs_dir, project_root)
         n_wires = config['environment']['n_wires']
 
         # 5. Initialize Evaluator
