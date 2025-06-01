@@ -1,0 +1,28 @@
+agent:
+  batch_size: 128
+  buffer_size: 300000
+  epsilon_decay: 0.9995
+  epsilon_end: 0.01
+  epsilon_start: 1.0
+  gamma: 0.99
+  lr: 0.0001
+environment:
+  max_steps: 65
+  n_wires: 9
+experiment:
+  base_dir: "/Users/theodorburca/Desktop/Master/Semestrul_2/3_Analiza_experimentala\u0306\
+    _a_algoritmilor/Proiect/github/RLSortingNetworks/checkpoints"
+model:
+  fc1_units: 1024
+  fc2_units: 1024
+  fc3_units: 512
+reward:
+  failure: -5.0
+  step_penalty: 0
+  success_base: 100.0
+training:
+  num_episodes: 1000
+  print_every: 50
+  save_checkpoints: true
+  start_fresh: false
+  target_update_freq: 500

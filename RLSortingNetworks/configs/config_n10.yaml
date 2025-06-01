@@ -1,0 +1,47 @@
+# Config for N=10 - Highly Aggressive Settings for Discovery
+
+environment:
+  n_wires: 10
+  # Optimal size=29.
+  max_steps: 90  # Was 65 for n=9. Optimal + 41. Generous room.
+
+training:
+  # Needs a very, very large number of episodes for n=10.
+  # Start with a high number and be prepared to increase significantly.
+  num_episodes: 1000 # Was 5000 in your n=9 example
+                       # 150k suggested for n=9 in my previous response.
+                       # This is a substantial jump.
+  target_update_freq: 700 # Was 500-600. Less frequent updates for very long training.
+  print_every: 100     # Reduce log frequency.
+  start_fresh: True    # Or False if resuming a very long run.
+  save_checkpoints: True # Save checkpoints regularly.
+
+agent:
+  lr: 1.0e-4          # Keep low learning rate.
+  gamma: 0.99         # Keep high gamma.
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  # Epsilon decay needs to be extremely slow.
+  epsilon_decay: 0.99998 # Was 0.99995.
+                         # After 100k episodes: epsilon ~ 0.135
+                         # After 200k episodes: epsilon ~ 0.018
+                         # After 250k episodes: epsilon ~ 0.0067
+  # Buffer size very large.
+  buffer_size: 400000 # Was 300000.
+  batch_size: 128     # Keep 128 if memory allows, else 64.
+
+reward:
+  success_base: 100.0
+  failure: -5.0
+  step_penalty: 0.0   # Start with 0. If agent only hits max_steps,
+                      # consider a tiny negative penalty like -0.001 or -0.005.
+
+model:
+  # Model capacity must be substantial. The 3-layer approach is good.
+  fc1_units: 1024
+  fc2_units: 1024
+  fc3_units: 512      # Keep the 3-layer structure.
+                      # If still struggling, might need 1024, 1024, 1024.
+
+experiment:
+  base_dir: "checkpoints"

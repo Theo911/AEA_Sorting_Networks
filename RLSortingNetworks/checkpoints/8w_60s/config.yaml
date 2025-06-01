@@ -20,8 +20,8 @@ reward:
   step_penalty: 0
   success_base: 100.0
 training:
-  num_episodes: 5000
+  num_episodes: 6000
   print_every: 50
   save_checkpoints: true
-  start_fresh: true
+  start_fresh: false
   target_update_freq: 500

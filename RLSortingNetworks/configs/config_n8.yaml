@@ -7,7 +7,7 @@ environment:
 
 training:
   # Requires significantly more episodes. Start high, maybe increase later.
-  num_episodes: 5000 # Was ~25k suggested for n=7. Substantial increase needed. need 40k, but trying with 5k
+  num_episodes: 6000 # Was ~25k suggested for n=7. Substantial increase needed. need 40k, but trying with 5k
   # Keep target update relatively infrequent.
   target_update_freq: 500 # Was ~300 suggested for n=7.
   print_every: 50     # Or maybe 100 to reduce log clutter on long runs.
