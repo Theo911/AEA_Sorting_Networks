@@ -1,0 +1,12 @@
+# Fisiere temporare Python
+__pycache__/
+*.py[cod]
+*.npy
+
+# Configurari IDE (PyCharm / IntelliJ / VSCode)
+.idea/
+.vscode/
+
+# Fisiere de output locale
+webapp/data/execution_history.json
+
