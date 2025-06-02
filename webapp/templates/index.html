@@ -206,10 +206,19 @@
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="algorithm" id="rlExecAlgo" value="rl">
-                                            <label class="form-check-label" for="rlExecAlgo">
-                                                RL Algorithm
+                                            <input class="form-check-input" type="radio" name="algorithm" id="rlDoubleExecAlgo" value="rl_double_dqn">
+                                            <label class="form-check-label" for="rlDoubleExecAlgo">
+                                                RL Double DQN Algorithm
                                                 <span class="badge bg-info">ML-Trained</span>
+                                                <span class="badge bg-success">Enhanced</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="algorithm" id="rlClassicExecAlgo" value="rl_classic_dqn">
+                                            <label class="form-check-label" for="rlClassicExecAlgo">
+                                                RL Classic DQN Algorithm
+                                                <span class="badge bg-info">ML-Trained</span>
+                                                <span class="badge bg-secondary">Classic</span>
                                             </label>
                                         </div>
                                     </div>
@@ -318,8 +327,11 @@
                                                     <div id="rlPruningEfficiency" class="fw-bold">-</div>
                                                 </div>
                                                 <div class="col-6">
-                                                    <small class="text-muted">vs Optimal:</small>
-                                                    <div id="rlVsOptimal" class="fw-bold">-</div>
+                                                    <small class="text-muted">Optimal: <span id="rlOptimalValue" class="fw-bold text-primary">-</span></small>
+                                                    <div>
+                                                        <small class="text-muted">vs Optimal:</small>
+                                                        <div id="rlVsOptimal" class="fw-bold">-</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             

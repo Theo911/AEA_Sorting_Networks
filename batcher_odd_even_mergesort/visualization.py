@@ -66,7 +66,7 @@ def visualize_network_execution(comparators: List[Tuple[int, int]], input_values
     n_wires = len(input_values)
     
     fig = plt.figure(figsize=(12, n_wires * 0.8))
-    plt.title(f"Execution of Batcher's Network on {input_values}")
+    plt.title(f"Sorting Network Execution on {input_values}")
     plt.axis('off')
     
     # Current state of the values

@@ -318,9 +318,14 @@ def execute_network():
     start_time = time.time()
     
     # Handle RL algorithms with evaluate.py integration
-    if algorithm == 'rl':
-        # Always use Double DQN (available for all RL sizes and generally superior)
-        agent_type = 'double_dqn'
+    if algorithm in ['rl', 'rl_double_dqn', 'rl_classic_dqn']:
+        # Determine agent type from algorithm value
+        if algorithm == 'rl_classic_dqn':
+            agent_type = 'classic_dqn'
+            algorithm_display_name = "RL Algorithm (Classic DQN)"
+        else:  # rl or rl_double_dqn
+            agent_type = 'double_dqn'
+            algorithm_display_name = "RL Algorithm (Double DQN)"
         
         try:
             # Use the enhanced RL execution with evaluate.py
@@ -331,12 +336,12 @@ def execute_network():
             result['execution_time_ms'] = total_execution_time
             
             # Enhanced algorithm name
-            result['algorithm'] = "RL Algorithm (Double DQN)"
+            result['algorithm'] = algorithm_display_name
             
             # Store execution result for analysis
             try:
                 execution_data = {
-                    'algorithm': algorithm,
+                    'algorithm': 'rl',  # Normalize for storage
                     'agent_type': agent_type,
                     'n_wires': n,
                     'input_values': input_values,

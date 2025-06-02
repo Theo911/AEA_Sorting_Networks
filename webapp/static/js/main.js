@@ -479,7 +479,7 @@ document.getElementById('executionForm').addEventListener('submit', function(e) 
         }
         
         // Handle RL-specific analysis data
-        if (data.rl_analysis && selectedAlgorithm === 'rl') {
+        if (data.rl_analysis && (selectedAlgorithm === 'rl' || selectedAlgorithm === 'rl_double_dqn' || selectedAlgorithm === 'rl_classic_dqn')) {
             const rlSection = document.getElementById('rlAnalysisSection');
             if (rlSection) {
                 rlSection.style.display = 'block';
@@ -492,6 +492,15 @@ document.getElementById('executionForm').addEventListener('submit', function(e) 
                 if (agentTypeTitle) {
                     const agentType = rlAnalysis.agent_type || '-';
                     agentTypeTitle.textContent = agentType !== '-' ? `(${agentType})` : '(-)';
+                    
+                    // Add data source indicator if synthetic
+                    if (rlAnalysis.is_synthetic) {
+                        agentTypeTitle.style.color = '#ffc107'; // warning color
+                        agentTypeTitle.title = `Data source: ${rlAnalysis.data_source || 'README Table (Model Unavailable)'}`;
+                    } else {
+                        agentTypeTitle.style.color = ''; // default color
+                        agentTypeTitle.title = `Data source: ${rlAnalysis.data_source || 'Actual Model'}`;
+                    }
                 }
                 
                 // Optimization Results (removed duplicates - Original Size/Depth shown above)
@@ -511,12 +520,22 @@ document.getElementById('executionForm').addEventListener('submit', function(e) 
                     }
                 }
                 
+                // Show optimal value
+                const optimalValueElement = document.getElementById('rlOptimalValue');
+                if (optimalValueElement) {
+                    const optimalValue = rlAnalysis.optimal_size || '-';
+                    optimalValueElement.textContent = optimalValue;
+                }
+                
                 const vsOptimalElement = document.getElementById('rlVsOptimal');
                 if (vsOptimalElement) {
                     const vsOptimal = rlAnalysis.vs_optimal || '-';
                     vsOptimalElement.textContent = vsOptimal;
                     // Color code based on performance vs optimal
-                    if (vsOptimal.startsWith('+')) {
+                    if (vsOptimal.includes('→')) {
+                        // Both original and pruned differences shown
+                        vsOptimalElement.className = 'fw-bold text-info';
+                    } else if (vsOptimal.startsWith('+')) {
                         vsOptimalElement.className = 'fw-bold text-warning';
                     } else if (vsOptimal === '0') {
                         vsOptimalElement.className = 'fw-bold text-success';

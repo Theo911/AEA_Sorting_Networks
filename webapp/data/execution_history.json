@@ -5324,13 +5324,1517 @@
         "vs_optimal": "+37"
       },
       "timestamp": "2025-06-02T14:19:52.270435"
+    },
+    {
+      "algorithm": "batcher",
+      "n_wires": 10,
+      "input_values": [
+        9,
+        6,
+        5,
+        1,
+        3,
+        10,
+        7,
+        2,
+        4,
+        8
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        7,
+        9,
+        10
+      ],
+      "execution_time_ms": 0.026941299438476562,
+      "network_generation_time_ms": 0.0209808349609375,
+      "sort_execution_time_ms": 0.0059604644775390625,
+      "comparators_count": 51,
+      "network_depth": 20,
+      "success": false,
+      "input_type": "random",
+      "timestamp": "2025-06-02T15:16:36.808053"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        7,
+        9,
+        4,
+        10,
+        5,
+        8,
+        2,
+        3,
+        6,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 5434.524059295654,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 37,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+55"
+      },
+      "timestamp": "2025-06-02T15:16:46.236652"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        5,
+        2,
+        7,
+        6,
+        9,
+        8,
+        3,
+        4,
+        10,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 4727.205991744995,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 37,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 29,
+        "vs_optimal": "+55 \u2192 +8"
+      },
+      "timestamp": "2025-06-02T16:10:44.402704"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 10,
+      "input_values": [
+        4,
+        3,
+        6,
+        2,
+        7,
+        1,
+        8,
+        9,
+        10,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 3824.779987335205,
+      "comparators_count": 88,
+      "network_depth": 38,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 35,
+        "pruned_depth": 17,
+        "pruning_efficiency": "60.2%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 29,
+        "vs_optimal": "+59 \u2192 +6"
+      },
+      "timestamp": "2025-06-02T16:11:13.479991"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        5,
+        2,
+        3,
+        8,
+        4,
+        1,
+        9,
+        10,
+        7,
+        6
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 3952.3537158966064,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 37,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 29,
+        "vs_optimal": "+55 \u2192 +8"
+      },
+      "timestamp": "2025-06-02T16:11:30.719568"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 9,
+      "input_values": [
+        7,
+        5,
+        1,
+        3,
+        9,
+        4,
+        6,
+        2,
+        8
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "execution_time_ms": 3401.7107486724854,
+      "comparators_count": 62,
+      "network_depth": 33,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 31,
+        "pruned_depth": 16,
+        "pruning_efficiency": "50.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 25,
+        "vs_optimal": "+37 \u2192 +6"
+      },
+      "timestamp": "2025-06-02T16:11:42.677907"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 10,
+      "input_values": [
+        10,
+        1,
+        3,
+        4,
+        5,
+        7,
+        2,
+        6,
+        8,
+        9
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 3836.259126663208,
+      "comparators_count": 88,
+      "network_depth": 38,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 35,
+        "pruned_depth": 17,
+        "pruning_efficiency": "60.2%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 29,
+        "vs_optimal": "+59 \u2192 +6"
+      },
+      "timestamp": "2025-06-02T16:11:54.475479"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 9,
+      "input_values": [
+        3,
+        2,
+        8,
+        1,
+        5,
+        6,
+        7,
+        4,
+        9
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "execution_time_ms": 3783.0750942230225,
+      "comparators_count": 57,
+      "network_depth": 30,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 29,
+        "pruned_depth": 13,
+        "pruning_efficiency": "49.1%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 25,
+        "vs_optimal": "+32 \u2192 +4"
+      },
+      "timestamp": "2025-06-02T16:12:29.963732"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 8,
+      "input_values": [
+        4,
+        2,
+        1,
+        6,
+        5,
+        8,
+        7,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3096.778154373169,
+      "comparators_count": 40,
+      "network_depth": 21,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 24,
+        "pruned_depth": 13,
+        "pruning_efficiency": "40.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 19,
+        "vs_optimal": "+21 \u2192 +5"
+      },
+      "timestamp": "2025-06-02T16:13:01.448951"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 5,
+      "input_values": [
+        5,
+        1,
+        2,
+        3,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "execution_time_ms": 2839.977979660034,
+      "comparators_count": 10,
+      "network_depth": 7,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 9,
+        "pruned_depth": 6,
+        "pruning_efficiency": "10.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 9,
+        "vs_optimal": "+1 \u2192 +0"
+      },
+      "timestamp": "2025-06-02T16:13:16.525216"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 4,
+      "input_values": [
+        2,
+        4,
+        1,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "execution_time_ms": 2657.2680473327637,
+      "comparators_count": 5,
+      "network_depth": 3,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 5,
+        "pruned_depth": 3,
+        "pruning_efficiency": "0.0%",
+        "pruning_applied": false,
+        "network_status": "Valid",
+        "optimal_size": 5,
+        "vs_optimal": "0"
+      },
+      "timestamp": "2025-06-02T16:13:24.092877"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 3,
+      "input_values": [
+        1,
+        2,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3
+      ],
+      "execution_time_ms": 2653.125286102295,
+      "comparators_count": 3,
+      "network_depth": 3,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 3,
+        "pruned_depth": 3,
+        "pruning_efficiency": "0.0%",
+        "pruning_applied": false,
+        "network_status": "Valid",
+        "optimal_size": 3,
+        "vs_optimal": "0"
+      },
+      "timestamp": "2025-06-02T16:13:28.274558"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 2,
+      "input_values": [
+        2,
+        1
+      ],
+      "output_values": [
+        1,
+        2
+      ],
+      "execution_time_ms": 2719.0098762512207,
+      "comparators_count": 1,
+      "network_depth": 1,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 1,
+        "pruned_depth": 1,
+        "pruning_efficiency": "0.0%",
+        "pruning_applied": false,
+        "network_status": "Valid",
+        "optimal_size": 1,
+        "vs_optimal": "0"
+      },
+      "timestamp": "2025-06-02T16:13:32.524979"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 5,
+      "input_values": [
+        5,
+        3,
+        4,
+        2,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "execution_time_ms": 2813.2259845733643,
+      "comparators_count": 10,
+      "network_depth": 7,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 9,
+        "pruned_depth": 6,
+        "pruning_efficiency": "10.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 9,
+        "vs_optimal": "+1 \u2192 +0"
+      },
+      "timestamp": "2025-06-02T16:13:36.715027"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 2,
+      "input_values": [
+        2,
+        1
+      ],
+      "output_values": [
+        1,
+        2
+      ],
+      "execution_time_ms": 2778.385877609253,
+      "comparators_count": 1,
+      "network_depth": 1,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 1,
+        "pruned_depth": 1,
+        "pruning_efficiency": "0.0%",
+        "pruning_applied": false,
+        "network_status": "Valid",
+        "optimal_size": 1,
+        "vs_optimal": "0"
+      },
+      "timestamp": "2025-06-02T16:13:54.826221"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 3,
+      "input_values": [
+        3,
+        2,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3
+      ],
+      "execution_time_ms": 2661.600112915039,
+      "comparators_count": 3,
+      "network_depth": 3,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 3,
+        "pruned_depth": 3,
+        "pruning_efficiency": "0.0%",
+        "pruning_applied": false,
+        "network_status": "Valid",
+        "optimal_size": 3,
+        "vs_optimal": "0"
+      },
+      "timestamp": "2025-06-02T16:13:59.212841"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 4,
+      "input_values": [
+        4,
+        2,
+        3,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "execution_time_ms": 2689.455032348633,
+      "comparators_count": 5,
+      "network_depth": 3,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 5,
+        "pruned_depth": 3,
+        "pruning_efficiency": "0.0%",
+        "pruning_applied": false,
+        "network_status": "Valid",
+        "optimal_size": 5,
+        "vs_optimal": "0"
+      },
+      "timestamp": "2025-06-02T16:14:03.062505"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 5,
+      "input_values": [
+        1,
+        5,
+        4,
+        2,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "execution_time_ms": 2711.2667560577393,
+      "comparators_count": 10,
+      "network_depth": 8,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 9,
+        "pruned_depth": 6,
+        "pruning_efficiency": "10.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 9,
+        "vs_optimal": "+1 \u2192 +0"
+      },
+      "timestamp": "2025-06-02T16:14:07.002208"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        2,
+        1,
+        3,
+        6,
+        5,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2781.2321186065674,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 12,
+        "vs_optimal": "+6 \u2192 +1"
+      },
+      "timestamp": "2025-06-02T16:14:11.010361"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 7,
+      "input_values": [
+        5,
+        6,
+        7,
+        2,
+        4,
+        1,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "execution_time_ms": 3199.7218132019043,
+      "comparators_count": 33,
+      "network_depth": 21,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 17,
+        "pruned_depth": 10,
+        "pruning_efficiency": "48.5%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 16,
+        "vs_optimal": "+17 \u2192 +1"
+      },
+      "timestamp": "2025-06-02T16:14:15.454691"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 8,
+      "input_values": [
+        3,
+        7,
+        1,
+        2,
+        4,
+        6,
+        5,
+        8
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3229.647159576416,
+      "comparators_count": 40,
+      "network_depth": 24,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 23,
+        "pruned_depth": 12,
+        "pruning_efficiency": "42.5%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 19,
+        "vs_optimal": "+21 \u2192 +4"
+      },
+      "timestamp": "2025-06-02T16:14:19.891490"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 9,
+      "input_values": [
+        9,
+        8,
+        1,
+        4,
+        7,
+        6,
+        3,
+        5,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "execution_time_ms": 3408.773183822632,
+      "comparators_count": 62,
+      "network_depth": 33,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 31,
+        "pruned_depth": 16,
+        "pruning_efficiency": "50.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 25,
+        "vs_optimal": "+37 \u2192 +6"
+      },
+      "timestamp": "2025-06-02T16:14:24.559022"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        4,
+        7,
+        9,
+        2,
+        8,
+        3,
+        10,
+        1,
+        6,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 3779.240131378174,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 37,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 29,
+        "vs_optimal": "+55 \u2192 +8"
+      },
+      "timestamp": "2025-06-02T16:14:30.477644"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        5,
+        2,
+        4,
+        3,
+        1,
+        6
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2963.024139404297,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 12,
+        "vs_optimal": "+6 \u2192 +1",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-02T16:25:00.466724"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 9,
+      "input_values": [
+        3,
+        1,
+        7,
+        4,
+        2,
+        5,
+        8,
+        9,
+        6
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "execution_time_ms": 3385.906934738159,
+      "comparators_count": 62,
+      "network_depth": 33,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 31,
+        "pruned_depth": 16,
+        "pruning_efficiency": "50.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 25,
+        "vs_optimal": "+37 \u2192 +6",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-02T16:25:06.825081"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        5,
+        7,
+        4,
+        9,
+        1,
+        8,
+        2,
+        10,
+        6,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 4137.82811164856,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 37,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 29,
+        "vs_optimal": "+55 \u2192 +8",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-02T16:25:13.134611"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 10,
+      "input_values": [
+        8,
+        5,
+        9,
+        4,
+        7,
+        3,
+        10,
+        6,
+        1,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 3871.1421489715576,
+      "comparators_count": 88,
+      "network_depth": 38,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 35,
+        "pruned_depth": 17,
+        "pruning_efficiency": "60.2%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 29,
+        "vs_optimal": "+59 \u2192 +6",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-02T16:25:21.014255"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 8,
+      "input_values": [
+        6,
+        4,
+        3,
+        1,
+        7,
+        2,
+        5,
+        8
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3389.065980911255,
+      "comparators_count": 40,
+      "network_depth": 21,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 24,
+        "pruned_depth": 13,
+        "pruning_efficiency": "40.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 19,
+        "vs_optimal": "+21 \u2192 +5",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-02T16:25:26.854597"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 5,
+      "input_values": [
+        3,
+        4,
+        5,
+        2,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "execution_time_ms": 2667.8307056427,
+      "comparators_count": 10,
+      "network_depth": 7,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 9,
+        "pruned_depth": 6,
+        "pruning_efficiency": "10.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 9,
+        "vs_optimal": "+1 \u2192 +0",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-02T16:25:31.129310"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 6,
+      "input_values": [
+        2,
+        6,
+        3,
+        5,
+        4,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 1847.2318649291992,
+      "comparators_count": 18,
+      "network_depth": 12,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn (Synthetic)",
+        "pruned_size": 13,
+        "pruned_depth": 7,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 12,
+        "vs_optimal": "+6 \u2192 +1",
+        "data_source": "README Table (Model Unavailable)",
+        "is_synthetic": true
+      },
+      "timestamp": "2025-06-02T16:25:34.874212"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 7,
+      "input_values": [
+        2,
+        7,
+        3,
+        6,
+        5,
+        1,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        5,
+        4,
+        7,
+        6
+      ],
+      "execution_time_ms": 2109.3950271606445,
+      "comparators_count": 31,
+      "network_depth": 14,
+      "success": false,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn (Synthetic)",
+        "pruned_size": 19,
+        "pruned_depth": 12,
+        "pruning_efficiency": "38.7%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 16,
+        "vs_optimal": "+15 \u2192 +3",
+        "data_source": "README Table (Model Unavailable)",
+        "is_synthetic": true
+      },
+      "timestamp": "2025-06-02T16:25:39.232067"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 7,
+      "input_values": [
+        4,
+        3,
+        6,
+        7,
+        2,
+        1,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        6
+      ],
+      "execution_time_ms": 2308.3510398864746,
+      "comparators_count": 31,
+      "network_depth": 14,
+      "success": false,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn (Synthetic)",
+        "pruned_size": 19,
+        "pruned_depth": 12,
+        "pruning_efficiency": "38.7%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 16,
+        "vs_optimal": "+15 \u2192 +3",
+        "data_source": "README Table (Model Unavailable)",
+        "is_synthetic": true
+      },
+      "timestamp": "2025-06-02T16:25:47.215040"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 7,
+      "input_values": [
+        6,
+        7,
+        2,
+        1,
+        3,
+        5,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        5,
+        4,
+        7,
+        6
+      ],
+      "execution_time_ms": 2046.2441444396973,
+      "comparators_count": 31,
+      "network_depth": 14,
+      "success": false,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn (Synthetic)",
+        "pruned_size": 19,
+        "pruned_depth": 12,
+        "pruning_efficiency": "38.7%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 16,
+        "vs_optimal": "+15 \u2192 +3",
+        "data_source": "README Table (Model Unavailable)",
+        "is_synthetic": true
+      },
+      "timestamp": "2025-06-02T16:25:50.688622"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 7,
+      "input_values": [
+        7,
+        1,
+        4,
+        5,
+        2,
+        3,
+        6
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        6
+      ],
+      "execution_time_ms": 1987.2031211853027,
+      "comparators_count": 31,
+      "network_depth": 14,
+      "success": false,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn (Synthetic)",
+        "pruned_size": 19,
+        "pruned_depth": 12,
+        "pruning_efficiency": "38.7%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 16,
+        "vs_optimal": "+15 \u2192 +3",
+        "data_source": "README Table (Model Unavailable)",
+        "is_synthetic": true
+      },
+      "timestamp": "2025-06-02T16:25:53.636222"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 5,
+      "input_values": [
+        5,
+        1,
+        3,
+        4,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "execution_time_ms": 2780.0257205963135,
+      "comparators_count": 10,
+      "network_depth": 7,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 9,
+        "pruned_depth": 6,
+        "pruning_efficiency": "10.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 9,
+        "vs_optimal": "+1 \u2192 +0",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-02T16:25:59.835955"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 6,
+      "input_values": [
+        5,
+        6,
+        4,
+        2,
+        3,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2216.3989543914795,
+      "comparators_count": 18,
+      "network_depth": 12,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn (Synthetic)",
+        "pruned_size": 13,
+        "pruned_depth": 7,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 12,
+        "vs_optimal": "+6 \u2192 +1",
+        "data_source": "README Table (Model Unavailable)",
+        "is_synthetic": true
+      },
+      "timestamp": "2025-06-02T16:26:03.394902"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 7,
+      "input_values": [
+        3,
+        5,
+        1,
+        6,
+        7,
+        4,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        4,
+        5,
+        3,
+        7,
+        6
+      ],
+      "execution_time_ms": 2248.57497215271,
+      "comparators_count": 31,
+      "network_depth": 14,
+      "success": false,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn (Synthetic)",
+        "pruned_size": 19,
+        "pruned_depth": 12,
+        "pruning_efficiency": "38.7%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 16,
+        "vs_optimal": "+15 \u2192 +3",
+        "data_source": "README Table (Model Unavailable)",
+        "is_synthetic": true
+      },
+      "timestamp": "2025-06-02T16:26:09.272952"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "classic_dqn",
+      "n_wires": 8,
+      "input_values": [
+        4,
+        5,
+        3,
+        1,
+        2,
+        8,
+        6,
+        7
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3404.5557975769043,
+      "comparators_count": 40,
+      "network_depth": 21,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Classic Dqn",
+        "pruned_size": 24,
+        "pruned_depth": 13,
+        "pruning_efficiency": "40.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 19,
+        "vs_optimal": "+21 \u2192 +5",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-02T16:26:14.410503"
     }
   ],
   "summary_stats": {
-    "total_executions": 149,
+    "total_executions": 187,
     "algorithms_used": {
-      "batcher": 62,
-      "rl": 51,
+      "batcher": 63,
+      "rl": 88,
       "batcher_improved": 36
     },
     "average_execution_time": {
@@ -5396,7 +6900,8 @@
         0.02002716064453125,
         0.0209808349609375,
         0.015020370483398438,
-        0.012874603271484375
+        0.012874603271484375,
+        0.026941299438476562
       ],
       "batcher_improved": [
         0.24628639221191406,
@@ -5487,7 +6992,44 @@
         3669.072151184082,
         4196.144819259644,
         3069.996118545532,
-        3390.558958053589
+        3390.558958053589,
+        5434.524059295654,
+        4727.205991744995,
+        3824.779987335205,
+        3952.3537158966064,
+        3401.7107486724854,
+        3836.259126663208,
+        3783.0750942230225,
+        3096.778154373169,
+        2839.977979660034,
+        2657.2680473327637,
+        2653.125286102295,
+        2719.0098762512207,
+        2813.2259845733643,
+        2778.385877609253,
+        2661.600112915039,
+        2689.455032348633,
+        2711.2667560577393,
+        2781.2321186065674,
+        3199.7218132019043,
+        3229.647159576416,
+        3408.773183822632,
+        3779.240131378174,
+        2963.024139404297,
+        3385.906934738159,
+        4137.82811164856,
+        3871.1421489715576,
+        3389.065980911255,
+        2667.8307056427,
+        1847.2318649291992,
+        2109.3950271606445,
+        2308.3510398864746,
+        2046.2441444396973,
+        1987.2031211853027,
+        2780.0257205963135,
+        2216.3989543914795,
+        2248.57497215271,
+        3404.5557975769043
       ]
     },
     "most_common_n_values": {},
