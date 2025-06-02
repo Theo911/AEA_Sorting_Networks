@@ -3101,14 +3101,2237 @@
       "success": true,
       "input_type": "random",
       "timestamp": "2025-05-30T17:50:34.946326"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 2,
+      "input_values": [
+        1,
+        2
+      ],
+      "output_values": [
+        1,
+        2
+      ],
+      "execution_time_ms": 3285.7718467712402,
+      "comparators_count": 1,
+      "network_depth": 1,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "original_size": 1,
+        "pruned_size": 1,
+        "original_depth": 1,
+        "pruned_depth": 1,
+        "pruning_efficiency": "0.0%",
+        "network_valid": true,
+        "source_description": "Best Network (from CSV)",
+        "agent_type": "double_dqn"
+      },
+      "timestamp": "2025-06-02T13:10:17.302852"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        1,
+        3,
+        4,
+        2,
+        6,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 3543.4179306030273,
+      "comparators_count": 19,
+      "network_depth": 15,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "original_size": 19,
+        "pruned_size": 14,
+        "original_depth": 15,
+        "pruned_depth": 10,
+        "pruning_efficiency": "26.3%",
+        "network_valid": true,
+        "source_description": "Best Network (from CSV)",
+        "agent_type": "double_dqn"
+      },
+      "timestamp": "2025-06-02T13:10:30.960723"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        4,
+        3,
+        6,
+        2,
+        5,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 3314.642906188965,
+      "comparators_count": 19,
+      "network_depth": 15,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "original_size": 19,
+        "pruned_size": 14,
+        "original_depth": 15,
+        "pruned_depth": 10,
+        "pruning_efficiency": "26.3%",
+        "network_valid": true,
+        "source_description": "Best Network (from CSV)",
+        "agent_type": "double_dqn"
+      },
+      "timestamp": "2025-06-02T13:10:45.241159"
+    },
+    {
+      "algorithm": "batcher",
+      "n_wires": 6,
+      "input_values": [
+        4,
+        6,
+        5,
+        3,
+        2,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 0.020742416381835938,
+      "network_generation_time_ms": 0.015974044799804688,
+      "sort_execution_time_ms": 0.00476837158203125,
+      "comparators_count": 18,
+      "network_depth": 10,
+      "success": true,
+      "input_type": "random",
+      "timestamp": "2025-06-02T13:11:05.033976"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        5,
+        1,
+        3,
+        6,
+        4,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 3366.7421340942383,
+      "comparators_count": 19,
+      "network_depth": 15,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "original_size": 19,
+        "pruned_size": 14,
+        "original_depth": 15,
+        "pruned_depth": 10,
+        "pruning_efficiency": "26.3%",
+        "network_valid": true,
+        "source_description": "Best Network (from CSV)",
+        "agent_type": "double_dqn"
+      },
+      "timestamp": "2025-06-02T13:11:14.828381"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        5,
+        2,
+        1,
+        6,
+        4,
+        3,
+        8,
+        7,
+        9,
+        10
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 4142.2929763793945,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "original_size": 84,
+        "pruned_size": 37,
+        "original_depth": 39,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "network_valid": true,
+        "source_description": "Best Network (from CSV)",
+        "agent_type": "double_dqn"
+      },
+      "timestamp": "2025-06-02T13:12:10.703980"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 4,
+      "input_values": [
+        1,
+        4,
+        2,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "execution_time_ms": 3039.6549701690674,
+      "comparators_count": 5,
+      "network_depth": 3,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "original_size": 5,
+        "pruned_size": 5,
+        "original_depth": 3,
+        "pruned_depth": 3,
+        "pruning_efficiency": "0.0%",
+        "network_valid": true,
+        "source_description": "Best Network (from CSV)",
+        "agent_type": "double_dqn"
+      },
+      "timestamp": "2025-06-02T13:12:26.104303"
+    },
+    {
+      "algorithm": "batcher",
+      "n_wires": 4,
+      "input_values": [
+        3,
+        1,
+        2,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "execution_time_ms": 0.01621246337890625,
+      "network_generation_time_ms": 0.013113021850585938,
+      "sort_execution_time_ms": 0.0030994415283203125,
+      "comparators_count": 6,
+      "network_depth": 4,
+      "success": true,
+      "input_type": "random",
+      "timestamp": "2025-06-02T13:12:38.242726"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 4,
+      "input_values": [
+        3,
+        2,
+        4,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "execution_time_ms": 3446.8767642974854,
+      "comparators_count": 5,
+      "network_depth": 3,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "original_size": 5,
+        "pruned_size": 5,
+        "original_depth": 3,
+        "pruned_depth": 3,
+        "pruning_efficiency": "0.0%",
+        "network_valid": true,
+        "source_description": "Best Network (from CSV)",
+        "agent_type": "double_dqn"
+      },
+      "timestamp": "2025-06-02T13:13:24.577420"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 7,
+      "input_values": [
+        4,
+        6,
+        7,
+        3,
+        1,
+        2,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "execution_time_ms": 3399.5189666748047,
+      "comparators_count": 34,
+      "network_depth": 22,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "original_size": 34,
+        "pruned_size": 19,
+        "original_depth": 22,
+        "pruned_depth": 11,
+        "pruning_efficiency": "44.1%",
+        "network_valid": true,
+        "source_description": "Best Network (from CSV)",
+        "agent_type": "double_dqn"
+      },
+      "timestamp": "2025-06-02T13:16:32.166932"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        1,
+        3,
+        6,
+        5,
+        4,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 3521.700143814087,
+      "comparators_count": 19,
+      "network_depth": 15,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 19,
+        "pruned_size": 14,
+        "original_depth": 15,
+        "pruned_depth": 10,
+        "pruning_efficiency": "26.3%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+7",
+        "vs_optimal_percent": "+58%"
+      },
+      "timestamp": "2025-06-02T13:23:40.501828"
+    },
+    {
+      "algorithm": "batcher_improved",
+      "n_wires": 6,
+      "input_values": [
+        5,
+        1,
+        6,
+        2,
+        4,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 0.04124641418457031,
+      "network_generation_time_ms": 0.03719329833984375,
+      "sort_execution_time_ms": 0.0040531158447265625,
+      "comparators_count": 12,
+      "network_depth": 5,
+      "success": true,
+      "input_type": "random",
+      "timestamp": "2025-06-02T13:25:11.993799"
+    },
+    {
+      "algorithm": "batcher",
+      "n_wires": 6,
+      "input_values": [
+        6,
+        5,
+        2,
+        1,
+        3,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 0.02002716064453125,
+      "network_generation_time_ms": 0.015974044799804688,
+      "sort_execution_time_ms": 0.0040531158447265625,
+      "comparators_count": 18,
+      "network_depth": 10,
+      "success": true,
+      "input_type": "random",
+      "timestamp": "2025-06-02T13:29:48.624132"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        3,
+        4,
+        2,
+        1,
+        6,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 3216.129779815674,
+      "comparators_count": 19,
+      "network_depth": 15,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 19,
+        "pruned_size": 14,
+        "original_depth": 15,
+        "pruned_depth": 10,
+        "pruning_efficiency": "26.3%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+7",
+        "vs_optimal_percent": "+58%"
+      },
+      "timestamp": "2025-06-02T13:29:55.549942"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        1,
+        5,
+        2,
+        3,
+        6,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 4173.305034637451,
+      "comparators_count": 19,
+      "network_depth": 15,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 19,
+        "pruned_size": 14,
+        "original_depth": 15,
+        "pruned_depth": 10,
+        "pruning_efficiency": "26.3%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+7",
+        "vs_optimal_percent": "+58%"
+      },
+      "timestamp": "2025-06-02T13:30:06.574577"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 2,
+      "input_values": [
+        2,
+        1
+      ],
+      "output_values": [
+        1,
+        2
+      ],
+      "execution_time_ms": 3170.478105545044,
+      "comparators_count": 1,
+      "network_depth": 1,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 1,
+        "pruned_size": 1,
+        "original_depth": 1,
+        "pruned_depth": 1,
+        "pruning_efficiency": "0.0%",
+        "pruning_applied": false,
+        "network_valid": true,
+        "vs_optimal_diff": "0",
+        "vs_optimal_percent": "0%"
+      },
+      "timestamp": "2025-06-02T13:30:21.614802"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 5,
+      "input_values": [
+        5,
+        1,
+        4,
+        3,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "execution_time_ms": 3012.404203414917,
+      "comparators_count": 12,
+      "network_depth": 9,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 12,
+        "pruned_size": 9,
+        "original_depth": 9,
+        "pruned_depth": 7,
+        "pruning_efficiency": "25.0%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+3",
+        "vs_optimal_percent": "+33%"
+      },
+      "timestamp": "2025-06-02T13:30:30.976052"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 7,
+      "input_values": [
+        7,
+        3,
+        2,
+        5,
+        6,
+        1,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "execution_time_ms": 3032.6108932495117,
+      "comparators_count": 34,
+      "network_depth": 22,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 34,
+        "pruned_size": 19,
+        "original_depth": 22,
+        "pruned_depth": 11,
+        "pruning_efficiency": "44.1%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+18",
+        "vs_optimal_percent": "+112%"
+      },
+      "timestamp": "2025-06-02T13:31:33.018306"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        1,
+        10,
+        3,
+        6,
+        7,
+        4,
+        2,
+        9,
+        5,
+        8
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 3886.522054672241,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 84,
+        "pruned_size": 37,
+        "original_depth": 39,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+55",
+        "vs_optimal_percent": "+190%"
+      },
+      "timestamp": "2025-06-02T13:32:40.936381"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 7,
+      "input_values": [
+        7,
+        6,
+        1,
+        4,
+        5,
+        2,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "execution_time_ms": 3199.831962585449,
+      "comparators_count": 34,
+      "network_depth": 22,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 34,
+        "pruned_size": 19,
+        "original_depth": 22,
+        "pruned_depth": 11,
+        "pruning_efficiency": "44.1%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+18",
+        "vs_optimal_percent": "+112%"
+      },
+      "timestamp": "2025-06-02T13:33:04.312363"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        3,
+        2,
+        1,
+        5,
+        6,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2862.4892234802246,
+      "comparators_count": 19,
+      "network_depth": 15,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 19,
+        "pruned_size": 14,
+        "original_depth": 15,
+        "pruned_depth": 10,
+        "pruning_efficiency": "26.3%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+7",
+        "vs_optimal_percent": "+58%"
+      },
+      "timestamp": "2025-06-02T13:33:16.665157"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        2,
+        5,
+        1,
+        3,
+        4,
+        6
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 3069.1230297088623,
+      "comparators_count": 19,
+      "network_depth": 15,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 19,
+        "pruned_size": 14,
+        "original_depth": 15,
+        "pruned_depth": 10,
+        "pruning_efficiency": "26.3%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+7",
+        "vs_optimal_percent": "+58%"
+      },
+      "timestamp": "2025-06-02T13:36:48.509230"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        3,
+        1,
+        6,
+        10,
+        5,
+        2,
+        4,
+        7,
+        9,
+        8
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 4011.112928390503,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 84,
+        "pruned_size": 37,
+        "original_depth": 39,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+55",
+        "vs_optimal_percent": "+190%"
+      },
+      "timestamp": "2025-06-02T13:37:03.022284"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 3,
+      "input_values": [
+        2,
+        3,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3
+      ],
+      "execution_time_ms": 2872.391939163208,
+      "comparators_count": 3,
+      "network_depth": 3,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 3,
+        "pruned_size": 3,
+        "original_depth": 3,
+        "pruned_depth": 3,
+        "pruning_efficiency": "0.0%",
+        "pruning_applied": false,
+        "network_valid": true,
+        "vs_optimal_diff": "0",
+        "vs_optimal_percent": "0%"
+      },
+      "timestamp": "2025-06-02T13:37:36.389007"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 5,
+      "input_values": [
+        3,
+        2,
+        1,
+        4,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "execution_time_ms": 2790.7867431640625,
+      "comparators_count": 12,
+      "network_depth": 9,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 12,
+        "pruned_size": 9,
+        "original_depth": 9,
+        "pruned_depth": 7,
+        "pruning_efficiency": "25.0%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+3",
+        "vs_optimal_percent": "+33%"
+      },
+      "timestamp": "2025-06-02T13:37:47.128994"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        4,
+        5,
+        1,
+        6,
+        2,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2926.6510009765625,
+      "comparators_count": 19,
+      "network_depth": 15,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 19,
+        "pruned_size": 14,
+        "original_depth": 15,
+        "pruned_depth": 10,
+        "pruning_efficiency": "26.3%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+7",
+        "vs_optimal_percent": "+58%"
+      },
+      "timestamp": "2025-06-02T13:38:26.954860"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 7,
+      "input_values": [
+        5,
+        7,
+        3,
+        1,
+        6,
+        2,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "execution_time_ms": 3130.657196044922,
+      "comparators_count": 34,
+      "network_depth": 22,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 34,
+        "pruned_size": 19,
+        "original_depth": 22,
+        "pruned_depth": 11,
+        "pruning_efficiency": "44.1%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+18",
+        "vs_optimal_percent": "+112%"
+      },
+      "timestamp": "2025-06-02T13:38:39.776663"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 8,
+      "input_values": [
+        8,
+        3,
+        1,
+        4,
+        6,
+        7,
+        5,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3079.991102218628,
+      "comparators_count": 43,
+      "network_depth": 24,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "Best Network (from CSV)",
+        "original_size": 43,
+        "pruned_size": 23,
+        "original_depth": 24,
+        "pruned_depth": 13,
+        "pruning_efficiency": "46.5%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+24",
+        "vs_optimal_percent": "+126%"
+      },
+      "timestamp": "2025-06-02T13:38:58.714251"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        1,
+        4,
+        3,
+        5,
+        2,
+        6
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 3686.661958694458,
+      "comparators_count": 19,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "README Table (README table)",
+        "original_size": 18,
+        "pruned_size": 13,
+        "original_depth": 14,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+6",
+        "vs_optimal_percent": "+50%",
+        "data_source": "README table"
+      },
+      "timestamp": "2025-06-02T13:48:47.859336"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 7,
+      "input_values": [
+        1,
+        3,
+        5,
+        2,
+        6,
+        7,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "execution_time_ms": 3093.090057373047,
+      "comparators_count": 34,
+      "network_depth": 21,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "README Table (README table)",
+        "original_size": 33,
+        "pruned_size": 17,
+        "original_depth": 21,
+        "pruned_depth": 10,
+        "pruning_efficiency": "48.5%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+17",
+        "vs_optimal_percent": "+106%",
+        "data_source": "README table"
+      },
+      "timestamp": "2025-06-02T13:49:15.300024"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 8,
+      "input_values": [
+        1,
+        6,
+        3,
+        7,
+        5,
+        4,
+        2,
+        8
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3171.083927154541,
+      "comparators_count": 43,
+      "network_depth": 24,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "source_description": "README Table (README table)",
+        "original_size": 40,
+        "pruned_size": 23,
+        "original_depth": 24,
+        "pruned_depth": 12,
+        "pruning_efficiency": "42.5%",
+        "pruning_applied": true,
+        "network_valid": true,
+        "vs_optimal_diff": "+21",
+        "vs_optimal_percent": "+111%",
+        "data_source": "README table"
+      },
+      "timestamp": "2025-06-02T13:49:31.555678"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        4,
+        2,
+        1,
+        6,
+        5,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2774.4150161743164,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T13:52:55.522355"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        6,
+        3,
+        4,
+        2,
+        1,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2982.8381538391113,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T13:53:07.391874"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        2,
+        6,
+        5,
+        1,
+        3,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2842.0281410217285,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T13:53:12.606001"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        5,
+        2,
+        1,
+        6,
+        3,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2988.313913345337,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T13:53:14.914584"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        2,
+        5,
+        1,
+        6,
+        3,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2921.54598236084,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T13:53:24.375391"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 8,
+      "input_values": [
+        5,
+        8,
+        1,
+        3,
+        6,
+        2,
+        7,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3493.20912361145,
+      "comparators_count": 40,
+      "network_depth": 24,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 23,
+        "pruned_depth": 12,
+        "pruning_efficiency": "42.5%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+21"
+      },
+      "timestamp": "2025-06-02T13:53:33.304678"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        6,
+        4,
+        1,
+        3,
+        5,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2851.893424987793,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T13:57:37.272083"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 7,
+      "input_values": [
+        1,
+        3,
+        5,
+        6,
+        4,
+        7,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "execution_time_ms": 3237.895965576172,
+      "comparators_count": 33,
+      "network_depth": 21,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 17,
+        "pruned_depth": 10,
+        "pruning_efficiency": "48.5%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+17"
+      },
+      "timestamp": "2025-06-02T13:57:53.439691"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 8,
+      "input_values": [
+        6,
+        5,
+        3,
+        2,
+        4,
+        1,
+        8,
+        7
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3223.276138305664,
+      "comparators_count": 40,
+      "network_depth": 24,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 23,
+        "pruned_depth": 12,
+        "pruning_efficiency": "42.5%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+21"
+      },
+      "timestamp": "2025-06-02T13:58:04.087094"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 9,
+      "input_values": [
+        7,
+        6,
+        1,
+        9,
+        5,
+        4,
+        8,
+        3,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "execution_time_ms": 3477.8168201446533,
+      "comparators_count": 62,
+      "network_depth": 33,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 31,
+        "pruned_depth": 16,
+        "pruning_efficiency": "50.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+37"
+      },
+      "timestamp": "2025-06-02T13:58:14.645793"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        10,
+        3,
+        9,
+        5,
+        7,
+        4,
+        6,
+        1,
+        2,
+        8
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 3840.852975845337,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 37,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+55"
+      },
+      "timestamp": "2025-06-02T13:58:25.304876"
+    },
+    {
+      "algorithm": "batcher",
+      "n_wires": 6,
+      "input_values": [
+        6,
+        5,
+        3,
+        2,
+        1,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 0.0209808349609375,
+      "network_generation_time_ms": 0.0171661376953125,
+      "sort_execution_time_ms": 0.003814697265625,
+      "comparators_count": 18,
+      "network_depth": 10,
+      "success": true,
+      "input_type": "random",
+      "timestamp": "2025-06-02T14:06:53.864632"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        4,
+        3,
+        2,
+        5,
+        1,
+        6
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 3095.447063446045,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T14:07:05.062443"
+    },
+    {
+      "algorithm": "batcher",
+      "n_wires": 6,
+      "input_values": [
+        3,
+        2,
+        1,
+        5,
+        6,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 0.015020370483398438,
+      "network_generation_time_ms": 0.011920928955078125,
+      "sort_execution_time_ms": 0.0030994415283203125,
+      "comparators_count": 18,
+      "network_depth": 10,
+      "success": true,
+      "input_type": "random",
+      "timestamp": "2025-06-02T14:11:59.795634"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        5,
+        4,
+        2,
+        3,
+        6,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2800.0383377075195,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T14:12:06.190160"
+    },
+    {
+      "algorithm": "batcher_improved",
+      "n_wires": 6,
+      "input_values": [
+        6,
+        2,
+        4,
+        5,
+        3,
+        1
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 0.04100799560546875,
+      "network_generation_time_ms": 0.03910064697265625,
+      "sort_execution_time_ms": 0.0019073486328125,
+      "comparators_count": 12,
+      "network_depth": 5,
+      "success": true,
+      "input_type": "random",
+      "timestamp": "2025-06-02T14:12:16.764880"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        1,
+        2,
+        3,
+        6,
+        4,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2754.4798851013184,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T14:12:22.096193"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        4,
+        6,
+        2,
+        3,
+        1,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2930.7351112365723,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T14:15:18.933774"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        2,
+        4,
+        3,
+        1,
+        9,
+        7,
+        5,
+        6,
+        8,
+        10
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 3767.5938606262207,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 37,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+55"
+      },
+      "timestamp": "2025-06-02T14:15:33.073896"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 9,
+      "input_values": [
+        6,
+        2,
+        1,
+        8,
+        9,
+        4,
+        7,
+        5,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "execution_time_ms": 3316.7169094085693,
+      "comparators_count": 62,
+      "network_depth": 33,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 31,
+        "pruned_depth": 16,
+        "pruning_efficiency": "50.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+37"
+      },
+      "timestamp": "2025-06-02T14:15:48.127361"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 8,
+      "input_values": [
+        2,
+        8,
+        5,
+        7,
+        4,
+        6,
+        1,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3116.925001144409,
+      "comparators_count": 40,
+      "network_depth": 24,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 23,
+        "pruned_depth": 12,
+        "pruning_efficiency": "42.5%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+21"
+      },
+      "timestamp": "2025-06-02T14:15:58.377135"
+    },
+    {
+      "algorithm": "batcher",
+      "n_wires": 6,
+      "input_values": [
+        4,
+        5,
+        6,
+        3,
+        1,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 0.012874603271484375,
+      "network_generation_time_ms": 0.011205673217773438,
+      "sort_execution_time_ms": 0.0016689300537109375,
+      "comparators_count": 18,
+      "network_depth": 10,
+      "success": true,
+      "input_type": "random",
+      "timestamp": "2025-06-02T14:19:07.990716"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        5,
+        2,
+        1,
+        4,
+        6,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2919.409990310669,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+6"
+      },
+      "timestamp": "2025-06-02T14:19:13.817555"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 8,
+      "input_values": [
+        5,
+        7,
+        1,
+        6,
+        2,
+        8,
+        4,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3129.8611164093018,
+      "comparators_count": 40,
+      "network_depth": 24,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 23,
+        "pruned_depth": 12,
+        "pruning_efficiency": "42.5%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+21"
+      },
+      "timestamp": "2025-06-02T14:19:22.971929"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        7,
+        3,
+        2,
+        9,
+        10,
+        4,
+        6,
+        5,
+        1,
+        8
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 3669.072151184082,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 37,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+55"
+      },
+      "timestamp": "2025-06-02T14:19:32.681473"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 10,
+      "input_values": [
+        3,
+        5,
+        10,
+        8,
+        1,
+        2,
+        7,
+        6,
+        9,
+        4
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "execution_time_ms": 4196.144819259644,
+      "comparators_count": 84,
+      "network_depth": 39,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 37,
+        "pruned_depth": 19,
+        "pruning_efficiency": "56.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+55"
+      },
+      "timestamp": "2025-06-02T14:19:39.619643"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 8,
+      "input_values": [
+        8,
+        3,
+        2,
+        4,
+        1,
+        7,
+        5,
+        6
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "execution_time_ms": 3069.996118545532,
+      "comparators_count": 40,
+      "network_depth": 24,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 23,
+        "pruned_depth": 12,
+        "pruning_efficiency": "42.5%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+21"
+      },
+      "timestamp": "2025-06-02T14:19:44.028278"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 9,
+      "input_values": [
+        8,
+        7,
+        3,
+        4,
+        2,
+        1,
+        9,
+        6,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "execution_time_ms": 3390.558958053589,
+      "comparators_count": 62,
+      "network_depth": 33,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 31,
+        "pruned_depth": 16,
+        "pruning_efficiency": "50.0%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "vs_optimal": "+37"
+      },
+      "timestamp": "2025-06-02T14:19:52.270435"
     }
   ],
   "summary_stats": {
-    "total_executions": 90,
+    "total_executions": 149,
     "algorithms_used": {
-      "batcher": 56,
-      "rl": 0,
-      "batcher_improved": 34
+      "batcher": 62,
+      "rl": 51,
+      "batcher_improved": 36
     },
     "average_execution_time": {
       "batcher": [
@@ -3167,7 +5390,13 @@
         0.023603439331054688,
         0.015020370483398438,
         0.024318695068359375,
-        0.03886222839355469
+        0.03886222839355469,
+        0.020742416381835938,
+        0.01621246337890625,
+        0.02002716064453125,
+        0.0209808349609375,
+        0.015020370483398438,
+        0.012874603271484375
       ],
       "batcher_improved": [
         0.24628639221191406,
@@ -3203,7 +5432,62 @@
         2.0117759704589844,
         30.417203903198242,
         32.66406059265137,
-        29.909849166870117
+        29.909849166870117,
+        0.04124641418457031,
+        0.04100799560546875
+      ],
+      "rl": [
+        3285.7718467712402,
+        3543.4179306030273,
+        3314.642906188965,
+        3366.7421340942383,
+        4142.2929763793945,
+        3039.6549701690674,
+        3446.8767642974854,
+        3399.5189666748047,
+        3521.700143814087,
+        3216.129779815674,
+        4173.305034637451,
+        3170.478105545044,
+        3012.404203414917,
+        3032.6108932495117,
+        3886.522054672241,
+        3199.831962585449,
+        2862.4892234802246,
+        3069.1230297088623,
+        4011.112928390503,
+        2872.391939163208,
+        2790.7867431640625,
+        2926.6510009765625,
+        3130.657196044922,
+        3079.991102218628,
+        3686.661958694458,
+        3093.090057373047,
+        3171.083927154541,
+        2774.4150161743164,
+        2982.8381538391113,
+        2842.0281410217285,
+        2988.313913345337,
+        2921.54598236084,
+        3493.20912361145,
+        2851.893424987793,
+        3237.895965576172,
+        3223.276138305664,
+        3477.8168201446533,
+        3840.852975845337,
+        3095.447063446045,
+        2800.0383377075195,
+        2754.4798851013184,
+        2930.7351112365723,
+        3767.5938606262207,
+        3316.7169094085693,
+        3116.925001144409,
+        2919.409990310669,
+        3129.8611164093018,
+        3669.072151184082,
+        4196.144819259644,
+        3069.996118545532,
+        3390.558958053589
       ]
     },
     "most_common_n_values": {},

@@ -182,9 +182,10 @@
             
             <!-- Execution Demo Tab -->
             <div class="tab-pane fade show active" id="execution" role="tabpanel">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
+                <!-- Top Row: Configuration and Results Side by Side -->
+                <div class="row mb-3">
+                    <div class="col-md-5">
+                        <div class="card h-100">
                             <div class="card-header">Execution Configuration</div>
                             <div class="card-body">
                                 <form id="executionForm">
@@ -202,6 +203,13 @@
                                             <label class="form-check-label" for="batcherImprovedExecAlgo">
                                                 Batcher's Enhanced Algorithm
                                                 <span class="badge bg-success">Optimized</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="algorithm" id="rlExecAlgo" value="rl">
+                                            <label class="form-check-label" for="rlExecAlgo">
+                                                RL Algorithm
+                                                <span class="badge bg-info">ML-Trained</span>
                                             </label>
                                         </div>
                                     </div>
@@ -236,8 +244,9 @@
                                 </form>
                             </div>
                         </div>
-                        
-                        <div class="card">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card h-100">
                             <div class="card-header">Execution Results</div>
                             <div class="card-body">
                                 <div class="mb-3">
@@ -248,38 +257,94 @@
                                     <label class="form-label">Output Sequence:</label>
                                     <div id="outputSequence" class="form-control" style="min-height: 38px;"></div>
                                 </div>
+                                
+                                <!-- Execution Results and RL Insights in horizontal layout -->
                                 <div class="row">
-                                    <div class="col-6">
-                                        <div class="mb-2">
-                                            <small class="text-muted">Execution Time:</small>
-                                            <div id="executionTime" class="fw-bold">-</div>
+                                    <!-- Left side: Basic execution metrics -->
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="mb-2">
+                                                    <small class="text-muted">Execution Time:</small>
+                                                    <div id="executionTime" class="fw-bold">-</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="mb-2">
+                                                    <small class="text-muted">Success:</small>
+                                                    <div id="executionSuccess" class="fw-bold">-</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="mb-2">
+                                                    <small class="text-muted">Comparators:</small>
+                                                    <div id="executionComparators" class="fw-bold">-</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="mb-2">
+                                                    <small class="text-muted">Network Depth:</small>
+                                                    <div id="executionDepth" class="fw-bold">-</div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="mb-2">
-                                            <small class="text-muted">Success:</small>
-                                            <div id="executionSuccess" class="fw-bold">-</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="mb-2">
-                                            <small class="text-muted">Comparators:</small>
-                                            <div id="executionComparators" class="fw-bold">-</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="mb-2">
-                                            <small class="text-muted">Network Depth:</small>
-                                            <div id="executionDepth" class="fw-bold">-</div>
+                                    
+                                    <!-- Right side: RL Analysis Section (hidden by default) -->
+                                    <div class="col-md-6" id="rlAnalysisSection" style="display: none;">
+                                        <div class="border-start ps-3">
+                                            <h6 class="text-primary mb-3">
+                                                <i class="bi bi-robot"></i> RL Insights <span id="rlAgentTypeTitle" class="text-info fw-normal">(-)</span>
+                                            </h6>
+                                            
+                                            <!-- Optimization Results -->
+                                            <div class="row mb-2">
+                                                <div class="col-6">
+                                                    <small class="text-muted">Pruned Size:</small>
+                                                    <div id="rlPrunedSize" class="fw-bold">-</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted">Pruned Depth:</small>
+                                                    <div id="rlPrunedDepth" class="fw-bold">-</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Efficiency Metrics -->
+                                            <div class="row mb-2">
+                                                <div class="col-6">
+                                                    <small class="text-muted">Pruning Efficiency:</small>
+                                                    <div id="rlPruningEfficiency" class="fw-bold">-</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted">vs Optimal:</small>
+                                                    <div id="rlVsOptimal" class="fw-bold">-</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Status Indicators -->
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <small class="text-muted">Network Status:</small>
+                                                    <div id="rlNetworkStatus" class="fw-bold">-</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted">Pruning Applied:</small>
+                                                    <div id="rlPruningApplied" class="fw-bold">-</div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
+                </div>
+                
+                <!-- Bottom Row: Full-Width Execution Visualization -->
+                <div class="row">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">Execution Visualization</div>
                             <div class="card-body text-center">

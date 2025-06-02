@@ -74,6 +74,25 @@ except ImportError as e:
     get_rl_network = None # Define as None to avoid NameError later
     RL_AVAILABLE = False
 
+# Import RL evaluation utilities
+try:
+    from utils.rl_evaluation import get_available_rl_sizes, get_available_agent_types, execute_rl_network
+    RL_EVALUATION_AVAILABLE = True
+    # Get available RL sizes on startup
+    AVAILABLE_RL_SIZES = get_available_rl_sizes()
+    print(f"Available RL network sizes: {AVAILABLE_RL_SIZES}")
+    # Print available agent types for each size
+    for n in AVAILABLE_RL_SIZES:
+        agents = get_available_agent_types(n)
+        print(f"  n={n}: {agents}")
+except ImportError as e:
+    print(f"Warning: Could not import RL evaluation utilities: {e}")
+    get_available_rl_sizes = lambda: []
+    get_available_agent_types = lambda n: []
+    execute_rl_network = None
+    RL_EVALUATION_AVAILABLE = False
+    AVAILABLE_RL_SIZES = []
+
 # Initialize Flask app
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
@@ -264,7 +283,19 @@ def execute_network():
     # Get the algorithm type
     algorithm = request.form.get('algorithm', 'batcher')
     
-    # Input validation
+    # Enhanced input validation for RL algorithms
+    if algorithm == 'rl':
+        if not RL_EVALUATION_AVAILABLE:
+            return jsonify({'error': 'RL evaluation not available. Please check installation.'})
+        
+        if n not in AVAILABLE_RL_SIZES:
+            return jsonify({'error': f'RL algorithms only available for sizes: {AVAILABLE_RL_SIZES}'})
+    else:
+        # Limit Batcher algorithms to n<=16 for better visualization
+        if n > 16:
+            return jsonify({'error': 'Batcher algorithms limited to n≤16 for optimal visualization. Use RL algorithms for larger sizes.'})
+    
+    # Standard input validation
     validation_error = validate_input_size(n)
     if validation_error:
         return jsonify(validation_error)
@@ -286,7 +317,48 @@ def execute_network():
     # Start timing for execution tracking
     start_time = time.time()
     
-    # Generate the network based on selected algorithm
+    # Handle RL algorithms with evaluate.py integration
+    if algorithm == 'rl':
+        # Always use Double DQN (available for all RL sizes and generally superior)
+        agent_type = 'double_dqn'
+        
+        try:
+            # Use the enhanced RL execution with evaluate.py
+            result = execute_rl_network(n, agent_type, input_values)
+            
+            # Calculate execution time
+            total_execution_time = (time.time() - start_time) * 1000
+            result['execution_time_ms'] = total_execution_time
+            
+            # Enhanced algorithm name
+            result['algorithm'] = "RL Algorithm (Double DQN)"
+            
+            # Store execution result for analysis
+            try:
+                execution_data = {
+                    'algorithm': algorithm,
+                    'agent_type': agent_type,
+                    'n_wires': n,
+                    'input_values': input_values,
+                    'output_values': result['output_values'],
+                    'execution_time_ms': total_execution_time,
+                    'comparators_count': result['comparators_count'],
+                    'network_depth': result['network_depth'],
+                    'success': result['success'],
+                    'input_type': input_type,
+                    'rl_analysis': result.get('rl_analysis', {})
+                }
+                data_manager.store_execution_result(execution_data)
+            except Exception as e:
+                print(f"Warning: Could not store RL execution result: {e}")
+            
+            return jsonify(result)
+            
+        except Exception as e:
+            traceback.print_exc()
+            return jsonify({'error': f'RL execution failed: {str(e)}'})
+    
+    # Handle Batcher algorithms (existing logic)
     if algorithm == 'batcher_improved':
         if not IMPROVED_BATCHER_AVAILABLE:
             return jsonify({'error': f'Enhanced Batcher algorithm not available. Import flag: {IMPROVED_BATCHER_AVAILABLE}'})
@@ -667,25 +739,30 @@ def api_algorithm_status():
             'batcher': {
                 'available': True,
                 'description': "Batcher's Traditional Algorithm",
-                'status': 'Classic reliable algorithm'
+                'status': 'Classic reliable algorithm',
+                'size_range': '2-16'
             },
             'batcher_improved': {
                 'available': IMPROVED_BATCHER_AVAILABLE and batcher_improved_test,
                 'description': "Enhanced Batcher Algorithm", 
                 'status': 'Optimized with modern improvements',
                 'test_result': batcher_improved_test,
-                'import_flag': IMPROVED_BATCHER_AVAILABLE
+                'import_flag': IMPROVED_BATCHER_AVAILABLE,
+                'size_range': '2-16'
             },
             'rl': {
-                'available': RL_AVAILABLE and get_rl_network is not None,
-                'description': "Reinforcement Learning Networks",
-                'status': 'AI-discovered networks (limited range)'
+                'available': RL_EVALUATION_AVAILABLE,
+                'description': "RL Algorithm (Double DQN)",
+                'status': 'ML-trained networks using advanced Double DQN' if RL_EVALUATION_AVAILABLE else 'Evaluation not available',
+                'size_range': ', '.join(map(str, AVAILABLE_RL_SIZES)) if AVAILABLE_RL_SIZES else 'None'
             }
         }
         
         return jsonify({
             'success': True,
             'algorithms': status,
+            'available_rl_sizes': AVAILABLE_RL_SIZES,
+            'rl_evaluation_available': RL_EVALUATION_AVAILABLE,
             'timestamp': datetime.datetime.now().isoformat()
         })
         
@@ -695,6 +772,29 @@ def api_algorithm_status():
             'error': str(e),
             'timestamp': datetime.datetime.now().isoformat()
         })
+
+@app.route('/api/available_sizes', methods=['GET'])
+@handle_exceptions  
+def api_available_sizes():
+    """Return available input sizes for each algorithm type"""
+    try:
+        return jsonify({
+            'success': True,
+            'sizes': {
+                'batcher': list(range(2, 17)),  # 2-16
+                'batcher_improved': list(range(2, 17)),  # 2-16
+                'rl': AVAILABLE_RL_SIZES
+            },
+            'rl_evaluation_available': RL_EVALUATION_AVAILABLE,
+            'available_rl_sizes': AVAILABLE_RL_SIZES
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': f'Failed to get available sizes: {str(e)}'
+        })
+
+
 
 if __name__ == '__main__':
     app.run(debug=True) 

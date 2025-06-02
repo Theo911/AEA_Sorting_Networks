@@ -41,4 +41,20 @@ body {
     .img-container img {
         transform: translateY(-5px); /* Raises numbers by 5px */
     }
+}
+
+/* Full-width execution visualization */
+#executionVisualization .img-container {
+    padding: 0; /* Remove padding to eliminate gaps */
+    background-color: transparent; /* Remove background */
+    border-radius: 0; /* Remove border radius */
+    margin-bottom: 0; /* Remove margin */
+}
+
+#executionVisualization .img-container img {
+    width: 100%; /* Force full width */
+    max-width: none; /* Remove max-width constraint */
+    margin: 0; /* Remove auto centering margin */
+    display: block;
+    border-radius: 4px; /* Add slight rounding to the image itself */
 } 

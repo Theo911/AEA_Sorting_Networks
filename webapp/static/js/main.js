@@ -118,6 +118,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (this.checked) {
                 console.log(`Algorithm changed to: ${this.value}`);
                 
+                // Update input size limits
+                updateInputSizeLimits();
+                
                 // Use enhanced algorithm change handler
                 handleAlgorithmChange();
             }
@@ -134,6 +137,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         input.addEventListener('change', updateRequiredInputs);
     });
     
+
+    
     // Set up form submissions for both generation and execution
     document.getElementById('networkForm')?.addEventListener('submit', handleNetworkGeneration);
     document.getElementById('executionForm')?.addEventListener('submit', handleNetworkExecution);
@@ -142,6 +147,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('Loading legacy algorithm status...');
     await loadAlgorithmStatus();
     console.log('Algorithm availability after legacy load:', algorithmAvailability);
+    
+    // Initial UI updates
+    updateInputSizeLimits();
     
     console.log('Webapp initialization complete');
     console.log('Final algorithmAvailability state:', algorithmAvailability);
@@ -468,6 +476,77 @@ document.getElementById('executionForm').addEventListener('submit', function(e) 
             document.getElementById('executionDepth').textContent = data.network_depth;
         } else {
             document.getElementById('executionDepth').textContent = '-';
+        }
+        
+        // Handle RL-specific analysis data
+        if (data.rl_analysis && selectedAlgorithm === 'rl') {
+            const rlSection = document.getElementById('rlAnalysisSection');
+            if (rlSection) {
+                rlSection.style.display = 'block';
+                
+                // Update RL analysis fields with enhanced data
+                const rlAnalysis = data.rl_analysis;
+                
+                // Algorithm Info - now in the title
+                const agentTypeTitle = document.getElementById('rlAgentTypeTitle');
+                if (agentTypeTitle) {
+                    const agentType = rlAnalysis.agent_type || '-';
+                    agentTypeTitle.textContent = agentType !== '-' ? `(${agentType})` : '(-)';
+                }
+                
+                // Optimization Results (removed duplicates - Original Size/Depth shown above)
+                document.getElementById('rlPrunedSize').textContent = rlAnalysis.pruned_size || '-';
+                document.getElementById('rlPrunedDepth').textContent = rlAnalysis.pruned_depth || '-';
+                
+                // Efficiency Metrics
+                const pruningEffElement = document.getElementById('rlPruningEfficiency');
+                if (pruningEffElement) {
+                    const efficiency = rlAnalysis.pruning_efficiency || '0%';
+                    pruningEffElement.textContent = efficiency;
+                    // Color code based on efficiency
+                    if (efficiency === '0%' || efficiency === '0.0%') {
+                        pruningEffElement.className = 'fw-bold text-muted';
+                    } else {
+                        pruningEffElement.className = 'fw-bold text-success';
+                    }
+                }
+                
+                const vsOptimalElement = document.getElementById('rlVsOptimal');
+                if (vsOptimalElement) {
+                    const vsOptimal = rlAnalysis.vs_optimal || '-';
+                    vsOptimalElement.textContent = vsOptimal;
+                    // Color code based on performance vs optimal
+                    if (vsOptimal.startsWith('+')) {
+                        vsOptimalElement.className = 'fw-bold text-warning';
+                    } else if (vsOptimal === '0') {
+                        vsOptimalElement.className = 'fw-bold text-success';
+                    } else {
+                        vsOptimalElement.className = 'fw-bold text-info';
+                    }
+                }
+                
+                // Status Indicators
+                const statusElement = document.getElementById('rlNetworkStatus');
+                if (statusElement) {
+                    const status = rlAnalysis.network_status || 'Unknown';
+                    const isValid = status === 'Valid';
+                    statusElement.textContent = isValid ? 'Valid ✓' : 'Invalid ✗';
+                    statusElement.className = isValid ? 'fw-bold text-success' : 'fw-bold text-danger';
+                }
+                
+                const pruningAppliedElement = document.getElementById('rlPruningApplied');
+                if (pruningAppliedElement) {
+                    const applied = rlAnalysis.pruning_applied;
+                    pruningAppliedElement.textContent = applied ? 'Yes ✓' : 'No';
+                    pruningAppliedElement.className = applied ? 'fw-bold text-success' : 'fw-bold text-muted';
+                }
+            }
+        } else {
+            // Hide RL analysis section for non-RL algorithms
+            const rlSection = document.getElementById('rlAnalysisSection');
+            if (rlSection) {
+                rlSection.style.display = 'none';
+            }
         }
     })
     .catch(error => {
@@ -1564,4 +1643,83 @@ function showAlgorithmUnavailableMessage(algorithmKey, availability) {
     toastElement.addEventListener('hidden.bs.toast', () => {
         toastElement.remove();
     });
+}
+
+
+
+// Update input size limits based on selected algorithm
+async function updateInputSizeLimits() {
+    const selectedAlgorithm = document.querySelector('input[name="algorithm"]:checked')?.value;
+    const inputSizeElement = document.getElementById('execInputSize');
+    
+    if (!inputSizeElement || !selectedAlgorithm) return;
+    
+    try {
+        const response = await fetch('/api/available_sizes');
+        const data = await response.json();
+        
+        if (data.success) {
+            const availableSizes = data.sizes[selectedAlgorithm] || [];
+            
+            if (availableSizes.length > 0) {
+                const minSize = Math.min(...availableSizes);
+                const maxSize = Math.max(...availableSizes);
+                
+                inputSizeElement.min = minSize;
+                inputSizeElement.max = maxSize;
+                
+                // Update current value if it's outside the new range
+                const currentValue = parseInt(inputSizeElement.value);
+                if (currentValue < minSize) {
+                    inputSizeElement.value = minSize;
+                } else if (currentValue > maxSize) {
+                    inputSizeElement.value = maxSize;
+                }
+                
+                // Update label to show range
+                const label = document.querySelector('label[for="execInputSize"]');
+                if (label) {
+                    if (selectedAlgorithm === 'rl') {
+                        label.textContent = `Number of Inputs (${availableSizes.join(', ')})`;
+                    } else {
+                        label.textContent = `Number of Inputs (${minSize}-${maxSize})`;
+                    }
+                }
+                
+                // Update required inputs display
+                updateRequiredInputs();
+                
+
+                
+                console.log(`Updated input size limits for ${selectedAlgorithm}: ${minSize}-${maxSize}`);
+            }
+        }
+    } catch (error) {
+        console.error('Error updating input size limits:', error);
+    }
+}
+
+
+
+// Update required inputs display
+function updateRequiredInputs() {
+    const inputSizeElement = document.getElementById('execInputSize');
+    const requiredInputsElement = document.getElementById('requiredInputs');
+    
+    if (inputSizeElement && requiredInputsElement) {
+        requiredInputsElement.textContent = inputSizeElement.value;
+    }
+}
+
+function toggleCustomInput() {
+    const customInputDiv = document.getElementById('customInputDiv');
+    const customInputRadio = document.getElementById('customInput');
+    
+    if (customInputDiv && customInputRadio) {
+        if (customInputRadio.checked) {
+            customInputDiv.style.display = 'block';
+        } else {
+            customInputDiv.style.display = 'none';
+        }
+    }
 } 
