@@ -6828,13 +6828,169 @@
         "is_synthetic": false
       },
       "timestamp": "2025-06-02T16:26:14.410503"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        3,
+        1,
+        5,
+        6,
+        4,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 2950.939893722534,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 12,
+        "vs_optimal": "+6 \u2192 +1",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-02T16:28:11.179307"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        4,
+        5,
+        2,
+        1,
+        6,
+        3
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 7551.4349937438965,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 12,
+        "vs_optimal": "+6 \u2192 +1",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-05T18:52:11.615779"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        6,
+        1,
+        4,
+        2,
+        3,
+        5
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 7679.745197296143,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 12,
+        "vs_optimal": "+6 \u2192 +1",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-05T18:59:51.571189"
+    },
+    {
+      "algorithm": "rl",
+      "agent_type": "double_dqn",
+      "n_wires": 6,
+      "input_values": [
+        3,
+        6,
+        5,
+        4,
+        1,
+        2
+      ],
+      "output_values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "execution_time_ms": 6953.237056732178,
+      "comparators_count": 18,
+      "network_depth": 14,
+      "success": true,
+      "input_type": "random",
+      "rl_analysis": {
+        "agent_type": "Double Dqn",
+        "pruned_size": 13,
+        "pruned_depth": 9,
+        "pruning_efficiency": "27.8%",
+        "pruning_applied": true,
+        "network_status": "Valid",
+        "optimal_size": 12,
+        "vs_optimal": "+6 \u2192 +1",
+        "data_source": "Actual Model",
+        "is_synthetic": false
+      },
+      "timestamp": "2025-06-05T19:00:36.378912"
     }
   ],
   "summary_stats": {
-    "total_executions": 187,
+    "total_executions": 191,
     "algorithms_used": {
       "batcher": 63,
-      "rl": 88,
+      "rl": 92,
       "batcher_improved": 36
     },
     "average_execution_time": {
@@ -7029,7 +7185,11 @@
         2780.0257205963135,
         2216.3989543914795,
         2248.57497215271,
-        3404.5557975769043
+        3404.5557975769043,
+        2950.939893722534,
+        7551.4349937438965,
+        7679.745197296143,
+        6953.237056732178
       ]
     },
     "most_common_n_values": {},

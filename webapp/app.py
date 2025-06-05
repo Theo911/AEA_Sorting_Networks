@@ -80,11 +80,9 @@ try:
     RL_EVALUATION_AVAILABLE = True
     # Get available RL sizes on startup
     AVAILABLE_RL_SIZES = get_available_rl_sizes()
-    print(f"Available RL network sizes: {AVAILABLE_RL_SIZES}")
     # Print available agent types for each size
     for n in AVAILABLE_RL_SIZES:
         agents = get_available_agent_types(n)
-        print(f"  n={n}: {agents}")
 except ImportError as e:
     print(f"Warning: Could not import RL evaluation utilities: {e}")
     get_available_rl_sizes = lambda: []
